@@ -1,0 +1,22 @@
+{
+  "name": "gpulist_e2e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "cypress open",
+    "cypress:cli": "cypress run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^14.0.3",
+    "eslint-plugin-cypress": "^4.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "prettier": "^3.8.1"
+  }
+}

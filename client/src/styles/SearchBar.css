@@ -1,0 +1,32 @@
+#search-bar-field {
+  background-color: rgba(12, 12, 12, 0.9);
+  max-width: 95%;
+  padding: 0.4rem;
+  border: 2px solid black;
+  border-style: groove;
+  border-radius: 1rem;
+  margin: 0 auto;
+  margin-bottom: 1rem; /* Increased margin to separate from index button */
+}
+
+#show-search-button {
+  width: 95%;
+  margin: 0.75rem auto;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+#search-bar-input {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  width: 95%;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  font-family: "digital-dreamers";
+}
+
+#search-bar-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #222;
+}

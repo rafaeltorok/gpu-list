@@ -1,0 +1,53 @@
+.gpu-data-table {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  border: 0.2rem solid;
+  border-style: groove;
+  border-collapse: separate;
+  border-spacing: 0; /* visually the same as collapse */
+  border-radius: 1rem;
+  overflow: hidden; /* ensures inner cells don’t “leak out” */
+}
+
+.gpu-data-table th,
+.gpu-data-table td {
+  border: 0.1rem solid black;
+  border-style: groove;
+  padding: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.gpu-data-table th {
+  background-color: rgba(18, 18, 18, 0.9);
+}
+
+.gpu-data-table td {
+  background-color: rgba(0, 0, 0, 0.9);
+  font-weight: bold;
+  border-style: inset;
+}
+
+.gpu-data-table #delete-gpu-button {
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  background-color: rgba(5, 5, 5, 0.9);
+}
+
+.gpu-data-table thead tr:first-child th {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-style: groove;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.gpu-data-table .table-header {
+  width: 100%;
+  background-color: rgba(5, 5, 5, 0.9);
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-style: groove;
+}

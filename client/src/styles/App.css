@@ -1,0 +1,84 @@
+#root {
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: "digital-dreamers", "sans-serif";
+}
+
+@font-face {
+  font-family: "digital-dreamers";
+  src: url("../fonts/DigitalDreamers-jy99.ttf") format("truetype");
+}
+
+h1,
+table {
+  border-radius: 1rem;
+}
+
+h1 {
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 0.15rem solid;
+  border-style: double;
+  font-size: 2.5rem;
+  text-decoration: underline;
+  padding: 1rem;
+}
+
+button {
+  background-color: #050505;
+  font-size: 1rem;
+  font-family: "digital-dreamers";
+  margin-top: 1rem;
+  border-style: outset;
+}
+
+button:active {
+  background-color: #151515;
+  font-size: 1rem;
+  font-family: "digital-dreamers";
+  margin-top: 1rem;
+  color: #505050;
+  border-style: inset;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #505050; /* or any custom style */
+}
+
+.button-area {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(12, 12, 12, 0.9);
+  border-radius: 1rem;
+  box-sizing: border-box; /* Prevents the are to be wider than the others */
+  margin-bottom: 2rem;
+  border: 0.25rem solid black;
+  border-style: groove;
+}
+
+.button-area button {
+  width: 90%;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.back-to-index-button,
+.back-to-index-button:active {
+  margin-top: 0.1rem;
+  margin-bottom: 2.5rem;
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+  #root {
+    padding: 0.5rem;
+  }
+}
+
+@media only screen and (hover: none) and (pointer: coarse) and (orientation: landscape) {
+  #root {
+    max-width: 500px;
+  }
+}

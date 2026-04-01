@@ -1,0 +1,144 @@
+.gpu-card-link {
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.gpu-card-link:hover {
+  transform: translateY(-5px);
+}
+
+.gpu-card {
+  max-width: 100%; /* Prevent overflow */
+  min-width: 0; /* Allow shrinking */
+  flex: 1; /* Enable flexible resizing */
+  box-sizing: border-box; /* Include padding and border in width */
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 2px solid;
+  border-style: groove;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+  transition: box-shadow 0.3s ease;
+}
+
+.gpu-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.gpu-card.nvidia {
+  border-color: #76b900;
+}
+
+.gpu-card.amd {
+  border-color: #ed1c24;
+}
+
+.gpu-card.intel {
+  border-color: #0068b5;
+}
+
+.gpu-card-header {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gpu-card.nvidia .gpu-card-header h2,
+.gpu-card.nvidia .gpu-card-header h3 {
+  color: #76b900;
+}
+
+.gpu-card.amd .gpu-card-header h2,
+.gpu-card.amd .gpu-card-header h3 {
+  color: #ed1c24;
+}
+
+.gpu-card.intel .gpu-card-header h2,
+.gpu-card.intel .gpu-card-header h3 {
+  color: #0068b5;
+}
+
+.gpu-card-header h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.gpu-card-header h3 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.gpu-card-specs {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gpu-card-spec {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gpu-card-spec:last-child {
+  border-bottom: none;
+}
+
+.spec-label {
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.spec-value {
+  font-weight: bold;
+}
+
+.gpu-card.nvidia .spec-value {
+  color: #76b900;
+}
+
+.gpu-card.amd .spec-value {
+  color: #ed1c24;
+}
+
+.gpu-card.intel .spec-value {
+  color: #0068b5;
+}
+
+.gpu-card-footer {
+  padding: 1rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.view-details {
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.gpu-card:hover .view-details {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+  .gpu-card {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .gpu-card {
+    max-width: 100%; /* Ensure cards fit within the screen */
+  }
+}

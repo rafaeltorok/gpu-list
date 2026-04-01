@@ -1,0 +1,151 @@
+.gpu-detail-container {
+  width: 100%;
+  padding: 1rem 0;
+  max-width: 1000px; /* Increase max width */
+  margin: 0 auto; /* Center the container horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+}
+
+.gpu-detail-card {
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 1rem;
+  border: 2px solid;
+  border-style: groove;
+  overflow: hidden;
+}
+
+.gpu-detail-card.nvidia {
+  border-color: #76b900;
+}
+
+.gpu-detail-card.amd {
+  border-color: #ed1c24;
+}
+
+.gpu-detail-card.intel {
+  border-color: #0068b5;
+}
+
+.gpu-detail-header {
+  position: relative;
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gpu-detail-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.gpu-detail-card.nvidia .gpu-detail-header h1 {
+  color: #76b900;
+}
+
+.gpu-detail-card.amd .gpu-detail-header h1 {
+  color: #ed1c24;
+}
+
+.gpu-detail-card.intel .gpu-detail-header h1 {
+  color: #0068b5;
+}
+
+.back-button {
+  position: relative;
+  left: 1rem;
+  top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.gpu-detail-content {
+  padding: 1.5rem;
+}
+
+.gpu-detail-section {
+  margin-bottom: 2rem;
+}
+
+.gpu-detail-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+.spec-item {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spec-label {
+  opacity: 0.7;
+  text-align: left;
+}
+
+.spec-value {
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+.gpu-detail-card.nvidia .spec-value {
+  color: #76b900;
+}
+
+.gpu-detail-card.amd .spec-value {
+  color: #ed1c24;
+}
+
+.gpu-detail-card.intel .spec-value {
+  color: #0068b5;
+}
+
+.gpu-detail-actions {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.delete-button {
+  background-color: rgba(220, 53, 69, 0.2);
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: rgba(220, 53, 69, 0.3);
+}
+
+@media (min-width: 768px) {
+  .specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .specs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gpu-detail-container {
+    max-width: 1000px; /* Further increase size on larger screens */
+  }
+}

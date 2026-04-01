@@ -1,0 +1,33 @@
+.app-header {
+  margin: 0 auto;
+  max-width: 500px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+}
+
+.header-logo h1 {
+  margin: 0;
+  font-size: 4.5rem;
+  background: linear-gradient(90deg, #76b900, #ed1c24, #0068b5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center; /* Ensure the title is centered */
+}
+
+.header-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.header-nav a {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.header-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
