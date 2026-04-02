@@ -364,7 +364,7 @@ App access
 ### Manual testing
 Enter the `tests` folder and install the dependencies
   ```bash
-  cd ./tests && npm install
+  cd ./e2e && npm install
   ```
 
 Start the Main UI

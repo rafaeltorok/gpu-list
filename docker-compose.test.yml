@@ -22,12 +22,12 @@ services:
       - webapp-server
 
   webapp-cypress:
-    build: ./tests
-    working_dir: /tests
+    build: ./e2e
+    working_dir: /e2e
     networks:
       - webapp-network
     env_file:
-      - ./tests/.docker.env
+      - ./e2e/.docker.env
     depends_on:
       - webapp-server
       - webapp-client
