@@ -12,7 +12,8 @@
   "description": "",
   "devDependencies": {
     "cypress": "^14.0.3",
-    "eslint-plugin-cypress": "^4.1.0"
+    "eslint-plugin-cypress": "^4.1.0",
+    "typescript": "5.4"
   },
   "dependencies": {
     "dotenv": "^17.2.1",

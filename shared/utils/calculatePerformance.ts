@@ -1,6 +1,6 @@
-import type { GpuType } from "../types/types";
+import type { GpuType, GpuInputType } from "../types/types";
 
-function calculatePerformance(gpu: GpuType): string[] {
+function calculatePerformance(gpu: GpuType | GpuInputType): string[] {
   return [
     getFp32(gpu.model, gpu.cores, gpu.boostclock),
     getTextureRate(gpu.tmus, gpu.boostclock),

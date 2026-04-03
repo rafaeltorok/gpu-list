@@ -14,4 +14,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./commands";
+import "./commands/setup";
+import "./commands/gpu";
+import "./commands/addForm";
+import "./commands/index";
+import "./commands/dataTables";
