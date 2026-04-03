@@ -8,7 +8,7 @@
     "dev": "tsx watch ./src/index.ts",
     "start:test": "NODE_ENV=test node ./build/index.js",
     "dev:test": "NODE_ENV=test tsx watch ./src/index.ts",
-    "test": "cross-env NODE_ENV=test node --test --import=tsx --test-concurrency=1"
+    "test": "cross-env NODE_ENV=test node --test --import=tsx --import ./tests/integration/setup.ts --test-concurrency=1"
   },
   "author": "",
   "license": "ISC",

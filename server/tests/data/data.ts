@@ -1,7 +1,8 @@
-import type { GpuType } from "../src/types.js";
+import type { GpuInputType } from "../../../shared/types/types";
 
-export const gpuList: GpuType[] = [
+export const gpuList: GpuInputType[] = [
   {
+    // Index 0
     manufacturer: "NVIDIA",
     gpuline: "GeForce",
     model: "RTX 3060",
@@ -16,6 +17,7 @@ export const gpuList: GpuType[] = [
     memclock: 15,
   },
   {
+    // Index 1
     manufacturer: "NVIDIA",
     gpuline: "GeForce",
     model: "GTX 970",
@@ -30,6 +32,7 @@ export const gpuList: GpuType[] = [
     memclock: 7,
   },
   {
+    // Index 2
     manufacturer: "AMD",
     gpuline: "Radeon",
     model: "RX 9070 XT",
@@ -44,6 +47,7 @@ export const gpuList: GpuType[] = [
     memclock: 20,
   },
   {
+    // Index 3
     manufacturer: "Intel",
     gpuline: "Arc",
     model: "B580",
@@ -57,4 +61,19 @@ export const gpuList: GpuType[] = [
     boostclock: 2670,
     memclock: 19,
   },
+  {
+    // Index 4
+    manufacturer: "NVIDIA",
+    gpuline: "",
+    model: "RTX PRO 6000 Blackwell",
+    cores: 24064,
+    tmus: 752,
+    rops: 192,
+    vram: 96,
+    bus: 512,
+    memtype: "GDDR7",
+    baseclock: 1590,
+    boostclock: 2617,
+    memclock: 28,
+  }
 ];
