@@ -28,3 +28,12 @@ export type GpuType = {
   boostclock: number;
   memclock: number;
 };
+
+export type HideClockSpeeds = Omit<
+  GpuType,
+  "baseclock" | "boostclock" | "memclock"
+>;
+
+export type HideVram = Omit<GpuType, "vram" | "memtype">;
+
+export type FormatGpuCalc = Omit<GpuType, "manufacturer" | "gpuline">;

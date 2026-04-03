@@ -5,7 +5,7 @@ import useGpuContext from "../hooks/useGpuContext";
 import "../styles/PageIndex.css";
 
 // TypeScript types
-import type { GpuType } from "../types/gpu";
+import type { GpuType } from "../../../shared/types/types";
 
 export default function PageIndex() {
   const {

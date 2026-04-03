@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import useGpuContext from "../hooks/useGpuContext";
 
 // Utils
-import calculatePerformance from "../utils/calculatePerformance";
+import calculatePerformance from "../../../shared/utils/calculatePerformance";
 
 // React components
 import GpuDataRow from "./GpuDataRow";
 
 // TypeScript types
-import type { GpuType } from "../types/gpu";
+import type { GpuType } from "../../../shared/types/types";
 
 // CSS Styles
 import "../styles/Gpu.css";

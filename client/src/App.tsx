@@ -1,7 +1,7 @@
 // Client base dependencies
 import { useEffect, useReducer } from "react";
 import gpuService from "./services/gpus";
-import GpuContext from "./Context/GpuContext.js";
+import GpuContext from "./Context/GpuContext";
 import dataReducer, { initialDataState } from "./reducers/dataReducer";
 import uiReducer, { initialUiState } from "./reducers/uiReducer";
 
@@ -9,14 +9,14 @@ import uiReducer, { initialUiState } from "./reducers/uiReducer";
 import AddGpuForm from "./components/AddGpuForm";
 import SearchBar from "./components/SearchBar";
 import PageIndex from "./components/PageIndex";
-import ShowAllButton from "./components/ShowAllButton.js";
+import ShowAllButton from "./components/ShowAllButton";
 import GpuList from "./components/GpuList";
 
 // CSS Styles
 import "./styles/App.css";
 
 // TypeScript types
-import type { GpuType, GpuInputType } from "./types/gpu.js";
+import type { GpuType, GpuInputType } from "../../shared/types/types";
 
 // Main App component
 function App() {

@@ -1,4 +1,4 @@
-import type { GpuType, GpuInputType } from "./gpu";
+import type { GpuType, GpuInputType } from "../../../shared/types/types";
 
 export type UiState = {
   searchGpu: string;

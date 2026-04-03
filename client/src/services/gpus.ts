@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { GpuInputType, GpuType } from "../types/gpu";
+import type { GpuInputType, GpuType } from "../../../shared/types/types";
 
 const baseUrl: string = "/api/gpus";
 

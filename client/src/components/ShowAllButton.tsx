@@ -1,3 +1,4 @@
+// React components
 import useGpuContext from "../hooks/useGpuContext";
 
 export default function ShowAllButton() {

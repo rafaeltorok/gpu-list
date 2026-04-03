@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import type { GpuType } from "../types.ts";
+import type { GpuType } from "../../../shared/types/types.js";
 
 const gpuSchema = new Schema<GpuType>({
   manufacturer: {

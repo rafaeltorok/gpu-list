@@ -1,4 +1,4 @@
-import type { GpuType } from "../types/gpu";
+import type { GpuType } from "../types/types";
 
 function calculatePerformance(gpu: GpuType): string[] {
   return [
