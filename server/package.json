@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "node ./build/index.js",
+    "start": "node ./build/server/src/index.js",
     "dev": "tsx watch ./src/index.ts",
-    "start:test": "NODE_ENV=test node ./build/index.js",
+    "start:test": "NODE_ENV=test node ./build/server/src/index.js",
     "dev:test": "NODE_ENV=test tsx watch ./src/index.ts",
     "test": "cross-env NODE_ENV=test node --test --import=tsx --import ./tests/integration/setup.ts --test-concurrency=1"
   },

@@ -9,7 +9,7 @@ import type {
   FormatGpuCalc,
   HideClockSpeeds,
   HideVram,
-} from "../../../shared/types/types.js";
+} from "../../../shared/types/types.ts";
 
 const gpusRouter = express.Router();
 
