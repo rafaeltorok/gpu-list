@@ -31,7 +31,8 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
     - [Manual testing](#manual-testing)
     - [Testing via Docker](#testing-via-docker)
   - [Integration tests (Backend)](#integration-tests-backend)
-  - [Backend server structure](#backend-server-structure)
+  - [Folder overview](#folder-overview)
+    - [Backend server structure](#backend-server-structure)
   - [Troubleshooting](#troubleshooting)
   - [Author](#author)
 
@@ -290,9 +291,9 @@ Delete
 
 ## Running with Docker
 ### Docker Compose (recommended)
-  ```bash
-  docker compose up -d
-  ```
+```bash
+docker compose up -d
+```
 
 App access
 - API → http://localhost:3001/api/gpus
@@ -316,25 +317,27 @@ App access
       docker build -f ./alternative-client/Dockerfile -t gpulist-webapp-alt-client ./
       ```
 
-    - Backend
+    - Backend Server
       ```bash
       docker -f ./server/Dockerfile build -t gpulist-webapp-server ./
       ```
 
 3. Run the containers
-    - Main UI
-      ```bash
-      docker run -d --name gpulist-webapp-client --network gpulist_webapp-network -p 5173:80 gpulist-webapp-client
-      ```
-      
-    - Alternative UI
-      ```bash
-      docker run -d --name gpulist-webapp-alt-client --network gpulist_webapp-network -p 5174:80 gpulist-webapp-alt-client
-      ```
+    - **The server must be started before any of the clients, due to Nginx requirements.**
 
     - Backend Server
       ```bash
       cd ./server && docker run -d --env-file .env --name gpulist-webapp-server --network gpulist_webapp-network -p 3001:3001 -ti gpulist-webapp-server
+      ```
+
+    - Main UI
+      ```bash
+      cd .. && docker run -d --name gpulist-webapp-client --network gpulist_webapp-network -p 5173:80 gpulist-webapp-client
+      ```
+      
+    - Alternative UI
+      ```bash
+      cd .. && docker run -d --name gpulist-webapp-alt-client --network gpulist_webapp-network -p 5174:80 gpulist-webapp-alt-client
       ```
 
 4. Access the app
@@ -424,34 +427,42 @@ cd ./server && npm install && npm run test
 ```
 
 
-## Backend server structure
-### Folder overview
+## Folder overview
+### Backend server structure
   ```
   /server/
-  ├── index.ts             # Entry point of the application
-  ├── app.ts               # Main Express app setup
-  ├── db/
-  │   └── mongo.ts         # Sets up the connection to the MongoDB database
-  ├── dist/                # Production-ready builds for the backend to serve
-  │   ├── main-client      # The main client production build
+  ├── src
+  │   ├── index.ts              # Entry point of the application
+  │   ├── app.ts                # Main Express app setup
+  │   ├── routes/               # Defines API routes and handles request logic for each endpoint
+  │   │   ├── gpus.ts           # Handles API requests related to the GPUs
+  │   │   └── testing.ts        # Handles database reset requests, used in E2E and integration tests
+  │   ├── db/
+  │   │   └── mongo.ts          # Sets up the connection to the MongoDB database
+  │   ├── middlewares/          # Custom middleware
+  │   │   └── errorHandler.ts   # Handles server errors
+  │   ├── models/               # Data models/schema definitions
+  │   │   └── gpu.ts            # Defines the GPU schema/model
+  │   └── utils/                # Utility/helper functions
+  │       ├── config.ts         # Handles environment configurations
+  │       └── logger.ts         # Logger setup (for logging requests/errors)
+  ├── dist/                     # Static frontend builds served by the backend in production
+  │   ├── main-client           # The main client static build
+  │   │   └── ...
+  │   └── alt-client            # Alternative client static build
   │       └── ...
-  │   └── alt-client       # Alternative client production build
-  │       └── ...
-  ├── controllers/         # Handles request logic (Controllers)
-  │   ├── gpus.ts          # GPUs controller: handles API requests related to the GPUs
-  │   └── testing.ts       # Controller to handle the reset database request, used in E2E and integration tests
-  ├── models/              # Data models/schema definitions (Models)
-  │   └── gpu.ts           # Defines the GPU schema/model
-  ├── middlewares/         # Custom middleware (e.g., authentication, error handling)
-  │   └── errorHandler.ts  # Handles server errors
-  ├── utils/               # Utility/helper functions
-  │   ├── config.ts        # Handles environment configurations
-  │   └── logger.ts        # Logger setup (for logging requests/errors)
-  ├── tests/               # Database integration tests
-  │   ├── data.ts          # Mock data
-  │   └── gpu_api.test.ts  # Integration tests, using the node:test module with supertest
-  ├── package-lock.json    # Manages exact dependency versions
-  └── package.json         # Project dependencies and scripts
+  ├── tests/                    # Database integration tests
+  │   ├── data          
+  │   │   └── data.ts           # Mock data
+  │   └── integration           # Integration tests, using the node:test module with supertest
+  │       ├── *.test.ts         # Test suites for each CRUD operation available on the app
+  │       └── setup.ts          # Setup and teardown logic for each test suite
+  ├── package-lock.json         # Manages exact dependency versions
+  ├── package.json              # Project dependencies and scripts
+  ├── tsconfig.json             # Main TypeScript configuration file
+  ├── environment.d.ts          # Declares TypeScript types for the process.env variables to ensure type safety
+  ├── Dockerfile                # Build an image for the server, used in both the Composer scripts
+  └── Dockerfile.prod           # Build a production version of the server, capable of serving static builds
   ```
 
 
