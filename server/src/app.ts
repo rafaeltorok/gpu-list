@@ -7,8 +7,8 @@ import morgan from "morgan";
 import middleware from "./middlewares/errorHandler.js";
 
 // Controllers
-import gpusRouter from "./controllers/gpus.js";
-import testingRouter from "./controllers/testing.js";
+import gpusRouter from "./routes/gpus.js";
+import testingRouter from "./routes/testing.js";
 
 // Setting the Express server
 const app = express();
