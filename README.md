@@ -407,15 +407,10 @@ Run Cypress
 ### Testing via Docker
 - Run the tests
   ```bash
-  docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
+  docker compose -f docker-compose.test.yml up --build --abort-on-container-exit && docker compose -f docker-compose.test.yml down -v
   ```
 
-- All containers will be stopped after the E2E tests are finished.
-
-- (OPTIONAL) Remove all stopped containers
-  ```bash
-  docker compose -f docker-compose.test.yml down -v
-  ```
+  - This command will also remove the stopped containers after all tests are finished.
 
 Note: ⚠️ E2E tests were designed for the Main UI only
 
