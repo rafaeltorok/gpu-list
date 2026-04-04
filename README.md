@@ -118,7 +118,7 @@ Alternative UI
 ## Quick Start
 ```bash
 $ git clone https://github.com/rafaeltorok/WebApps.git
-$ cd gpulist/server && npm install && npm run start
+$ cd ./server && npm install && npm run start
 ```
 
 - Access the Web UI on http://localhost:3001
@@ -173,12 +173,12 @@ $ cd gpulist/server && npm install && npm run start
 ### Frontend
 Main UI
   ```bash
-  cd ./gpulist/client && npm install && npm run dev
+  cd ./client && npm install && npm run dev
   ```
 
 Alternative UI (Optional)
   ```bash
-  cd ./gpulist/alternate-client && npm install && npm run dev
+  cd ./alternate-client && npm install && npm run dev
   ```
 
 Vite auto-selects ports: 
@@ -188,23 +188,23 @@ Vite auto-selects ports:
 ### Backend
 #### Development mode (watch mode with tsx)
 ```bash
-cd ./gpulist/server && npm install && npm run dev
+cd ./server && npm install && npm run dev
 ```
 
 #### Production mode
-  - Build frontend
+  - Build the main client
     ```bash
-    cd ./gpulist/client && npm run build && cp -r ./dist/* ../server/dist/man-client
+    cd ./client && npm run build && cp -r ./dist/* ../server/dist/main-client
     ```
 
-  - Or Alternative UI
+  - And the Alternative UI
     ```bash
-    cd ./gpulist/alternate-client && npm run build && cp -r ./dist/* ../server/dist/alt-client
+    cd ./alternate-client && npm run build && cp -r ./dist/* ../server/dist/alt-client
     ```
 
   - Compile the backend server into JavaScript code
     ```bash
-    cd ./gpulist/server && npm install && npm run tsc
+    cd ./server && npm install && npm run tsc
     ```
 
   - Start the backend server
@@ -291,7 +291,7 @@ Delete
 ## Running with Docker
 ### Docker Compose (recommended)
   ```bash
-  cd ./gpulist && docker compose up -d
+  docker compose up -d
   ```
 
 App access
@@ -308,17 +308,17 @@ App access
 2. Build the images
     - Main UI
       ```bash
-      docker build -t gpulist-webapp-client ./client
+      docker build -f ./client/Dockerfile -t gpulist-webapp-client ./
       ```
 
     - Alternative UI
       ```bash
-      docker build -t gpulist-webapp-alt-client ./alternative-client
+      docker build -f ./alternative-client/Dockerfile -t gpulist-webapp-alt-client ./
       ```
 
     - Backend
       ```bash
-      docker build -t gpulist-webapp-server ./server
+      docker -f ./server/Dockerfile build -t gpulist-webapp-server ./
       ```
 
 3. Run the containers
@@ -342,10 +342,10 @@ App access
     - Main UI → http://localhost:5173
     - Alternative UI → http://localhost:5174/alt/
 
-### Backend server (Serving both clients production builds)
+### Backend server (Serving static builds for both clients)
 1. Build the backend server image only
     ```bash
-    cd ./server && docker build -f ./Dockerfile.prod -t gpulist-app .
+    docker build -f ./server/Dockerfile.prod -t gpulist-app ./
     ```
 
 2. Run the server image
@@ -377,7 +377,7 @@ Start the Backend Server in testing mode
 
 - Compile the TypeScript code to JavaScript
   ```bash
-  cd ./gpulist/server && npm install && npm run tsc
+  cd ./server && npm install && npm run tsc
   ```
 
 - Running the compiled JavaScript code
@@ -402,8 +402,16 @@ Run Cypress
     ``` 
   
 ### Testing via Docker
+- Run the tests
   ```bash
   docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
+  ```
+
+- All containers will be stopped after the E2E tests are finished.
+
+- (OPTIONAL) Remove all stopped containers
+  ```bash
+  docker compose -f docker-compose.test.yml down -v
   ```
 
 Note: ⚠️ E2E tests were designed for the Main UI only
@@ -412,17 +420,18 @@ Note: ⚠️ E2E tests were designed for the Main UI only
 ## Integration tests (Backend server)
 Running the tests (uses the test database instead of the main one)
 ```bash
-cd ./gpulist/server && npm install && npm run test
+cd ./server && npm install && npm run test
 ```
 
 
 ## Backend server structure
 ### Folder overview
   ```
-  gpuList/server/
+  /server/
   ├── index.ts             # Entry point of the application
   ├── app.ts               # Main Express app setup
-  ├── types.ts             # File containing the TypeScript types and interfaces
+  ├── db/
+  │   └── mongo.ts         # Sets up the connection to the MongoDB database
   ├── dist/                # Production-ready builds for the backend to serve
   │   ├── main-client      # The main client production build
   │       └── ...

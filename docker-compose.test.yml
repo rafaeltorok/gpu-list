@@ -1,6 +1,8 @@
 services:
   webapp-server:
-    build: ./server
+    build: 
+      context: ./
+      dockerfile: ./server/Dockerfile
     container_name: gpulist-webapp-server
     networks:
       - webapp-network
@@ -12,7 +14,9 @@ services:
       NODE_ENV: test
 
   webapp-client:
-    build: ./client
+    build: 
+      context: ./
+      dockerfile: ./client/Dockerfile
     container_name: gpulist-webapp-client
     networks:
       - webapp-network
@@ -22,7 +26,9 @@ services:
       - webapp-server
 
   webapp-cypress:
-    build: ./e2e
+    build: 
+      context: ./
+      dockerfile: ./e2e/Dockerfile
     working_dir: /e2e
     networks:
       - webapp-network

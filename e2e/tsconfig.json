@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["es6", "dom"],
-    "sourceMap": true,
+    "sourceMap": false,
     "types": ["cypress", "node"]
   },
   "include": ["**/*.ts", "cypress/support/e2e.ts"]
