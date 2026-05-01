@@ -44,7 +44,7 @@ describe("Testing the index", function () {
     });
   });
 
-  it("clicking on an index item", function () {
+  it("clicking on an index item expands the respective data table", function () {
     cy.fixture('gpus').then((gpuList) => {
       // Get a test card from the list
       const gpu = gpuList[0];
@@ -52,8 +52,11 @@ describe("Testing the index", function () {
       // Open the index
       cy.get("#page-index").find("button").contains("Show index").click();
 
-      // Selects the first item
+      // Selects the respective card name on the index
       cy.indexSelector(getFullModel(gpu));
+
+      // Confirm all specifications are being displayed
+      cy.checkSpecs(gpu, "GB")
     });
   });
 

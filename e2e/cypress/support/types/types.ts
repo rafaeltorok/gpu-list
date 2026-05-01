@@ -18,9 +18,9 @@ declare global {
       fillAddForm(gpu: GpuInputType): Chainable<void>,
 
       // dataTables commands
-      showData(gpuName: string): Chainable<void>,
-      checkRowData(rowName: string, data: string | number): Chainable<void>,
-      checkSpecs(gpu: GpuInputType, index: number, vramSuffix: string): Chainable<void>,
+      showData(gpu: GpuInputType): Chainable<void>,
+      checkRowData(gpu: GpuInputType, rowName: string, data: string | number): Chainable<void>,
+      checkSpecs(gpu: GpuInputType, vramSuffix: string): Chainable<void>,
 
       // gpu commands
       createGpu(gpuObject: GpuInputType): Chainable<Cypress.Response<unknown>>,

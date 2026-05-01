@@ -26,7 +26,7 @@ describe("Testing the add form", function () {
       cy.get(".add-gpu-submit-button").click();
 
       // Confirm each data row is being correctly displayed
-      cy.showData(getFullModel(gpu));
+      cy.showData(gpu);
       cy.get(".gpu-data-table th")
         .contains("CORES")
         .siblings()
