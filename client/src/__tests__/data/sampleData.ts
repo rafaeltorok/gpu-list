@@ -62,9 +62,41 @@ const rx7900xtx: GpuInputType = {
   memclock: 20,
 };
 
+const b580: GpuInputType = {
+  manufacturer: "Intel",
+  gpuline: "Arc",
+  model: "B580",
+  cores: 2560,
+  tmus: 160,
+  rops: 80,
+  vram: 12,
+  bus: 192,
+  memtype: "GDDR6",
+  baseclock: 2670,
+  boostclock: 2670,
+  memclock: 19,
+};
+
+const g210: GpuInputType = {
+  manufacturer: "NVIDIA",
+  gpuline: "GeForce",
+  model: "210",
+  cores: 16,
+  tmus: 8,
+  rops: 4,
+  vram: 0.512,
+  bus: 64,
+  memtype: "DDR3",
+  baseclock: 520,
+  boostclock: 520,
+  memclock: 0.8,
+};
+
 export default {
   rtx5090,
   gtx650,
   rx9070xt,
   rx7900xtx,
+  b580,
+  g210,
 };

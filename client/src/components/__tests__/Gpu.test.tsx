@@ -69,7 +69,7 @@ describe("Testing the data table component", () => {
 
     // Find the header by its role and name
     const heading = screen.getByRole("columnheader", { 
-      name: /NVIDIA GeForce RTX 5090/i 
+      name: /nvidia geforce rtx 5090/i 
     });
 
     expect(heading).toBeInTheDocument();
@@ -226,5 +226,117 @@ describe("Testing the data table component", () => {
     expect(within(pixelRateRow).getByText("N/A")).toBeInTheDocument();
     const bandwidthRow = screen.getByRole("row", { name: /bandwidth/i });
     expect(within(bandwidthRow).getByText("N/A")).toBeInTheDocument();
+  });
+
+  test("the Show All Data button automatically opens the GPU table", async () => {
+    // Get a sample card to test
+    const gpu = {
+      ...sampleData.rtx5090,
+      id: "679a7283008a75d4667c342a"
+    };
+
+    // Set the showAll value open all tables on the page
+    const mockContextShowAll = {
+      ...mockContextValue,
+      uiState: {
+        ...mockContextValue.uiState,
+        showAll: true,
+      },
+    };
+
+    // Render component
+    render(
+      <GpuContext.Provider value={mockContextShowAll}>
+        <Gpu gpu={gpu} />
+      </GpuContext.Provider>
+    );
+
+    // Confirm the table has been opened
+    expect(screen.getByRole("row", { name: /specifications/i })).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: /clock speeds/i })).toBeInTheDocument();
+    expect(screen.getByRole("row", { name: /theoretical performance/i })).toBeInTheDocument();
+  });
+
+  test("the VRAM amount measured in MB is properly displayed", async () => {
+    // Get a sample card to test
+    const gpu = {
+      ...sampleData.g210,
+      id: "6963dcc3cc4ec5826eef4090"    // The actual ID from the MongoDB database
+    };
+
+    // Render component
+    render(
+      <GpuContext.Provider value={mockContextValue}>
+        <Gpu gpu={gpu} />
+      </GpuContext.Provider>
+    );
+
+    // Format the VRAM amount do be displayed (512MB)
+    const vramAmount = (gpu.vram * 1000) + "MB";
+
+    // Get the Show button to display all the data
+    const showButton = screen.getByRole("button", { name: /show/i });
+    await user.click(showButton);
+
+    // Confirm the VRAM amount is displayed in MB
+    const vramRow = screen.getByRole("row", { name: /vram/i });
+    expect(within(vramRow).getByText(`${vramAmount} ${gpu.memtype}`)).toBeInTheDocument();
+  });
+
+  test("each of the manufacturer CSS classes are correctly applied", async () => {
+    // Get sample cards to test
+    const nvidiaGpu = {
+      ...sampleData.rtx5090,
+      id: "679a7283008a75d4667c342a"
+    };
+
+    const amdGpu = {
+      ...sampleData.rx7900xtx,
+      id: "6799299865f183f803c94e06"
+    };
+
+    const intelGpu = {
+      ...sampleData.b580,
+      id: "6799299865f183f803c94e2c"
+    };
+
+    const defaultClassGpu = {
+      ...sampleData.rtx5090,
+      manufacturer: "Default",
+      gpuline: "None",
+      model: "Unknown",
+      id: "000a0000000a00a0000a000a"  // Random non-existing ID
+    };
+
+    // Render component
+    render(
+      <GpuContext.Provider value={mockContextValue}>
+        <Gpu gpu={nvidiaGpu} />
+        <Gpu gpu={amdGpu} />
+        <Gpu gpu={intelGpu} />
+        <Gpu gpu={defaultClassGpu} />
+      </GpuContext.Provider>
+    );
+
+    // Confirm the classes have been correctly applied to each data table
+    const nvidiaHeading = screen.getByRole("columnheader", { 
+      name: /nvidia geforce rtx 5090/i
+    });
+    expect(nvidiaHeading).toHaveClass("nvidia-model-header");
+
+    const amdHeading = screen.getByRole("columnheader", { 
+      name: /amd radeon rx 7900 xtx/i
+    });
+    expect(amdHeading).toHaveClass("amd-model-header");
+
+    const intelHeading = screen.getByRole("columnheader", { 
+      name: /intel arc b580/i
+    });
+    expect(intelHeading).toHaveClass("intel-model-header");
+
+    const defaultHeading = screen.getByRole("columnheader", { 
+      name: /default none unknown/i
+    });
+    expect(defaultHeading).toHaveClass("model-header");
   });
 });
