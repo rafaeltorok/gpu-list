@@ -30,7 +30,9 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
   - [End-to-End (E2E) testing](#end-to-end-e2e-testing)
     - [Manual testing](#manual-testing)
     - [Testing via Docker](#testing-via-docker)
-  - [Integration tests (Backend)](#integration-tests-backend)
+  - [Integration tests (Backend server)](#integration-tests-backend-server)
+  - [Integration tests (Frontend / Main client)](#integration-tests-frontend--main-client)
+  - [Unit tests (Frontend / Main client)](#unit-tests-frontend--main-client)
   - [Folder overview](#folder-overview)
     - [Backend server structure](#backend-server-structure)
   - [Troubleshooting](#troubleshooting)
@@ -422,8 +424,49 @@ cd ./server && npm install && npm run test
 ```
 
 
+## Integration tests (Frontend / Main client)
+**All frontend related tests have been implemented by using Vitest, alongside the React Testing Library.**
+
+Install dependencies
+```bash
+cd ./client && npm install
+```
+
+Run all tests in watch mode
+```bash
+npm run test
+```
+
+Single run without watch mode
+```bash
+npm run test:run
+```
+
+Vitest UI mode
+```bash
+npm run test:ui
+```
+
+Get the current test coverage
+```bash
+npm run coverage
+```
+
+
+## Unit tests (Frontend / Main client)
+Install dependencies
+```bash
+cd ./client && npm install
+```
+
+The same npm commands from the integration tests can be used for these. To run only the Unit tests, specify the folder (Example)
+```bash
+npm run test:run -- ./src/__tests__
+```
+
+
 ## Folder overview
-### Backend server structure
+### Backend server
   ```
   /server/
   ├── src
