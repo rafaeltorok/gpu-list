@@ -16,7 +16,6 @@ import calculatePerformance from "../../../../shared/utils/calculatePerformance"
 
 // TypeScript types
 import type { GpuContextType } from "../../types/context";
-import type { GpuType } from "../../../../shared/types/types";
 
 // Mock the React Context
 const mockContextValue: GpuContextType = {
@@ -46,22 +45,21 @@ const mockContextValue: GpuContextType = {
 
 // Global variables
 let user: ReturnType<typeof userEvent.setup>;
-let gpu: GpuType;
 
 // Tests
 describe("Testing the data table component", () => {
   beforeEach(() => {
     // Setup the user event
     user = userEvent.setup();
-
-    // Get a sample card to test
-    gpu = {
-      ...sampleData.rtx5090,
-      id: "679a7283008a75d4667c342a"  // The actual ID from the MongoDB database
-    };
   });
 
   test("a valid GPU object is correctly rendered", () => {
+    // Get a sample card to test
+    const gpu = {
+      ...sampleData.rtx5090,
+      id: "679a7283008a75d4667c342a"  // The actual ID from the MongoDB database
+    };
+
     // Render component
     render(
       <GpuContext.Provider value={mockContextValue}>
@@ -78,8 +76,14 @@ describe("Testing the data table component", () => {
   });
 
   test("the Show toggle display all of the card's data", async () => {
+    // Get a sample card to test
+    const gpu = {
+      ...sampleData.rtx5090,
+      id: "679a7283008a75d4667c342a"
+    };
+
     // Calculate the theoretical performance
-    const performance = calculatePerformance(sampleData.rtx5090);
+    const performance = calculatePerformance(gpu);
 
     // Render component
     render(
@@ -124,6 +128,12 @@ describe("Testing the data table component", () => {
   });
 
   test("the Hide toggle hides the card's data", async () => {
+    // Get a sample card to test
+    const gpu = {
+      ...sampleData.rtx5090,
+      id: "679a7283008a75d4667c342a"
+    };
+
     // Render component
     render(
       <GpuContext.Provider value={mockContextValue}>
@@ -148,5 +158,73 @@ describe("Testing the data table component", () => {
     expect(screen.queryByRole("row", { name: /specifications/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("row", { name: /clock speeds/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("row", { name: /theoretical performance/i })).not.toBeInTheDocument();
+  });
+
+  test("clicking on the Delete button triggers a confirm alert message", async () => {
+    // Get a sample card to test
+    const gpu = {
+      ...sampleData.rtx5090,
+      id: "679a7283008a75d4667c342a"
+    };
+
+    // Mock the alert message
+    const alertMessage = vi.spyOn(window, "confirm").mockReturnValue(true);
+
+    // Render component
+    render(
+      <GpuContext.Provider value={mockContextValue}>
+        <Gpu gpu={gpu} />
+      </GpuContext.Provider>
+    );
+
+    // Get the Show button to display all the data
+    const showButton = screen.getByRole("button", { name: /show/i });
+    await user.click(showButton);
+
+    // Click on the Delete button
+    const deleteButton = screen.getByRole("button", { name: /delete/i });
+    await user.click(deleteButton);
+
+    // Confirm the message has been correctly called
+    expect(mockContextValue.deleteGpu).toHaveBeenCalledWith(gpu);
+
+    // Clean up
+    alertMessage.mockRestore();
+  });
+
+  test("the theoretical performance for invalid specifications should be properly handled by the UI", async () => {
+    const gpu = {
+      ...sampleData.rtx5090,
+      cores: 0,
+      tmus: -1,
+      rops: "",
+      bus: true
+    }
+
+    // Calculate the theoretical performance
+    // @ts-expect-error
+    const performance = calculatePerformance(gpu);
+
+    // Render component
+    render(
+      <GpuContext.Provider value={mockContextValue}>
+        {/* @ts-expect-error */}
+        <Gpu gpu={gpu} />
+      </GpuContext.Provider>
+    );
+
+    // Get the Show button to display all the data
+    const showButton = screen.getByRole("button", { name: /show/i });
+    await user.click(showButton);
+
+    // Theoretical performance section
+    const fp32Row = screen.getByRole("row", { name: /fp32\(float\)/i });
+    expect(within(fp32Row).getByText("N/A")).toBeInTheDocument();
+    const textureRateRow = screen.getByRole("row", { name: /texture rate/i });
+    expect(within(textureRateRow).getByText("N/A")).toBeInTheDocument();
+    const pixelRateRow = screen.getByRole("row", { name: /pixel rate/i });
+    expect(within(pixelRateRow).getByText("N/A")).toBeInTheDocument();
+    const bandwidthRow = screen.getByRole("row", { name: /bandwidth/i });
+    expect(within(bandwidthRow).getByText("N/A")).toBeInTheDocument();
   });
 });
