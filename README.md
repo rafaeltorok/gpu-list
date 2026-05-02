@@ -425,7 +425,7 @@ cd ./server && npm install && npm run test
 
 
 ## Integration tests (Frontend / Main client)
-**All frontend related tests have been implemented by using Vitest, alongside the React Testing Library.**
+**All frontend related tests have been implemented with Vitest alongside the React Testing Library.**
 
 Install dependencies
 ```bash
@@ -434,17 +434,17 @@ cd ./client && npm install
 
 Run all tests in watch mode
 ```bash
-npm run test
+npm run test -- ./src/components/__tests__
 ```
 
 Single run without watch mode
 ```bash
-npm run test:run
+npm run test:run -- ./src/components/__tests__
 ```
 
 Vitest UI mode
 ```bash
-npm run test:ui
+npm run test:ui -- ./src/components/__tests__
 ```
 
 Get the current test coverage
@@ -459,7 +459,7 @@ Install dependencies
 cd ./client && npm install
 ```
 
-The same npm commands from the integration tests can be used for these. To run only the Unit tests, specify the folder (Example)
+The same npm commands from the integration tests can be used for these (Example)
 ```bash
 npm run test:run -- ./src/__tests__
 ```
