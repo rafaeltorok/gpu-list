@@ -1,7 +1,6 @@
 // Test dependencies
-import { describe, test, expect, beforeEach } from "vitest";
+import { describe, test, expect, beforeEach, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 
 // Component
