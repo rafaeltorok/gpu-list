@@ -31,7 +31,7 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
     - [Manual testing](#manual-testing)
     - [Testing via Docker](#testing-via-docker)
   - [Integration tests (Backend server)](#integration-tests-backend-server)
-  - [Integration tests (Frontend / Main client)](#integration-tests-frontend--main-client)
+  - [Component tests (Main client)](#component-tests-main-client)
   - [Unit tests (Frontend / Main client)](#unit-tests-frontend--main-client)
   - [Folder overview](#folder-overview)
     - [Backend server structure](#backend-server-structure)
@@ -424,7 +424,7 @@ cd ./server && npm install && npm run test
 ```
 
 
-## Integration tests (Frontend / Main client)
+## Component tests (Main client)
 **All frontend related tests have been implemented with Vitest alongside the React Testing Library.**
 
 Install dependencies
