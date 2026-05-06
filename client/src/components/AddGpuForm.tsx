@@ -29,6 +29,9 @@ export default function AddGpuForm() {
   const addGpu = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const base = Number(gpu.baseclock.trim());
+    const boost = Number(gpu.boostclock.trim());
+
     if (
       gpu.manufacturer.trim() === "" ||
       gpu.model.trim() === "" ||
@@ -38,8 +41,8 @@ export default function AddGpuForm() {
       Number(gpu.vram.trim()) < 0.016 ||
       Number(gpu.bus.trim()) < 1 ||
       gpu.memtype.trim() === "" ||
-      Number(gpu.baseclock.trim()) < 1 ||
-      Number(gpu.boostclock.trim()) < 1 ||
+      !Number.isInteger(base) ||
+      !Number.isInteger(boost) ||
       Number(gpu.memclock.trim()) < 0.1
     ) {
       alert("Invalid GPU data");
