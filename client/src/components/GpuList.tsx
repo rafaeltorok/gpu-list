@@ -10,27 +10,27 @@ import type { GpuType } from "../../../shared/types/types";
 export default function GpuList() {
   const {
     dataState: { gpus, gpusFound },
-    uiState: { searchGpu },
+    uiState: { searchGpu, showAll },
   } = useGpuContext();
 
   function scrollToIndex(gpuTableId: string) {
+    // Scroll to the add gpu form position
     const element = document.querySelector(".add-gpu-form");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+    }
 
-      const gpuTable = document.getElementById(gpuTableId);
-      const hideButton =
-        gpuTable?.querySelector<HTMLButtonElement>(".show-hide-button");
-      const showAllButton: HTMLElement | null =
-        document.getElementById("show-all-button");
+    // Collapse the respective data table clicked on
+    const gpuTable = document.getElementById(gpuTableId);
+    const hideButton =
+      gpuTable?.querySelector<HTMLButtonElement>(".show-hide-button");
 
-      if (
-        hideButton &&
-        hideButton.textContent === "Hide" &&
-        showAllButton?.textContent === "Show all data"
-      ) {
-        hideButton.click();
-      }
+    if (
+      hideButton &&
+      hideButton.getAttribute("aria-expanded") === "true" &&
+      !showAll
+    ) {
+      hideButton.click();
     }
   }
 
@@ -41,7 +41,7 @@ export default function GpuList() {
           <div>No GPUs available</div>
         ) : (
           gpuList.map((gpu) => (
-            <div key={gpu.id}>
+            <section key={gpu.id} aria-labelledby={`${gpu.id}-heading`}>
               <Gpu gpu={gpu} />
               <button
                 className="back-to-index-button"
@@ -53,7 +53,7 @@ export default function GpuList() {
               >
                 Back to Index
               </button>
-            </div>
+            </section>
           ))
         )}
       </>
