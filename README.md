@@ -33,8 +33,7 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
   - [Integration tests (Backend server)](#integration-tests-backend-server)
   - [Component tests (Main client)](#component-tests-main-client)
   - [Unit tests (Frontend / Main client)](#unit-tests-frontend--main-client)
-  - [Folder overview](#folder-overview)
-    - [Backend server structure](#backend-server-structure)
+  - [Project overview (folder structure)](#project-overview-folder-structure)
   - [Troubleshooting](#troubleshooting)
   - [Author](#author)
 
@@ -465,12 +464,12 @@ npm run test:run -- ./src/__tests__
 ```
 
 
-## Folder overview
+## Project overview (folder structure)
 ### Frontend (Main client)
 ```bash
 /client/
 ├── src
-│   ├── App.tsx                       # Main App component, holds the logic for creating the React Context for GPUs
+│   ├── App.tsx                       # Handles the logic for creating the React Context for GPUs
 │   ├── assets                        # Icons
 │   │   ├── apple-touch-icon.png
 │   │   ├── background_alt.jpg
@@ -483,20 +482,20 @@ npm run test:run -- ./src/__tests__
 │   │   ├── favicon.ico
 │   │   └── favicon.png
 │   ├── components                    # Presentational and state-driven UI components
-│   │   ├── AddGpuForm.tsx            # Display the add new card form, holds the logic for the frontend validation
-│   │   ├── FormRow.tsx               # Render a single row for the add form component
-│   │   ├── GpuDataRow.tsx            # Render a single row for the GPU data table
-│   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects
-│   │   ├── Gpu.tsx                   # Display a single graphics card data table
+│   │   ├── AddGpuForm.tsx            # Handles the logic for the frontend validation, submissions state and form handling
+│   │   ├── FormRow.tsx               # Render a single row for the add form component, helper component for the add form
+│   │   ├── GpuDataRow.tsx            # Render a single row for the GPU data table, helper component for the data tables
+│   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
+│   │   ├── Gpu.tsx                   # Display a single graphics card data table, presentational component
 │   │   ├── PageIndex.tsx             # Render the main page index
-│   │   ├── SearchBar.tsx             # Responsible for displaying and handling the search terms
+│   │   ├── SearchBar.tsx             # Responsible for displaying and handling the search terms, interacting with the React context
 │   │   ├── ShowAllButton.tsx         # Render the button on the main page
 │   │   └── __tests__                 # Component integration tests
 │   │       ├── AddGpuForm.test.tsx
 │   │       ├── GpuList.test.tsx
 │   │       └── Gpu.test.tsx
-│   ├── Context                       # React context API folder
-│   │   └── GpuContext.ts             # Create a new context for the GPU objects
+│   ├── context                       # React context API folder
+│   │   └── GpuContext.ts             # Defines the shared React context for both the UI and GPU-related states
 │   ├── fonts                         # Custom font for the web UI
 │   │   └── DigitalDreamers-jy99.ttf
 │   ├── hooks                         # Allows components to access the GPU context
@@ -507,7 +506,7 @@ npm run test:run -- ./src/__tests__
 │   │   ├── dataReducer.ts            # Related to the data handling on the app
 │   │   └── uiReducer.ts              # Related to the UI elements, such as displaying buttons and/or forms
 │   ├── services                      # API communication layer
-│   │   └── gpus.ts
+│   │   └── gpus.ts                   # Handles GPU-related API requests
 │   ├── setupTests.ts                 # Setup config file to be used with Vitest
 │   ├── styles                        # Custom CSS styles for the React components
 │   │   ├── AddGpuForm.css
@@ -522,7 +521,7 @@ npm run test:run -- ./src/__tests__
 │   ├── test-utils                    # Shared utilities and fixtures for component testing
 │   │   ├── createMockContext.ts
 │   │   └── data
-│   │       └── sampleData.ts         # Example data to be used for testing purposes
+│   │       └── fixtures.ts         # Example data to be used for testing purposes
 │   └── types                         # TypeScript types exclusive to the main client frontend
 │       └── context.ts
 ├── Dockerfile                        # Docker setup file to serve the main client with Nginx

@@ -1,7 +1,7 @@
 // Client base dependencies
 import { useEffect, useReducer } from "react";
 import gpuService from "./services/gpus";
-import GpuContext from "./Context/GpuContext";
+import GpuContext from "./context/GpuContext";
 import dataReducer, { initialDataState } from "./reducers/dataReducer";
 import uiReducer, { initialUiState } from "./reducers/uiReducer";
 

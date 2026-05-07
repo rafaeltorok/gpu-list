@@ -1,6 +1,6 @@
 // Context setup
 import { useContext } from "react";
-import GpuContext from "../Context/GpuContext";
+import GpuContext from "../context/GpuContext";
 
 // TypeScript types
 import type { GpuContextType } from "../types/context";

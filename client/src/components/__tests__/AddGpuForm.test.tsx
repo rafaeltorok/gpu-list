@@ -10,8 +10,8 @@ import AddGpuForm from "../AddGpuForm";
 import createMockContext from "../../test-utils/createMockContext";
 
 // Data
-import sampleData from "../../test-utils/data/sampleData";
-import GpuContext from "../../Context/GpuContext";
+import sampleData from "../../test-utils/data/fixtures";
+import GpuContext from "../../context/GpuContext";
 
 // TypeScript types
 import type { GpuContextType } from "../../types/context";
@@ -30,7 +30,7 @@ interface FormFields {
   baseClockField: HTMLElement;
   boostClockField: HTMLElement;
   memClockField: HTMLElement;
-};
+}
 
 // Global variables
 let user: ReturnType<typeof userEvent.setup>;
@@ -41,7 +41,9 @@ let alertMock: MockInstance;
 function getInputFields() {
   // Select each of the input fields available on the form
   return {
-    manufacturerField: screen.getByLabelText(/manufacturer/i, { selector: "input" }),
+    manufacturerField: screen.getByLabelText(/manufacturer/i, {
+      selector: "input",
+    }),
     gpuLineField: screen.getByLabelText(/gpu line/i, { selector: "input" }),
     modelField: screen.getByLabelText(/model/i, { selector: "input" }),
     coresField: screen.getByLabelText(/cores/i, { selector: "input" }),
@@ -51,25 +53,40 @@ function getInputFields() {
     busField: screen.getByLabelText(/bus width/i, { selector: "input" }),
     memTypeField: screen.getByLabelText(/memory type/i, { selector: "input" }),
     baseClockField: screen.getByLabelText(/base clock/i, { selector: "input" }),
-    boostClockField: screen.getByLabelText(/boost clock/i, { selector: "input" }),
-    memClockField: screen.getByLabelText(/memory clock/i, { selector: "input" }),
-  }
+    boostClockField: screen.getByLabelText(/boost clock/i, {
+      selector: "input",
+    }),
+    memClockField: screen.getByLabelText(/memory clock/i, {
+      selector: "input",
+    }),
+  };
 }
 
 async function fillInputFields(formFields: FormFields, gpuData: GpuInputType) {
   // Type on each one of the fields
-  if (gpuData.manufacturer) await user.type(formFields.manufacturerField, gpuData.manufacturer);
-  if (gpuData.gpuline) await user.type(formFields.gpuLineField, gpuData.gpuline);
+  if (gpuData.manufacturer)
+    await user.type(formFields.manufacturerField, gpuData.manufacturer);
+  if (gpuData.gpuline)
+    await user.type(formFields.gpuLineField, gpuData.gpuline);
   if (gpuData.model) await user.type(formFields.modelField, gpuData.model);
-  if (gpuData.cores !== undefined) await user.type(formFields.coresField, String(gpuData.cores));
-  if (gpuData.tmus !== undefined) await user.type(formFields.tmusField, String(gpuData.tmus));
-  if (gpuData.rops !== undefined) await user.type(formFields.ropsField, String(gpuData.rops));
-  if (gpuData.vram !== undefined) await user.type(formFields.vramField, String(gpuData.vram));
-  if (gpuData.bus !== undefined) await user.type(formFields.busField, String(gpuData.bus));
-  if (gpuData.memtype) await user.type(formFields.memTypeField, gpuData.memtype);
-  if (gpuData.baseclock !== undefined) await user.type(formFields.baseClockField, String(gpuData.baseclock));
-  if (gpuData.boostclock !== undefined) await user.type(formFields.boostClockField, String(gpuData.boostclock));
-  if (gpuData.memclock !== undefined) await user.type(formFields.memClockField, String(gpuData.memclock));
+  if (gpuData.cores !== undefined)
+    await user.type(formFields.coresField, String(gpuData.cores));
+  if (gpuData.tmus !== undefined)
+    await user.type(formFields.tmusField, String(gpuData.tmus));
+  if (gpuData.rops !== undefined)
+    await user.type(formFields.ropsField, String(gpuData.rops));
+  if (gpuData.vram !== undefined)
+    await user.type(formFields.vramField, String(gpuData.vram));
+  if (gpuData.bus !== undefined)
+    await user.type(formFields.busField, String(gpuData.bus));
+  if (gpuData.memtype)
+    await user.type(formFields.memTypeField, gpuData.memtype);
+  if (gpuData.baseclock !== undefined)
+    await user.type(formFields.baseClockField, String(gpuData.baseclock));
+  if (gpuData.boostclock !== undefined)
+    await user.type(formFields.boostClockField, String(gpuData.boostclock));
+  if (gpuData.memclock !== undefined)
+    await user.type(formFields.memClockField, String(gpuData.memclock));
 }
 
 // Tests
@@ -87,7 +104,7 @@ describe("Testing the add graphics card form", () => {
       render(
         <GpuContext.Provider value={mockContextValue}>
           <AddGpuForm />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Select the field set for the input fields
@@ -98,7 +115,7 @@ describe("Testing the add graphics card form", () => {
 
       // Confirm the entire input field set is hidden
       expect(formFieldSet).not.toBeInTheDocument();
-      
+
       // Confirm the Submit button is also hidden
       expect(submitButton).not.toBeInTheDocument();
     });
@@ -107,21 +124,21 @@ describe("Testing the add graphics card form", () => {
   describe("the web form UI works", () => {
     beforeEach(() => {
       const mockContextValue = createMockContext();
-      
+
       // Expand the add form
       mockContextOpenForm = {
         ...mockContextValue,
         uiState: {
           ...mockContextValue.uiState,
           showAddForm: true,
-        }
+        },
       };
 
       // Render the form component
       render(
         <GpuContext.Provider value={mockContextOpenForm}>
           <AddGpuForm />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
     });
 
@@ -151,7 +168,7 @@ describe("Testing the add graphics card form", () => {
     test("the submit button works", async () => {
       // Add the sample data
       const gpuData = sampleData.rtx5090;
-      
+
       const formFields = getInputFields();
 
       await fillInputFields(formFields, gpuData);
@@ -180,7 +197,9 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).toHaveBeenCalledTimes(1);
 
       // Confirm the correct data has been passed on to the function
-      expect(mockContextOpenForm.createGpu).toHaveBeenCalledWith({ ...gpuData });
+      expect(mockContextOpenForm.createGpu).toHaveBeenCalledWith({
+        ...gpuData,
+      });
     });
   });
 
@@ -194,18 +213,18 @@ describe("Testing the add graphics card form", () => {
         uiState: {
           ...mockContextValue.uiState,
           showAddForm: true,
-        }
+        },
       };
 
       // Render the form component
       render(
         <GpuContext.Provider value={mockContextOpenForm}>
           <AddGpuForm />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Mock the alert message
-      alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+      alertMock = vi.spyOn(window, "alert").mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -221,7 +240,9 @@ describe("Testing the add graphics card form", () => {
       await fillInputFields(formFields, otherFields);
 
       // Assert the correct input is present on each respective field
-      expect(formFields.manufacturerField).toHaveValue(otherFields.manufacturer);
+      expect(formFields.manufacturerField).toHaveValue(
+        otherFields.manufacturer,
+      );
       expect(formFields.modelField).toHaveValue(otherFields.model);
       expect(formFields.coresField).toHaveValue(otherFields.cores);
       expect(formFields.tmusField).toHaveValue(otherFields.tmus);
@@ -243,7 +264,10 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).toHaveBeenCalledTimes(1);
 
       // Confirm the correct data has been passed on to the function
-      expect(mockContextOpenForm.createGpu).toHaveBeenCalledWith({ ...otherFields, gpuline: "" });
+      expect(mockContextOpenForm.createGpu).toHaveBeenCalledWith({
+        ...otherFields,
+        gpuline: "",
+      });
     });
 
     test("the manufacturer and model fields are required", async () => {
@@ -264,7 +288,7 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
 
       // Assert the message
-      expect(alertMock).toHaveBeenCalledWith('Invalid GPU data');
+      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
 
       // Clean up
       alertMock.mockRestore();
@@ -290,7 +314,7 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
 
       // Assert the message
-      expect(alertMock).toHaveBeenCalledWith('Invalid GPU data');
+      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
 
       // Clean up
       alertMock.mockRestore();
@@ -300,7 +324,7 @@ describe("Testing the add graphics card form", () => {
       const gpuData = {
         ...sampleData.rtx5090,
         cores: -1,
-      }
+      };
 
       const formFields = getInputFields();
 
@@ -316,7 +340,7 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
 
       // Assert the message
-      expect(alertMock).toHaveBeenCalledWith('Invalid GPU data');
+      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
 
       // Clean up
       alertMock.mockRestore();
@@ -340,7 +364,7 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
 
       // Assert the message
-      expect(alertMock).toHaveBeenCalledWith('Invalid GPU data');
+      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
 
       // Clean up
       alertMock.mockRestore();
@@ -352,7 +376,7 @@ describe("Testing the add graphics card form", () => {
         ...sampleData.rtx5090,
         baseclock: 2.2,
         boostclock: 2.7,
-      }
+      };
 
       const formFields = getInputFields();
 
@@ -368,7 +392,7 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
 
       // Assert the message
-      expect(alertMock).toHaveBeenCalledWith('Invalid GPU data');
+      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
 
       // Clean up
       alertMock.mockRestore();

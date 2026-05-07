@@ -7,8 +7,8 @@ import userEvent from "@testing-library/user-event";
 import Gpu from "../Gpu";
 
 // Data
-import sampleData from "../../test-utils/data/sampleData";
-import GpuContext from "../../Context/GpuContext";
+import sampleData from "../../test-utils/data/fixtures";
+import GpuContext from "../../context/GpuContext";
 
 // Utils
 import calculatePerformance from "../../../../shared/utils/calculatePerformance";
@@ -57,19 +57,19 @@ describe("Testing the data table component", () => {
       // Get a sample card to test
       const gpu = {
         ...sampleData.rtx5090,
-        id: "679a7283008a75d4667c342a"  // The actual ID from the MongoDB database
+        id: "679a7283008a75d4667c342a", // The actual ID from the MongoDB database
       };
 
       // Render component
       render(
         <GpuContext.Provider value={mockContextValue}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Find the header by its role and name
-      const heading = screen.getByRole("columnheader", { 
-        name: /nvidia geforce rtx 5090/i 
+      const heading = screen.getByRole("columnheader", {
+        name: /nvidia geforce rtx 5090/i,
       });
 
       expect(heading).toBeInTheDocument();
@@ -79,18 +79,18 @@ describe("Testing the data table component", () => {
       // Get a sample card to test
       const gpu = {
         ...sampleData.g210,
-        id: "6963dcc3cc4ec5826eef4090"    // The actual ID from the MongoDB database
+        id: "6963dcc3cc4ec5826eef4090", // The actual ID from the MongoDB database
       };
 
       // Render component
       render(
         <GpuContext.Provider value={mockContextValue}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Format the VRAM amount do be displayed (512MB)
-      const vramAmount = (gpu.vram * 1000) + "MB";
+      const vramAmount = gpu.vram * 1000 + "MB";
 
       // Get the Show button to display all the data
       const showButton = screen.getByRole("button", { name: /show/i });
@@ -98,7 +98,9 @@ describe("Testing the data table component", () => {
 
       // Confirm the VRAM amount is displayed in MB
       const vramRow = screen.getByRole("row", { name: /vram/i });
-      expect(within(vramRow).getByText(`${vramAmount} ${gpu.memtype}`)).toBeInTheDocument();
+      expect(
+        within(vramRow).getByText(`${vramAmount} ${gpu.memtype}`),
+      ).toBeInTheDocument();
     });
   });
 
@@ -109,8 +111,8 @@ describe("Testing the data table component", () => {
         cores: 0,
         tmus: -1,
         rops: "",
-        bus: true
-      }
+        bus: true,
+      };
 
       // Calculate the theoretical performance
       // @ts-expect-error
@@ -121,7 +123,7 @@ describe("Testing the data table component", () => {
         <GpuContext.Provider value={mockContextValue}>
           {/* @ts-expect-error */}
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Get the Show button to display all the data
@@ -145,7 +147,7 @@ describe("Testing the data table component", () => {
       // Get a sample card to test
       const gpu = {
         ...sampleData.rtx5090,
-        id: "679a7283008a75d4667c342a"
+        id: "679a7283008a75d4667c342a",
       };
 
       // Calculate the theoretical performance
@@ -155,7 +157,7 @@ describe("Testing the data table component", () => {
       render(
         <GpuContext.Provider value={mockContextValue}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Get the Show button to display all the data
@@ -170,41 +172,55 @@ describe("Testing the data table component", () => {
       const ropsRow = screen.getByRole("row", { name: /rops/i });
       expect(within(ropsRow).getByText(gpu.rops)).toBeInTheDocument();
       const vramRow = screen.getByRole("row", { name: /vram/i });
-      expect(within(vramRow).getByText(`${gpu.vram}GB ${gpu.memtype}`)).toBeInTheDocument();
+      expect(
+        within(vramRow).getByText(`${gpu.vram}GB ${gpu.memtype}`),
+      ).toBeInTheDocument();
       const busRow = screen.getByRole("row", { name: /bus width/i });
       expect(within(busRow).getByText(`${gpu.bus} bit`)).toBeInTheDocument();
 
       // Clock speeds
       const baseClockRow = screen.getByRole("row", { name: /base clock/i });
-      expect(within(baseClockRow).getByText(`${gpu.baseclock} MHz`)).toBeInTheDocument();
+      expect(
+        within(baseClockRow).getByText(`${gpu.baseclock} MHz`),
+      ).toBeInTheDocument();
       const boostClockRow = screen.getByRole("row", { name: /boost clock/i });
-      expect(within(boostClockRow).getByText(`${gpu.boostclock} MHz`)).toBeInTheDocument();
+      expect(
+        within(boostClockRow).getByText(`${gpu.boostclock} MHz`),
+      ).toBeInTheDocument();
       const memClockRow = screen.getByRole("row", { name: /memory clock/i });
-      expect(within(memClockRow).getByText(`${gpu.memclock} Gbps effective`)).toBeInTheDocument();
+      expect(
+        within(memClockRow).getByText(`${gpu.memclock} Gbps effective`),
+      ).toBeInTheDocument();
 
       // Theoretical performance
       const fp32Row = screen.getByRole("row", { name: /fp32\(float\)/i });
       expect(within(fp32Row).getByText(performance[0])).toBeInTheDocument();
       const textureRateRow = screen.getByRole("row", { name: /texture rate/i });
-      expect(within(textureRateRow).getByText(performance[1])).toBeInTheDocument();
+      expect(
+        within(textureRateRow).getByText(performance[1]),
+      ).toBeInTheDocument();
       const pixelRateRow = screen.getByRole("row", { name: /pixel rate/i });
-      expect(within(pixelRateRow).getByText(performance[2])).toBeInTheDocument();
+      expect(
+        within(pixelRateRow).getByText(performance[2]),
+      ).toBeInTheDocument();
       const bandwidthRow = screen.getByRole("row", { name: /bandwidth/i });
-      expect(within(bandwidthRow).getByText(performance[3])).toBeInTheDocument();
+      expect(
+        within(bandwidthRow).getByText(performance[3]),
+      ).toBeInTheDocument();
     });
 
     test("the Hide toggle hides the card's data", async () => {
       // Get a sample card to test
       const gpu = {
         ...sampleData.rtx5090,
-        id: "679a7283008a75d4667c342a"
+        id: "679a7283008a75d4667c342a",
       };
 
       // Render component
       render(
         <GpuContext.Provider value={mockContextValue}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Get the Show button to display all the data
@@ -212,25 +228,37 @@ describe("Testing the data table component", () => {
       await user.click(showButton);
 
       // Confirm the table has been opened
-      expect(screen.getByRole("row", { name: /specifications/i })).toBeInTheDocument();
-      expect(screen.getByRole("row", { name: /clock speeds/i })).toBeInTheDocument();
-      expect(screen.getByRole("row", { name: /theoretical performance/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("row", { name: /specifications/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("row", { name: /clock speeds/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("row", { name: /theoretical performance/i }),
+      ).toBeInTheDocument();
 
       // Click on the Hide button
       const hideButton = screen.getByRole("button", { name: /hide/i });
       await user.click(hideButton);
 
       // Confirm the table sections have been hidden
-      expect(screen.queryByRole("row", { name: /specifications/i })).not.toBeInTheDocument();
-      expect(screen.queryByRole("row", { name: /clock speeds/i })).not.toBeInTheDocument();
-      expect(screen.queryByRole("row", { name: /theoretical performance/i })).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("row", { name: /specifications/i }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("row", { name: /clock speeds/i }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("row", { name: /theoretical performance/i }),
+      ).not.toBeInTheDocument();
     });
 
     test("the Show All Data button automatically opens the GPU table", async () => {
       // Get a sample card to test
       const gpu = {
         ...sampleData.rtx5090,
-        id: "679a7283008a75d4667c342a"
+        id: "679a7283008a75d4667c342a",
       };
 
       // Set the showAll value open all tables on the page
@@ -246,13 +274,19 @@ describe("Testing the data table component", () => {
       render(
         <GpuContext.Provider value={mockContextShowAll}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Confirm the table has been opened
-      expect(screen.getByRole("row", { name: /specifications/i })).toBeInTheDocument();
-      expect(screen.getByRole("row", { name: /clock speeds/i })).toBeInTheDocument();
-      expect(screen.getByRole("row", { name: /theoretical performance/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("row", { name: /specifications/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("row", { name: /clock speeds/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("row", { name: /theoretical performance/i }),
+      ).toBeInTheDocument();
     });
   });
 
@@ -261,7 +295,7 @@ describe("Testing the data table component", () => {
       // Get a sample card to test
       const gpu = {
         ...sampleData.rtx5090,
-        id: "679a7283008a75d4667c342a"
+        id: "679a7283008a75d4667c342a",
       };
 
       // Mock the alert message
@@ -271,7 +305,7 @@ describe("Testing the data table component", () => {
       render(
         <GpuContext.Provider value={mockContextValue}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Get the Show button to display all the data
@@ -295,17 +329,17 @@ describe("Testing the data table component", () => {
       // Get sample cards to test
       const nvidiaGpu = {
         ...sampleData.rtx5090,
-        id: "679a7283008a75d4667c342a"
+        id: "679a7283008a75d4667c342a",
       };
 
       const amdGpu = {
         ...sampleData.rx7900xtx,
-        id: "6799299865f183f803c94e06"
+        id: "6799299865f183f803c94e06",
       };
 
       const intelGpu = {
         ...sampleData.b580,
-        id: "6799299865f183f803c94e2c"
+        id: "6799299865f183f803c94e2c",
       };
 
       const defaultClassGpu = {
@@ -313,7 +347,7 @@ describe("Testing the data table component", () => {
         manufacturer: "Default",
         gpuline: "None",
         model: "Unknown",
-        id: "000a0000000a00a0000a000a"  // Random non-existing ID
+        id: "000a0000000a00a0000a000a", // Random non-existing ID
       };
 
       // Render component
@@ -323,27 +357,27 @@ describe("Testing the data table component", () => {
           <Gpu gpu={amdGpu} />
           <Gpu gpu={intelGpu} />
           <Gpu gpu={defaultClassGpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Confirm the classes have been correctly applied to each data table
-      const nvidiaHeading = screen.getByRole("columnheader", { 
-        name: /nvidia geforce rtx 5090/i
+      const nvidiaHeading = screen.getByRole("columnheader", {
+        name: /nvidia geforce rtx 5090/i,
       });
       expect(nvidiaHeading).toHaveClass("nvidia-model-header");
 
-      const amdHeading = screen.getByRole("columnheader", { 
-        name: /amd radeon rx 7900 xtx/i
+      const amdHeading = screen.getByRole("columnheader", {
+        name: /amd radeon rx 7900 xtx/i,
       });
       expect(amdHeading).toHaveClass("amd-model-header");
 
-      const intelHeading = screen.getByRole("columnheader", { 
-        name: /intel arc b580/i
+      const intelHeading = screen.getByRole("columnheader", {
+        name: /intel arc b580/i,
       });
       expect(intelHeading).toHaveClass("intel-model-header");
 
-      const defaultHeading = screen.getByRole("columnheader", { 
-        name: /default none unknown/i
+      const defaultHeading = screen.getByRole("columnheader", {
+        name: /default none unknown/i,
       });
       expect(defaultHeading).toHaveClass("model-header");
     });
