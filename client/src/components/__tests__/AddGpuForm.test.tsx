@@ -10,7 +10,7 @@ import AddGpuForm from "../AddGpuForm";
 import createMockContext from "../../test-utils/createMockContext";
 
 // Data
-import sampleData from "../../__tests__/data/sampleData";
+import sampleData from "../../test-utils/data/sampleData";
 import GpuContext from "../../Context/GpuContext";
 
 // TypeScript types

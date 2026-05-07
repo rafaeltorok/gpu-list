@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest";
 import calculatePerformance from "../../../../shared/utils/calculatePerformance";
 
 // Test data
-import sampleData from "../data/sampleData";
+import sampleData from "../../test-utils/data/sampleData";
 
 // Tests
 describe("Testing the calculate performance util", () => {

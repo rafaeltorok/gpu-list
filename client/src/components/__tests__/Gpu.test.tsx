@@ -7,7 +7,7 @@ import userEvent from "@testing-library/user-event";
 import Gpu from "../Gpu";
 
 // Data
-import sampleData from "../../__tests__/data/sampleData";
+import sampleData from "../../test-utils/data/sampleData";
 import GpuContext from "../../Context/GpuContext";
 
 // Utils
