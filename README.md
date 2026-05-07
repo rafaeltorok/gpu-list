@@ -466,42 +466,115 @@ npm run test:run -- ./src/__tests__
 
 
 ## Folder overview
+### Frontend (Main client)
+```bash
+/client/
+├── src
+│   ├── App.tsx                       # Main App component, holds the logic for creating the React Context for GPUs
+│   ├── assets                        # Icons
+│   │   ├── apple-touch-icon.png
+│   │   ├── background_alt.jpg
+│   │   ├── background.jpg
+│   │   ├── backup_favicon.ico
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-192x192.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon-512x512.png
+│   │   ├── favicon.ico
+│   │   └── favicon.png
+│   ├── components                    # Presentational and state-driven UI components
+│   │   ├── AddGpuForm.tsx            # Display the add new card form, holds the logic for the frontend validation
+│   │   ├── FormRow.tsx               # Render a single row for the add form component
+│   │   ├── GpuDataRow.tsx            # Render a single row for the GPU data table
+│   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects
+│   │   ├── Gpu.tsx                   # Display a single graphics card data table
+│   │   ├── PageIndex.tsx             # Render the main page index
+│   │   ├── SearchBar.tsx             # Responsible for displaying and handling the search terms
+│   │   ├── ShowAllButton.tsx         # Render the button on the main page
+│   │   └── __tests__                 # Component integration tests
+│   │       ├── AddGpuForm.test.tsx
+│   │       ├── GpuList.test.tsx
+│   │       └── Gpu.test.tsx
+│   ├── Context                       # React context API folder
+│   │   └── GpuContext.ts             # Create a new context for the GPU objects
+│   ├── fonts                         # Custom font for the web UI
+│   │   └── DigitalDreamers-jy99.ttf
+│   ├── hooks                         # Allows components to access the GPU context
+│   │   └── useGpuContext.ts
+│   ├── index.css                     # Custom CSS rules for the root and body elements
+│   ├── main.tsx                      # Entry point for the React app
+│   ├── reducers                      # State transition logic for the React Context
+│   │   ├── dataReducer.ts            # Related to the data handling on the app
+│   │   └── uiReducer.ts              # Related to the UI elements, such as displaying buttons and/or forms
+│   ├── services                      # API communication layer
+│   │   └── gpus.ts
+│   ├── setupTests.ts                 # Setup config file to be used with Vitest
+│   ├── styles                        # Custom CSS styles for the React components
+│   │   ├── AddGpuForm.css
+│   │   ├── App.css
+│   │   ├── Gpu.css
+│   │   ├── ManufacturerColors.css
+│   │   ├── PageIndex.css
+│   │   └── SearchBar.css
+│   ├── __tests__                     # Unit tests for the app's util scripts
+│   │   └── utils
+│   │       └── calculatePerformance.test.ts
+│   ├── test-utils                    # Shared utilities and fixtures for component testing
+│   │   ├── createMockContext.ts
+│   │   └── data
+│   │       └── sampleData.ts         # Example data to be used for testing purposes
+│   └── types                         # TypeScript types exclusive to the main client frontend
+│       └── context.ts
+├── Dockerfile                        # Docker setup file to serve the main client with Nginx
+├── eslint.config.js                  # ESLint custom config file
+├── index.html
+├── manifest.json
+├── nginx.conf                        # The Nginx config to be used with the Docker container
+├── package.json
+├── package-lock.json
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+└── vitest.config.ts                  # Config file for the component tests
+```
+
 ### Backend server
-  ```
-  /server/
-  ├── src
-  │   ├── index.ts              # Entry point of the application
-  │   ├── app.ts                # Main Express app setup
-  │   ├── routes/               # Defines API routes and handles request logic for each endpoint
-  │   │   ├── gpus.ts           # Handles API requests related to the GPUs
-  │   │   └── testing.ts        # Handles database reset requests, used in E2E and integration tests
-  │   ├── db/
-  │   │   └── mongo.ts          # Sets up the connection to the MongoDB database
-  │   ├── middlewares/          # Custom middleware
-  │   │   └── errorHandler.ts   # Handles server errors
-  │   ├── models/               # Data models/schema definitions
-  │   │   └── gpu.ts            # Defines the GPU schema/model
-  │   └── utils/                # Utility/helper functions
-  │       ├── config.ts         # Handles environment configurations
-  │       └── logger.ts         # Logger setup (for logging requests/errors)
-  ├── dist/                     # Static frontend builds served by the backend in production
-  │   ├── main-client           # The main client static build
-  │   │   └── ...
-  │   └── alt-client            # Alternative client static build
-  │       └── ...
-  ├── tests/                    # Database integration tests
-  │   ├── data          
-  │   │   └── data.ts           # Mock data
-  │   └── integration           # Integration tests, using the node:test module with supertest
-  │       ├── *.test.ts         # Test suites for each CRUD operation available on the app
-  │       └── setup.ts          # Setup and teardown logic for each test suite
-  ├── package-lock.json         # Manages exact dependency versions
-  ├── package.json              # Project dependencies and scripts
-  ├── tsconfig.json             # Main TypeScript configuration file
-  ├── environment.d.ts          # Declares TypeScript types for the process.env variables to ensure type safety
-  ├── Dockerfile                # Build an image for the server, used in both the Composer scripts
-  └── Dockerfile.prod           # Build a production version of the server, capable of serving static builds
-  ```
+```bash
+/server/
+├── src
+│   ├── index.ts              # Entry point of the application
+│   ├── app.ts                # Main Express app setup
+│   ├── routes/               # Defines API routes and handles request logic for each endpoint
+│   │   ├── gpus.ts           # Handles API requests related to the GPUs
+│   │   └── testing.ts        # Handles database reset requests, used in E2E and integration tests
+│   ├── db/
+│   │   └── mongo.ts          # Sets up the connection to the MongoDB database
+│   ├── middlewares/          # Custom middleware
+│   │   └── errorHandler.ts   # Handles server errors
+│   ├── models/               # Data models/schema definitions
+│   │   └── gpu.ts            # Defines the GPU schema/model
+│   └── utils/                # Utility/helper functions
+│       ├── config.ts         # Handles environment configurations
+│       └── logger.ts         # Logger setup (for logging requests/errors)
+├── dist/                     # Static frontend builds served by the backend in production
+│   ├── main-client           # The main client static build
+│   │   └── ...
+│   └── alt-client            # Alternative client static build
+│       └── ...
+├── tests/                    # Database integration tests
+│   ├── data          
+│   │   └── data.ts           # Mock data
+│   └── integration           # Integration tests, using the node:test module with supertest
+│       ├── *.test.ts         # Test suites for each CRUD operation available on the app
+│       └── setup.ts          # Setup and teardown logic for each test suite
+├── package-lock.json         # Manages exact dependency versions
+├── package.json              # Project dependencies and scripts
+├── tsconfig.json             # Main TypeScript configuration file
+├── environment.d.ts          # Declares TypeScript types for the process.env variables to ensure type safety
+├── Dockerfile                # Build an image for the server, used in both the Composer scripts
+└── Dockerfile.prod           # Build a production version of the server, capable of serving static builds
+```
 
 
 ## Troubleshooting
