@@ -37,21 +37,25 @@ export default function GpuList() {
   function renderGpuList(gpuList: GpuType[]) {
     return (
       <>
-        {gpuList.map((gpu) => (
-          <div key={gpu.id}>
-            <Gpu gpu={gpu} />
-            <button
-              className="back-to-index-button"
-              onClick={() =>
-                scrollToIndex(
-                  `${gpu.manufacturer.toLowerCase()}-${gpu.gpuline.toLowerCase()}-${gpu.model.toLowerCase()}`,
-                )
-              }
-            >
-              Back to Index
-            </button>
-          </div>
-        ))}
+        {gpuList.length < 1 ? (
+          <div>No GPUs available</div>
+        ) : (
+          gpuList.map((gpu) => (
+            <div key={gpu.id}>
+              <Gpu gpu={gpu} />
+              <button
+                className="back-to-index-button"
+                onClick={() =>
+                  scrollToIndex(
+                    `${gpu.manufacturer.toLowerCase()}-${gpu.gpuline.toLowerCase()}-${gpu.model.toLowerCase()}`,
+                  )
+                }
+              >
+                Back to Index
+              </button>
+            </div>
+          ))
+        )}
       </>
     );
   }
