@@ -63,10 +63,11 @@ export default function Gpu({ gpu }: GpuProps) {
       id={`${gpu.manufacturer.toLowerCase()}-${gpu.gpuline.toLowerCase()}-${gpu.model.toLowerCase()}`}
       className="gpu-data-table"
       aria-label={`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+      data-testid="gpu-data-table"
     >
       <thead>
         <tr>
-          <th className={gpuHeaderClass} colSpan={2}>
+          <th id={`${gpu.id}-heading`} className={gpuHeaderClass} colSpan={2}>
             {/* Filters out an empty GPU line to prevent two whitespaces in the full model name */}
             {[gpu.manufacturer, gpu.gpuline, gpu.model]
               .filter(Boolean)
