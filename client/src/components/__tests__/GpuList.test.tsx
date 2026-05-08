@@ -62,7 +62,7 @@ describe("Testing the Gpu List component", () => {
       // Check if all of the sample cards are present on the page
       for (const gpu of gpus) {
         expect(
-          screen.getByRole("columnheader", {
+          screen.getByRole("region", {
             name: `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`,
           }),
         ).toBeInTheDocument();
@@ -118,13 +118,13 @@ describe("Testing the Gpu List component", () => {
 
     test("the field should be displayed when available", () => {
       expect(
-        screen.getByRole("columnheader", { name: /nvidia geforce rtx 5090/i }),
+        screen.getByRole("region", { name: /nvidia geforce rtx 5090/i }),
       ).toBeInTheDocument();
     });
 
     test("when not available, there should be no whitespaces on its place", () => {
       expect(
-        screen.getByRole("columnheader", {
+        screen.getByRole("region", {
           name: /nvidia rtx pro 6000 blackwell/i,
         }),
       ).toBeInTheDocument();
@@ -176,38 +176,38 @@ describe("Testing the Gpu List component", () => {
 
       // Assert only the AMD Radeon cards are present on the list
       expect(
-        screen.getByRole("columnheader", {
+        screen.getByRole("region", {
           name: /amd radeon rx 9070 xt/i,
         }),
       ).toBeInTheDocument();
 
       expect(
-        screen.getByRole("columnheader", {
+        screen.getByRole("region", {
           name: /amd radeon rx 7900 xtx/i,
         }),
       ).toBeInTheDocument();
 
       // Assert none of the NVIDIA and Intel cards are present
       expect(
-        screen.queryByRole("columnheader", {
+        screen.queryByRole("region", {
           name: /nvidia geforce rtx 5090/i,
         }),
       ).not.toBeInTheDocument();
 
       expect(
-        screen.queryByRole("columnheader", {
+        screen.queryByRole("region", {
           name: /nvidia geforce gtx 650/i,
         }),
       ).not.toBeInTheDocument();
 
       expect(
-        screen.queryByRole("columnheader", {
+        screen.queryByRole("region", {
           name: /intel arc b580/i,
         }),
       ).not.toBeInTheDocument();
 
       expect(
-        screen.queryByRole("columnheader", {
+        screen.queryByRole("region", {
           name: /nvidia geforce 210/i,
         }),
       ).not.toBeInTheDocument();
@@ -260,7 +260,7 @@ describe("Testing the Gpu List component", () => {
       user = userEvent.setup();
     });
 
-    test("clicking on the button should automatically hide a data table", async () => {
+    test("should automatically hide a data table", async () => {
       const gpu: GpuType[] = [{ ...sampleData.rtx5090, id: "rtx5090" }];
 
       const mockContextWithCards = createMockContextWithCards(gpu);
@@ -282,7 +282,7 @@ describe("Testing the Gpu List component", () => {
       });
       await user.click(showButton);
 
-      // Confirm the table has been opened
+      // Confirm the table has been expanded
       expect(
         within(dataTable).getByRole("columnheader", {
           name: /specifications/i,
@@ -304,7 +304,7 @@ describe("Testing the Gpu List component", () => {
 
       await user.click(backToIndexButton);
 
-      // Confirm the table has closed
+      // Confirm the table has collapsed
       expect(
         within(dataTable).queryByRole("columnheader", {
           name: /specifications/i,
@@ -320,6 +320,68 @@ describe("Testing the Gpu List component", () => {
           name: /theoretical performance/i,
         }),
       ).not.toBeInTheDocument();
+    });
+
+    test("should not hide a table when showAll is active", async () => {
+      const gpu: GpuType[] = [{ ...sampleData.rtx5090, id: "rtx5090" }];
+
+      const mockContextWithCards = createMockContextWithCards(gpu);
+
+      const mockContextShowAll = {
+        ...mockContextWithCards,
+        uiState: {
+          ...mockContextWithCards.uiState,
+          showAll: true,
+        }
+      }
+
+      render(
+        <GpuContext.Provider value={mockContextShowAll}>
+          <GpuList />
+        </GpuContext.Provider>,
+      );
+
+      // Select the entire GPU data section
+      const dataTable = screen.getByRole("region", {
+        name: /nvidia geforce rtx 5090/i,
+      });
+
+      // Confirm the table has already been expanded
+      expect(
+        within(dataTable).getByRole("columnheader", {
+          name: /specifications/i,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        within(dataTable).getByRole("columnheader", { name: /clock speeds/i }),
+      ).toBeInTheDocument();
+      expect(
+        within(dataTable).getByRole("columnheader", {
+          name: /theoretical performance/i,
+        }),
+      ).toBeInTheDocument();
+
+      // Select its respective back to index button
+      const backToIndexButton = within(dataTable).getByRole("button", {
+        name: /back to index/i,
+      });
+
+      await user.click(backToIndexButton);
+
+      // Confirm the table has not collapsed
+      expect(
+        within(dataTable).getByRole("columnheader", {
+          name: /specifications/i,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        within(dataTable).getByRole("columnheader", { name: /clock speeds/i }),
+      ).toBeInTheDocument();
+      expect(
+        within(dataTable).getByRole("columnheader", {
+          name: /theoretical performance/i,
+        }),
+      ).toBeInTheDocument();
     });
   });
 });
