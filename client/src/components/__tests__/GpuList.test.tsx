@@ -36,6 +36,21 @@ function createMockContextWithCards(gpus: GpuType[]): GpuContextType {
   return mockContextWithCards;
 }
 
+async function expandTable(modelName: string): Promise<HTMLElement> {
+  // Select the entire GPU data section
+  const dataTable = screen.getByRole("region", {
+    name: modelName,
+  });
+
+  // Click on the Show button to display all the data
+  const showButton = within(dataTable).getByRole("button", {
+    name: /show/i,
+  });
+  await user.click(showButton);
+
+  return dataTable;
+}
+
 // Tests
 describe("Testing the Gpu List component", () => {
   describe("empty and filled lists", () => {
@@ -271,16 +286,7 @@ describe("Testing the Gpu List component", () => {
         </GpuContext.Provider>,
       );
 
-      // Select the entire GPU data section
-      const dataTable = screen.getByRole("region", {
-        name: /nvidia geforce rtx 5090/i,
-      });
-
-      // Click on the Show button to display all the data
-      const showButton = within(dataTable).getByRole("button", {
-        name: /show/i,
-      });
-      await user.click(showButton);
+      const dataTable = await expandTable(`${gpu[0].manufacturer} ${gpu[0].gpuline} ${gpu[0].model}`);
 
       // Confirm the table has been expanded
       expect(
@@ -379,6 +385,93 @@ describe("Testing the Gpu List component", () => {
       ).toBeInTheDocument();
       expect(
         within(dataTable).getByRole("columnheader", {
+          name: /theoretical performance/i,
+        }),
+      ).toBeInTheDocument();
+    });
+
+    test("should only hide the respective data table not others", async () => {
+      const gpu: GpuType[] = [
+        { ...sampleData.rtx5090, id: "rtx5090" },
+        { ...sampleData.rx9070xt, id: "rx9070xt" }
+      ];
+
+      const mockContextWithCards = createMockContextWithCards(gpu);
+
+      render(
+        <GpuContext.Provider value={mockContextWithCards}>
+          <GpuList />
+        </GpuContext.Provider>,
+      );
+
+      // Open the first data table
+      const firstDataTable = await expandTable(`${gpu[0].manufacturer} ${gpu[0].gpuline} ${gpu[0].model}`);
+
+      const secondDataTable = await expandTable(`${gpu[1].manufacturer} ${gpu[1].gpuline} ${gpu[1].model}`);
+
+      // Confirm both tables have been expanded
+      expect(
+        within(firstDataTable).getByRole("columnheader", {
+          name: /specifications/i,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        within(firstDataTable).getByRole("columnheader", { name: /clock speeds/i }),
+      ).toBeInTheDocument();
+      expect(
+        within(firstDataTable).getByRole("columnheader", {
+          name: /theoretical performance/i,
+        }),
+      ).toBeInTheDocument();
+
+      expect(
+        within(secondDataTable).getByRole("columnheader", {
+          name: /specifications/i,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        within(secondDataTable).getByRole("columnheader", { name: /clock speeds/i }),
+      ).toBeInTheDocument();
+      expect(
+        within(secondDataTable).getByRole("columnheader", {
+          name: /theoretical performance/i,
+        }),
+      ).toBeInTheDocument();
+
+      // Select the first table back to index button
+      const backToIndexButton = within(firstDataTable).getByRole("button", {
+        name: /back to index/i,
+      });
+
+      await user.click(backToIndexButton);
+
+      // Confirm only the first table has collapsed
+      expect(
+        within(firstDataTable).queryByRole("columnheader", {
+          name: /specifications/i,
+        }),
+      ).not.toBeInTheDocument();
+      expect(
+        within(firstDataTable).queryByRole("columnheader", {
+          name: /clock speeds/i,
+        }),
+      ).not.toBeInTheDocument();
+      expect(
+        within(firstDataTable).queryByRole("columnheader", {
+          name: /theoretical performance/i,
+        }),
+      ).not.toBeInTheDocument();
+
+      expect(
+        within(secondDataTable).getByRole("columnheader", {
+          name: /specifications/i,
+        }),
+      ).toBeInTheDocument();
+      expect(
+        within(secondDataTable).getByRole("columnheader", { name: /clock speeds/i }),
+      ).toBeInTheDocument();
+      expect(
+        within(secondDataTable).getByRole("columnheader", {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();
