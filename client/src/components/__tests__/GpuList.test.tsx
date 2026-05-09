@@ -390,7 +390,7 @@ describe("Testing the Gpu List component", () => {
       ).toBeInTheDocument();
     });
 
-    test("should only hide the respective data table not others", async () => {
+    test("should only hide the respective table not any other", async () => {
       const gpu: GpuType[] = [
         { ...sampleData.rtx5090, id: "rtx5090" },
         { ...sampleData.rx9070xt, id: "rx9070xt" }
