@@ -67,24 +67,24 @@ export default function PageIndex() {
   }
 
   return (
-    <div id="page-index">
-      <h2 className="page-index-title">
-        <button
-          id="show-index-button"
-          type="button"
-          onClick={() =>
-            uiDispatch({
-              type: "TOGGLE_INDEX",
-            })
-          }
-        >
-          {showIndex ? "Hide index" : "Show index"}
-        </button>
-      </h2>
+    <div id="page-index-container">
+      <button
+        id="show-index-button"
+        type="button"
+        onClick={() =>
+          uiDispatch({
+            type: "TOGGLE_INDEX",
+          })
+        }
+      >
+        {showIndex ? "Hide index" : "Show index"}
+      </button>
       {showIndex && (
-        <ul className="page-index-list">
-          {searchGpu ? renderIndexItems(gpusFound) : renderIndexItems(gpus)}
-        </ul>
+        <div className="index-list-container">
+          <ul className="index-list">
+            {searchGpu ? renderIndexItems(gpusFound) : renderIndexItems(gpus)}
+          </ul>
+        </div>
       )}
     </div>
   );
