@@ -4,6 +4,7 @@ import useGpuContext from "../hooks/useGpuContext";
 
 // Utils
 import calculatePerformance from "../../../shared/utils/calculatePerformance";
+import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
 
 // React components
 import GpuDataRow from "./GpuDataRow";
@@ -60,7 +61,7 @@ export default function Gpu({ gpu }: GpuProps) {
 
   return (
     <table
-      id={`${gpu.manufacturer.toLowerCase()}-${gpu.gpuline.toLowerCase()}-${gpu.model.toLowerCase()}`}
+      id={generateGpuDomId(gpu)}
       className="gpu-data-table"
       aria-label={`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
       data-testid="gpu-data-table"

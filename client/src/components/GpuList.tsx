@@ -1,12 +1,16 @@
 // React context
 import useGpuContext from "../hooks/useGpuContext";
 
-// React components
+// Components
 import Gpu from "./Gpu";
+
+// Utils
+import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
 
 // TypeScript types
 import type { GpuType } from "../../../shared/types/types";
 
+// Component
 export default function GpuList() {
   const {
     dataState: { gpus, gpusFound },
@@ -45,11 +49,7 @@ export default function GpuList() {
               <Gpu gpu={gpu} />
               <button
                 className="back-to-index-button"
-                onClick={() =>
-                  scrollToIndex(
-                    `${gpu.manufacturer.toLowerCase()}-${gpu.gpuline.toLowerCase()}-${gpu.model.toLowerCase()}`,
-                  )
-                }
+                onClick={() => scrollToIndex(generateGpuDomId(gpu))}
               >
                 Back to Index
               </button>

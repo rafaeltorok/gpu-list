@@ -1,12 +1,16 @@
 // React Context
 import useGpuContext from "../hooks/useGpuContext";
 
+// Utils
+import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
+
 // CSS Styles
 import "../styles/PageIndex.css";
 
 // TypeScript types
 import type { GpuType } from "../../../shared/types/types";
 
+// Component
 export default function PageIndex() {
   const {
     dataState: { gpus, gpusFound },
@@ -40,11 +44,7 @@ export default function PageIndex() {
           <li key={gpu.id}>
             <button
               className="index-item-button"
-              onClick={() =>
-                scrollToGpu(
-                  `${gpu.manufacturer.toLowerCase()}-${gpu.gpuline.toLowerCase()}-${gpu.model.toLowerCase()}`,
-                )
-              }
+              onClick={() => scrollToGpu(generateGpuDomId(gpu))}
             >
               <span
                 className={
@@ -86,9 +86,7 @@ export default function PageIndex() {
         {showIndex ? "Hide index" : "Show index"}
       </button>
       {showIndex && (
-        <div className="index-list-container">
-          {renderIndexItems()}
-        </div>
+        <div className="index-list-container">{renderIndexItems()}</div>
       )}
     </div>
   );
