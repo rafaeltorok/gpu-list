@@ -267,6 +267,87 @@ describe("Testing the Gpu List component", () => {
       // Assert a message is present on the page
       expect(screen.getByText(/no gpus found/i)).toBeInTheDocument();
     });
+
+    test("the object filtering should be case-insensitive", () => {
+      // Fetch all available sample cards
+      const gpus: GpuType[] = [
+        { ...sampleData.rtx5090, id: "rtx5090" },
+        { ...sampleData.rx9070xt, id: "rx9070xt" },
+        { ...sampleData.rx7900xtx, id: "rx7900xtx" },
+        { ...sampleData.gtx650, id: "gtx650" },
+        { ...sampleData.b580, id: "b580" },
+        { ...sampleData.g210, id: "g210" },
+      ];
+
+      // Filter only AMD Radeon cards
+      const filteredGpus: GpuType[] = [
+        { ...sampleData.rx9070xt, id: "rx9070xt" },
+        { ...sampleData.rx7900xtx, id: "rx7900xtx" },
+      ];
+
+      const mockContextValue = createMockContext();
+
+      const mockContextFiltered = {
+        ...mockContextValue,
+        dataState: {
+          ...mockContextValue.dataState,
+          gpus: gpus,
+          gpusFound: filteredGpus,
+        },
+        uiState: {
+          ...mockContextValue.uiState,
+          searchGpu: "RADEON",
+        },
+      };
+
+      // Render the list component, containing only the filtered objects
+      render(
+        <GpuContext.Provider value={mockContextFiltered}>
+          <GpuList />
+        </GpuContext.Provider>,
+      );
+
+      // Confirm there are only two objects being displayed on the list
+      expect(screen.getAllByTestId("gpu-data-table").length).toBe(2);
+
+      // Assert only the AMD Radeon cards are present on the list
+      expect(
+        screen.getByRole("region", {
+          name: /amd radeon rx 9070 xt/i,
+        }),
+      ).toBeInTheDocument();
+
+      expect(
+        screen.getByRole("region", {
+          name: /amd radeon rx 7900 xtx/i,
+        }),
+      ).toBeInTheDocument();
+
+      // Assert none of the NVIDIA and Intel cards are present
+      expect(
+        screen.queryByRole("region", {
+          name: /nvidia geforce rtx 5090/i,
+        }),
+      ).not.toBeInTheDocument();
+
+      expect(
+        screen.queryByRole("region", {
+          name: /nvidia geforce gtx 650/i,
+        }),
+      ).not.toBeInTheDocument();
+
+      expect(
+        screen.queryByRole("region", {
+          name: /intel arc b580/i,
+        }),
+      ).not.toBeInTheDocument();
+
+      expect(
+        screen.queryByRole("region", {
+          name: /nvidia geforce 210/i,
+        }),
+      ).not.toBeInTheDocument();
+    });
   });
 
   describe("the back to index button", () => {
