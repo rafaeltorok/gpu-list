@@ -25,6 +25,7 @@ const gpus: GpuType[] = [
   { ...sampleData.g210, id: "g210" },
 ];
 
+// Tests
 describe("The PageIndex component", () => {
   describe("testing basic index rendering", () => {
     test("the index should be hidden as default", () => {
