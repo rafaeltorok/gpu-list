@@ -216,15 +216,15 @@ describe("testing the search bar", function () {
     cy.get("#search-bar-input").type("GeForce");
 
     // Open the index
-    cy.get("#page-index")
+    cy.get("#page-index-container")
       .find("#show-index-button")
       .contains("Show index")
       .click();
 
     // Confirm only the filtered cards appear on the index list
-    cy.get(".page-index-list li").eq(0).contains("NVIDIA GeForce RTX 3060");
-    cy.get(".page-index-list li").eq(1).contains("NVIDIA GeForce GTX 970");
-    cy.get(".page-index-list li").eq(2).contains("NVIDIA GeForce GTX 650");
-    cy.get(".page-index-list li").eq(3).contains("NVIDIA GeForce GT 210");
+    cy.get(".index-list li").eq(0).contains("NVIDIA GeForce RTX 3060");
+    cy.get(".index-list li").eq(1).contains("NVIDIA GeForce GTX 970");
+    cy.get(".index-list li").eq(2).contains("NVIDIA GeForce GTX 650");
+    cy.get(".index-list li").eq(3).contains("NVIDIA GeForce GT 210");
   });
 });

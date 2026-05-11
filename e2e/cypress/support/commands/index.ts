@@ -3,7 +3,7 @@ Cypress.Commands.add(
   "indexSelector",
   (itemName: string) => {
     // Select based on text
-    cy.get(".page-index-list li")
+    cy.get(".index-list li")
       .contains(itemName)
       .click();
 

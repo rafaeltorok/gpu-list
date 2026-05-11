@@ -14,10 +14,10 @@ describe("Testing the index", function () {
 
   it("the index can be shown", function () {
     // Click on the button to expand the index
-    cy.get("#page-index").find("button").contains("Show index").click();
+    cy.get("#page-index-container").find("button").contains("Show index").click();
 
     // Confirm the hide button is visible
-    cy.get("#page-index").find("button").should("contain", "Hide index");
+    cy.get("#page-index-container").find("button").should("contain", "Hide index");
   });
 
   it("checking if the graphics cards are present in the index", function () {
@@ -28,19 +28,19 @@ describe("Testing the index", function () {
       const thirdGpu = gpuList[2];
 
       // Expand the index to display all available cards
-      cy.get("#page-index")
+      cy.get("#page-index-container")
         .find("#show-index-button")
         .contains("Show index")
         .click();
 
       // Confirm all cards are present on the index
-      cy.get(".page-index-list li")
+      cy.get(".index-list li")
         .eq(0)
         .contains(getFullModel(firstGpu));
 
-      cy.get(".page-index-list li").eq(1).contains(getFullModel(secondGpu));
+      cy.get(".index-list li").eq(1).contains(getFullModel(secondGpu));
 
-      cy.get(".page-index-list li").eq(2).contains(getFullModel(thirdGpu));
+      cy.get(".index-list li").eq(2).contains(getFullModel(thirdGpu));
     });
   });
 
@@ -50,7 +50,7 @@ describe("Testing the index", function () {
       const gpu = gpuList[0];
 
       // Open the index
-      cy.get("#page-index").find("button").contains("Show index").click();
+      cy.get("#page-index-container").find("button").contains("Show index").click();
 
       // Selects the respective card name on the index
       cy.indexSelector(getFullModel(gpu));
@@ -62,16 +62,16 @@ describe("Testing the index", function () {
 
   it("the index can be hidden", function () {
     // Open the index
-    cy.get("#page-index").find("button").contains("Show index").click();
+    cy.get("#page-index-container").find("button").contains("Show index").click();
 
     // Confirm it has been opened
-    cy.get("#page-index").find("button").should("contain", "Hide index");
+    cy.get("#page-index-container").find("button").should("contain", "Hide index");
 
     // Click on the hide button
-    cy.get("#page-index").find("button").contains("Hide index").click();
+    cy.get("#page-index-container").find("button").contains("Hide index").click();
 
     // Confirm it is hidden
-    cy.get("#page-index").find("button").should("contain", "Show index");
+    cy.get("#page-index-container").find("button").should("contain", "Show index");
   });
 
   it("the back to index button works properly", function () {
@@ -80,7 +80,7 @@ describe("Testing the index", function () {
       const gpu = gpuList[0];
 
       // Open the index
-      cy.get("#page-index").find("button").contains("Show index").click();
+      cy.get("#page-index-container").find("button").contains("Show index").click();
 
       // Click on the first index item
       cy.indexSelector(getFullModel(gpu));
@@ -93,7 +93,7 @@ describe("Testing the index", function () {
         .click();
 
       // Confirm the user view has returned to the index
-      cy.get(".page-index-list").should("be.visible");
+      cy.get(".index-list").should("be.visible");
     });
   });
 });
