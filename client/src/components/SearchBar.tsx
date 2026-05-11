@@ -14,7 +14,7 @@ export default function SearchBar() {
   const handleSearch = (searchTerm: string) => {
     uiDispatch({
       type: "SET_SEARCH",
-      payload: searchTerm,
+      payload: searchTerm.trimStart(),
     });
   };
 
