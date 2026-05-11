@@ -42,7 +42,7 @@ export default function Gpu({ gpu }: GpuProps) {
     if (fullModelName.includes("nvidia") || fullModelName.includes("geforce")) {
       return "nvidia-model-header";
     } else if (
-      fullModelName.includes("radeon") ||
+      fullModelName.includes("amd") ||
       fullModelName.includes("radeon")
     ) {
       return "amd-model-header";
