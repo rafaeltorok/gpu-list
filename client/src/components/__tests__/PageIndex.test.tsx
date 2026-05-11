@@ -38,16 +38,16 @@ describe("The PageIndex component", () => {
       );
 
       // Confirm the button is displaying the correct text
-      expect(screen.getByRole("button", { name: /show index/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /show index/i }),
+      ).toBeInTheDocument();
 
       // Confirm the list of index items is not visible by default
       expect(screen.queryByRole("list")).not.toBeInTheDocument();
     });
 
     test("an open index is properly displayed", () => {
-      const gpu: GpuType[] = [
-        { ...sampleData.rtx5090, id: "rtx5090" },
-      ];
+      const gpu: GpuType[] = [{ ...sampleData.rtx5090, id: "rtx5090" }];
 
       const mockContextValue = createMockContext();
 
@@ -61,8 +61,8 @@ describe("The PageIndex component", () => {
         uiState: {
           ...mockContextValue.uiState,
           showIndex: true,
-        }
-      }
+        },
+      };
 
       // Render the page index component
       render(
@@ -70,13 +70,19 @@ describe("The PageIndex component", () => {
           <PageIndex />
         </GpuContext.Provider>,
       );
-      
+
       // Confirm the button is displaying the correct text
-      expect(screen.getByRole("button", { name: /hide index/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /hide index/i }),
+      ).toBeInTheDocument();
 
       // Confirm there is a list item present on the index
       const listItem = screen.getByRole("listitem");
-      expect(within(listItem).getByRole("button", { name: /nvidia geforce rtx 5090/i })).toBeInTheDocument();
+      expect(
+        within(listItem).getByRole("button", {
+          name: /nvidia geforce rtx 5090/i,
+        }),
+      ).toBeInTheDocument();
     });
 
     test("the index should be empty when there are no cards available", () => {
@@ -89,8 +95,8 @@ describe("The PageIndex component", () => {
         uiState: {
           ...mockContextValue.uiState,
           showIndex: true,
-        }
-      }
+        },
+      };
 
       // Render the page index component
       render(
@@ -125,8 +131,8 @@ describe("The PageIndex component", () => {
           ...mockContextValue.uiState,
           showIndex: true,
           searchGpu: "radeon",
-        }
-      }
+        },
+      };
 
       // Render the page index component
       render(
@@ -136,8 +142,12 @@ describe("The PageIndex component", () => {
       );
 
       // Confirm it contains only the cards found
-      expect(screen.getByRole("button", { name: /amd radeon rx 9070 xt/i })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /amd radeon rx 7900 xtx/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /amd radeon rx 9070 xt/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /amd radeon rx 7900 xtx/i }),
+      ).toBeInTheDocument();
     });
 
     test("an empty search term should display all index items", () => {
@@ -160,8 +170,8 @@ describe("The PageIndex component", () => {
           ...mockContextValue.uiState,
           showIndex: true,
           searchGpu: "",
-        }
-      }
+        },
+      };
 
       // Render the page index component
       render(
@@ -171,12 +181,24 @@ describe("The PageIndex component", () => {
       );
 
       // Confirm it contains all the items
-      expect(screen.getByRole("button", { name: /nvidia geforce rtx 5090/i })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /amd radeon rx 9070 xt/i })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /amd radeon rx 7900 xtx/i })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /nvidia geforce gtx 650/i })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /intel arc b580/i })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /nvidia geforce 210/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /nvidia geforce rtx 5090/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /amd radeon rx 9070 xt/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /amd radeon rx 7900 xtx/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /nvidia geforce gtx 650/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /intel arc b580/i }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /nvidia geforce 210/i }),
+      ).toBeInTheDocument();
     });
 
     test("the index list should be empty if no cards are found", () => {
@@ -194,8 +216,8 @@ describe("The PageIndex component", () => {
           ...mockContextValue.uiState,
           showIndex: true,
           searchGpu: "none",
-        }
-      }
+        },
+      };
 
       // Render the page index component
       render(

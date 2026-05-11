@@ -367,7 +367,9 @@ describe("Testing the Gpu List component", () => {
         </GpuContext.Provider>,
       );
 
-      const dataTable = await expandTable(`${gpu[0].manufacturer} ${gpu[0].gpuline} ${gpu[0].model}`);
+      const dataTable = await expandTable(
+        `${gpu[0].manufacturer} ${gpu[0].gpuline} ${gpu[0].model}`,
+      );
 
       // Confirm the table has been expanded
       expect(
@@ -419,8 +421,8 @@ describe("Testing the Gpu List component", () => {
         uiState: {
           ...mockContextWithCards.uiState,
           showAll: true,
-        }
-      }
+        },
+      };
 
       render(
         <GpuContext.Provider value={mockContextShowAll}>
@@ -474,7 +476,7 @@ describe("Testing the Gpu List component", () => {
     test("should only hide the respective table not any other", async () => {
       const gpu: GpuType[] = [
         { ...sampleData.rtx5090, id: "rtx5090" },
-        { ...sampleData.rx9070xt, id: "rx9070xt" }
+        { ...sampleData.rx9070xt, id: "rx9070xt" },
       ];
 
       const mockContextWithCards = createMockContextWithCards(gpu);
@@ -486,9 +488,13 @@ describe("Testing the Gpu List component", () => {
       );
 
       // Open the first data table
-      const firstDataTable = await expandTable(`${gpu[0].manufacturer} ${gpu[0].gpuline} ${gpu[0].model}`);
+      const firstDataTable = await expandTable(
+        `${gpu[0].manufacturer} ${gpu[0].gpuline} ${gpu[0].model}`,
+      );
 
-      const secondDataTable = await expandTable(`${gpu[1].manufacturer} ${gpu[1].gpuline} ${gpu[1].model}`);
+      const secondDataTable = await expandTable(
+        `${gpu[1].manufacturer} ${gpu[1].gpuline} ${gpu[1].model}`,
+      );
 
       // Confirm both tables have been expanded
       expect(
@@ -497,7 +503,9 @@ describe("Testing the Gpu List component", () => {
         }),
       ).toBeInTheDocument();
       expect(
-        within(firstDataTable).getByRole("columnheader", { name: /clock speeds/i }),
+        within(firstDataTable).getByRole("columnheader", {
+          name: /clock speeds/i,
+        }),
       ).toBeInTheDocument();
       expect(
         within(firstDataTable).getByRole("columnheader", {
@@ -511,7 +519,9 @@ describe("Testing the Gpu List component", () => {
         }),
       ).toBeInTheDocument();
       expect(
-        within(secondDataTable).getByRole("columnheader", { name: /clock speeds/i }),
+        within(secondDataTable).getByRole("columnheader", {
+          name: /clock speeds/i,
+        }),
       ).toBeInTheDocument();
       expect(
         within(secondDataTable).getByRole("columnheader", {
@@ -549,7 +559,9 @@ describe("Testing the Gpu List component", () => {
         }),
       ).toBeInTheDocument();
       expect(
-        within(secondDataTable).getByRole("columnheader", { name: /clock speeds/i }),
+        within(secondDataTable).getByRole("columnheader", {
+          name: /clock speeds/i,
+        }),
       ).toBeInTheDocument();
       expect(
         within(secondDataTable).getByRole("columnheader", {
