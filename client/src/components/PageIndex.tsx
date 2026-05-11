@@ -27,10 +27,16 @@ export default function PageIndex() {
     }
   };
 
-  function renderIndexItems(gpuList: GpuType[]) {
+  function renderIndexItems() {
+    const indexItems: GpuType[] = searchGpu.trimStart() ? gpusFound : gpus;
+
+    if (indexItems.length === 0) {
+      return null;
+    }
+
     return (
-      <>
-        {gpuList.map((gpu) => (
+      <ul className="index-list">
+        {indexItems.map((gpu) => (
           <li key={gpu.id}>
             <button
               className="index-item-button"
@@ -62,7 +68,7 @@ export default function PageIndex() {
             </button>
           </li>
         ))}
-      </>
+      </ul>
     );
   }
 
@@ -81,9 +87,7 @@ export default function PageIndex() {
       </button>
       {showIndex && (
         <div className="index-list-container">
-          <ul className="index-list">
-            {searchGpu ? renderIndexItems(gpusFound) : renderIndexItems(gpus)}
-          </ul>
+          {renderIndexItems()}
         </div>
       )}
     </div>
