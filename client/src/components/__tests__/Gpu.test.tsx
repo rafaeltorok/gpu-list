@@ -12,35 +12,7 @@ import GpuContext from "../../context/GpuContext";
 
 // Utils
 import calculatePerformance from "../../../../shared/utils/calculatePerformance";
-
-// TypeScript types
-import type { GpuContextType } from "../../types/context";
-
-// Mock the React Context
-const mockContextValue: GpuContextType = {
-  // Functions: vi.fn() track calls and return promises
-  createGpu: vi.fn().mockResolvedValue(true),
-  deleteGpu: vi.fn().mockResolvedValue(undefined),
-
-  // States
-  dataState: {
-    gpus: [],
-    gpusFound: [],
-    loading: false,
-    error: null,
-  },
-  uiState: {
-    showAll: false,
-    searchGpu: "",
-    showSearch: false,
-    showAddForm: false,
-    showIndex: false,
-  },
-
-  // Dispatches
-  dataDispatch: vi.fn(),
-  uiDispatch: vi.fn(),
-};
+import createMockContext from "../../test-utils/createMockContext";
 
 // Global variables
 let user: ReturnType<typeof userEvent.setup>;
@@ -59,6 +31,8 @@ describe("Testing the data table component", () => {
         ...sampleData.rtx5090,
         id: "679a7283008a75d4667c342a", // The actual ID from the MongoDB database
       };
+
+      const mockContextValue = createMockContext();
 
       // Render component
       render(
@@ -81,6 +55,8 @@ describe("Testing the data table component", () => {
         ...sampleData.g210,
         id: "6963dcc3cc4ec5826eef4090", // The actual ID from the MongoDB database
       };
+
+      const mockContextValue = createMockContext();
 
       // Render component
       render(
@@ -118,6 +94,8 @@ describe("Testing the data table component", () => {
       // @ts-expect-error
       const performance = calculatePerformance(gpu);
 
+      const mockContextValue = createMockContext();
+
       // Render component
       render(
         <GpuContext.Provider value={mockContextValue}>
@@ -152,6 +130,8 @@ describe("Testing the data table component", () => {
 
       // Calculate the theoretical performance
       const performance = calculatePerformance(gpu);
+
+      const mockContextValue = createMockContext();
 
       // Render component
       render(
@@ -216,6 +196,8 @@ describe("Testing the data table component", () => {
         id: "679a7283008a75d4667c342a",
       };
 
+      const mockContextValue = createMockContext();
+
       // Render component
       render(
         <GpuContext.Provider value={mockContextValue}>
@@ -261,6 +243,8 @@ describe("Testing the data table component", () => {
         id: "679a7283008a75d4667c342a",
       };
 
+      const mockContextValue = createMockContext();
+
       // Set the showAll value open all tables on the page
       const mockContextShowAll = {
         ...mockContextValue,
@@ -300,6 +284,8 @@ describe("Testing the data table component", () => {
 
       // Mock the alert message
       const alertMessage = vi.spyOn(window, "confirm").mockReturnValue(true);
+
+      const mockContextValue = createMockContext();
 
       // Render component
       render(
@@ -349,6 +335,8 @@ describe("Testing the data table component", () => {
         model: "Unknown",
         id: "000a0000000a00a0000a000a", // Random non-existing ID
       };
+
+      const mockContextValue = createMockContext();
 
       // Render component
       render(
