@@ -1,5 +1,5 @@
 // Test dependencies
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 
 // Component
@@ -14,8 +14,11 @@ import GpuContext from "../../context/GpuContext";
 
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
+import userEvent from "@testing-library/user-event";
 
 // Global variables
+let user: ReturnType<typeof userEvent.setup>;
+
 const gpus: GpuType[] = [
   { ...sampleData.rtx5090, id: "rtx5090" },
   { ...sampleData.rx9070xt, id: "rx9070xt" },
@@ -229,6 +232,55 @@ describe("The PageIndex component", () => {
 
       // Confirm it contains no item list
       expect(screen.queryByRole("list")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("the react context dispatch function", () => {
+    beforeEach(() => {
+      user = userEvent.setup();
+    });
+
+    test("the show index button should send a proper context dispatch call", async () => {
+      const mockContextValue = createMockContext();
+
+      // Render the page index component
+      render(
+        <GpuContext.Provider value={mockContextValue}>
+          <PageIndex />
+        </GpuContext.Provider>,
+      );
+
+      // Find and click on the show index button
+      const showButton = screen.getByRole("button", { name: /show index/i });
+      await user.click(showButton);
+
+      expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({ type: "TOGGLE_INDEX" });
+    });
+
+    test("the hide index button should send a proper context dispatch call", async () => {
+      const mockContextValue = createMockContext();
+
+      // Create a new context with an open index
+      const mockContextIndexOpened = {
+        ...mockContextValue,
+        uiState: {
+          ...mockContextValue.uiState,
+          showIndex: true,
+        },
+      };
+
+      // Render the page index component
+      render(
+        <GpuContext.Provider value={mockContextIndexOpened}>
+          <PageIndex />
+        </GpuContext.Provider>,
+      );
+
+      // Find and click on the hide index button
+      const hideButton = screen.getByRole("button", { name: /hide index/i });
+      await user.click(hideButton);
+
+      expect(mockContextIndexOpened.uiDispatch).toHaveBeenCalledWith({ type: "TOGGLE_INDEX" });
     });
   });
 });
