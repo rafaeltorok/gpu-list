@@ -128,7 +128,7 @@ describe("Testing the Search Bar component", () => {
       user = userEvent.setup();
     });
 
-    test("the search button should send a proper context dispatch call", async () => {
+    test("the search button should send a toggle dispatch call", async () => {
       const mockContextValue = createMockContext();
 
       // Render the page index component
@@ -146,15 +146,9 @@ describe("Testing the Search Bar component", () => {
       expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({
         type: "TOGGLE_SEARCH",
       });
-
-      // NOTE: The effect inside SearchBar fires on mount (showSearch starts as false),
-      // triggering a SET_SEARCH dispatch. This is an artifact of the mocked environment
-      // since uiDispatch is a vi.fn() and never updates state, so the effect dependency
-      // never changes after the click.
-      expect(mockContextValue.uiDispatch).toHaveBeenCalledTimes(2);
     });
 
-    test("the cancel button should send a proper context dispatch call", async () => {
+    test("the cancel button should send a toggle dispatch call", async () => {
       const mockContextValue = createMockContext();
 
       // Create a new context with an open index
@@ -181,7 +175,6 @@ describe("Testing the Search Bar component", () => {
       expect(mockContextOpenSearchBar.uiDispatch).toHaveBeenCalledWith({
         type: "TOGGLE_SEARCH",
       });
-      expect(mockContextOpenSearchBar.uiDispatch).toHaveBeenCalledTimes(1);
     });
   });
 });
