@@ -25,16 +25,18 @@ describe("Testing the show all button", () => {
       uiState: {
         ...mockContextValue.uiState,
         showAll: true,
-      }
+      },
     };
 
     render(
       <GpuContext.Provider value={mockContextShowAll}>
         <ShowAllButton />
-      </GpuContext.Provider>
+      </GpuContext.Provider>,
     );
 
-    expect(screen.getByRole("button", { name: /hide all data/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /hide all data/i }),
+    ).toBeInTheDocument();
   });
 
   test("a false show all state should display a show button", () => {
@@ -43,10 +45,12 @@ describe("Testing the show all button", () => {
     render(
       <GpuContext.Provider value={mockContextValue}>
         <ShowAllButton />
-      </GpuContext.Provider>
+      </GpuContext.Provider>,
     );
 
-    expect(screen.getByRole("button", { name: /show all data/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /show all data/i }),
+    ).toBeInTheDocument();
   });
 
   test("clicking on the button sends a proper dispatch value", async () => {
@@ -58,7 +62,7 @@ describe("Testing the show all button", () => {
     render(
       <GpuContext.Provider value={mockContextValue}>
         <ShowAllButton />
-      </GpuContext.Provider>
+      </GpuContext.Provider>,
     );
 
     // Get the button and click it
@@ -66,6 +70,8 @@ describe("Testing the show all button", () => {
     await user.click(showButton);
 
     // Confirm the dispatch function has received the correct value
-    expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({ type: "TOGGLE_SHOW_ALL" });
+    expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({
+      type: "TOGGLE_SHOW_ALL",
+    });
   });
 });

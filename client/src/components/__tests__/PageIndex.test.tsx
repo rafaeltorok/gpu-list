@@ -254,7 +254,9 @@ describe("The PageIndex component", () => {
       const showButton = screen.getByRole("button", { name: /show index/i });
       await user.click(showButton);
 
-      expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({ type: "TOGGLE_INDEX" });
+      expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({
+        type: "TOGGLE_INDEX",
+      });
     });
 
     test("the hide index button should send a proper context dispatch call", async () => {
@@ -280,7 +282,9 @@ describe("The PageIndex component", () => {
       const hideButton = screen.getByRole("button", { name: /hide index/i });
       await user.click(hideButton);
 
-      expect(mockContextIndexOpened.uiDispatch).toHaveBeenCalledWith({ type: "TOGGLE_INDEX" });
+      expect(mockContextIndexOpened.uiDispatch).toHaveBeenCalledWith({
+        type: "TOGGLE_INDEX",
+      });
     });
   });
 });
