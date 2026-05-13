@@ -26,7 +26,7 @@ let user: ReturnType<typeof userEvent.setup>;
 // Helper functions
 function TestProvider({ children }: TestProviderProps) {
   const mockContext = createMockContext();
-  
+
   // Open the search bar
   const [uiState, setUiState] = useState({
     ...mockContext.uiState,
@@ -66,14 +66,19 @@ describe("Testing the Search Bar component", () => {
       render(
         <GpuContext.Provider value={mockContextValue}>
           <SearchBar />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Confirm the open button is present
-      expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /search/i }),
+      ).toBeInTheDocument();
+
+      // Assert the input field is hidden
+      expect(screen.queryByPlaceholderText(/search/i)).not.toBeInTheDocument();
     });
 
-    test("the search bar can be shown", () => {
+    test("renders the input field when showSearch is true", () => {
       const mockContextValue = createMockContext();
 
       const mockContextOpenSearchBar = {
@@ -81,19 +86,21 @@ describe("Testing the Search Bar component", () => {
         uiState: {
           ...mockContextValue.uiState,
           showSearch: true,
-        }
+        },
       };
 
       render(
         <GpuContext.Provider value={mockContextOpenSearchBar}>
           <SearchBar />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Confirm the button to hide the bar is present
-      expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /cancel/i }),
+      ).toBeInTheDocument();
 
-      // Assert the input field has the correct placeholder
+      // Assert the input field is visible
       expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
     });
 
@@ -105,7 +112,7 @@ describe("Testing the Search Bar component", () => {
       render(
         <TestProvider>
           <SearchBar />
-        </TestProvider>
+        </TestProvider>,
       );
 
       // Find the search input field and fill it
@@ -135,10 +142,19 @@ describe("Testing the Search Bar component", () => {
       const searchButton = screen.getByRole("button", { name: /search/i });
       await user.click(searchButton);
 
-      expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({ type: "TOGGLE_SEARCH" });
+      // Assert the toggle dispatch is correct
+      expect(mockContextValue.uiDispatch).toHaveBeenCalledWith({
+        type: "TOGGLE_SEARCH",
+      });
+
+      // NOTE: The effect inside SearchBar fires on mount (showSearch starts as false),
+      // triggering a SET_SEARCH dispatch. This is an artifact of the mocked environment
+      // since uiDispatch is a vi.fn() and never updates state, so the effect dependency
+      // never changes after the click.
+      expect(mockContextValue.uiDispatch).toHaveBeenCalledTimes(2);
     });
 
-    test("the cancel button send a proper context dispatch call", async () => {
+    test("the cancel button should send a proper context dispatch call", async () => {
       const mockContextValue = createMockContext();
 
       // Create a new context with an open index
@@ -161,7 +177,11 @@ describe("Testing the Search Bar component", () => {
       const hideButton = screen.getByRole("button", { name: /cancel/i });
       await user.click(hideButton);
 
-      expect(mockContextOpenSearchBar.uiDispatch).toHaveBeenCalledWith({ type: "TOGGLE_SEARCH" });
+      // Assert the toggle dispatch is correct
+      expect(mockContextOpenSearchBar.uiDispatch).toHaveBeenCalledWith({
+        type: "TOGGLE_SEARCH",
+      });
+      expect(mockContextOpenSearchBar.uiDispatch).toHaveBeenCalledTimes(1);
     });
   });
 });
