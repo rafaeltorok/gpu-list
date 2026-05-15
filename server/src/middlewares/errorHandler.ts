@@ -19,7 +19,7 @@ function errorHandler(
 
   // Narrows down validation errors
   if (err instanceof mongoose.Error.ValidationError) {
-    let errors: Record<string, string> = {};
+    const errors: Record<string, string> = {};
 
     Object.keys(err.errors).forEach((key: string) => {
       const error = err.errors[key];
