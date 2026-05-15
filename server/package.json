@@ -8,7 +8,8 @@
     "dev": "tsx watch ./src/index.ts",
     "start:test": "NODE_ENV=test node ./build/server/src/index.js",
     "dev:test": "NODE_ENV=test tsx watch ./src/index.ts",
-    "test": "cross-env NODE_ENV=test node --test --import=tsx --import ./tests/integration/setup.ts --test-concurrency=1"
+    "test": "cross-env NODE_ENV=test node --test --import=tsx --import ./tests/integration/setup.ts --test-concurrency=1",
+    "lint": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -21,17 +22,24 @@
     "morgan": "^1.10.1"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/mongoose": "^5.11.96",
     "@types/morgan": "^1.9.10",
     "@types/node": "^25.3.3",
     "@types/supertest": "^7.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.3",
+    "@typescript-eslint/parser": "^8.59.3",
     "cross-env": "^10.1.0",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "jiti": "^2.7.0",
     "prettier": "^3.8.1",
     "supertest": "^7.2.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.3"
   },
   "type": "module"
 }
