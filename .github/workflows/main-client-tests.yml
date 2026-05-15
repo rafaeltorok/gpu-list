@@ -1,0 +1,36 @@
+name: Main Client testing suites
+
+on:
+  push:
+    branches: [ main, testing ]
+
+jobs:
+  unit_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npm run test:run -- ./src/__tests__
+
+  component_tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: npm install
+      - name: Run component tests
+        run: npm run test:run -- ./src/components/__tests__
