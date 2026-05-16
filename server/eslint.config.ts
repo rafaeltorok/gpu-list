@@ -1,43 +1,46 @@
 // ESLint
 import js from "@eslint/js";
 import globals from "globals";
-import { defineConfig } from "eslint/config";
 
 // TypeScript
 import tseslint from "typescript-eslint";
 
-// Config
-export default defineConfig([
+export default tseslint.config(
   {
     ignores: [
       "build/**",
       "dist/**",
       "coverage/**",
       "node_modules/**",
-      "*.d.ts",
-      "tests/**"
+      "**/*.d.ts",
     ],
   },
 
+  // Base JavaScript recommended rules
   js.configs.recommended,
 
+  // TypeScript recommended rules
   ...tseslint.configs.recommended,
-  
+
+  // Type-aware TypeScript rules
+  ...tseslint.configs.recommendedTypeChecked,
+
   {
-    files: ["src/**/*.{ts}"],
-    plugins: {
-      "@typescript-eslint": tseslint.plugin
-    },
+    files: ["**/*.ts"],
+
     languageOptions: {
       parser: tseslint.parser,
+
       parserOptions: {
         project: "./tsconfig.json",
-        tsconfigRootDir: import.meta.dirname
+        tsconfigRootDir: import.meta.dirname,
       },
-      globals: globals.node 
+
+      globals: globals.node,
     },
+
     rules: {
-      // Use TS version instead
+      // Disable base rule in favor of TS version
       "no-unused-vars": "off",
 
       "@typescript-eslint/no-unused-vars": [
@@ -49,6 +52,7 @@ export default defineConfig([
         },
       ],
 
+      // Async safety
       "@typescript-eslint/no-floating-promises": "error",
 
       "@typescript-eslint/no-misused-promises": [
@@ -58,11 +62,14 @@ export default defineConfig([
         },
       ],
 
-      "no-console": "off",
-
+      // Code consistency
       "@typescript-eslint/consistent-type-imports": "warn",
 
+      // Gradual strictness
       "@typescript-eslint/no-explicit-any": "warn",
+
+      // Backend logging is acceptable
+      "no-console": "off",
     },
-  },
-]);
+  }
+);
