@@ -1,13 +1,35 @@
+// Mongoose dependencies
 import { Schema, model } from "mongoose";
-import type { GpuType } from "../../../shared/types/types.ts";
 
+// TypeScript types
+import type { GpuType } from "../../../shared/types/types.ts";
+import type { Types } from "mongoose";
+
+interface GpuMongoDocument {
+  manufacturer: string;
+  gpuline: string;
+  model: string;
+  cores: number;
+  tmus: number;
+  rops: number;
+  vram: number;
+  bus: number;
+  memtype: string;
+  baseclock: number;
+  boostclock: number;
+  memclock: number;
+  _id: Types.ObjectId;
+  _v: number;
+}
+
+// Schema definition
 const gpuSchema = new Schema<GpuType>({
   manufacturer: {
     type: String,
     required: [true, "Manufacturer is required"],
     trim: true,
     validate: {
-      validator: (v) => v.trim().length > 0,
+      validator: (v: string) => v.trim().length > 0,
       message: "Manufacturer cannot be empty",
     },
   },
@@ -21,7 +43,7 @@ const gpuSchema = new Schema<GpuType>({
     required: [true, "Model is required"],
     trim: true,
     validate: {
-      validator: (v) => v.trim().length > 0,
+      validator: (v: string) => v.trim().length > 0,
       message: "Model cannot be empty",
     },
   },
@@ -55,7 +77,7 @@ const gpuSchema = new Schema<GpuType>({
     required: [true, "Memory type is required"],
     trim: true,
     validate: {
-      validator: (v) => v.trim().length > 0,
+      validator: (v: string) => v.trim().length > 0,
       message: "Memory type cannot be empty",
     },
   },
@@ -77,10 +99,25 @@ const gpuSchema = new Schema<GpuType>({
 });
 
 gpuSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.__v;
+  transform: (_document, returnedObject) => {
+    // Explicitly type the Mongo object, since the original is of any type
+    const obj = returnedObject as GpuMongoDocument;
+    const transformedGpuObject: GpuType = {
+      id: obj._id.toString(),
+      manufacturer: obj.manufacturer,
+      gpuline: obj.gpuline,
+      model: obj.model,
+      cores: obj.cores,
+      tmus: obj.tmus,
+      rops: obj.rops,
+      vram: obj.vram,
+      bus: obj.bus,
+      memtype: obj.memtype,
+      baseclock: obj.baseclock,
+      boostclock: obj.boostclock,
+      memclock: obj.memclock
+    }
+    return transformedGpuObject;
   },
 });
 

@@ -90,7 +90,7 @@ gpusRouter.get(
 // POST a new graphics card on the database
 gpusRouter.post(
   "/",
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<object, object, GpuType>, res: Response, next: NextFunction) => {
     try {
       const {
         manufacturer,
@@ -147,7 +147,7 @@ gpusRouter.post(
 // PUT (update) a graphics card data
 gpusRouter.put(
   "/:id",
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }, object, Partial<GpuType>>, res: Response, next: NextFunction) => {
     try {
       const updateFields = req.body;
 
