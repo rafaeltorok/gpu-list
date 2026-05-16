@@ -7,7 +7,13 @@ import logger from "../utils/logger.js";
 
 export default async function connectToDatabase() {
   // Check if it is already connected
-  if (mongoose.connection.readyState === 1) {
+  if (mongoose.connection.readyState === mongoose.STATES.connected) {
+    return;
+  }
+
+  // Check if it is still trying to connect
+  if (mongoose.connection.readyState === mongoose.STATES.connecting) {
+    // Avoid duplicate attempts when trying to connect
     return;
   }
 
@@ -20,12 +26,17 @@ export default async function connectToDatabase() {
     
     try {
       await mongoose.connect(config.MONGODB_URI);
-      logger.info("connect to MongoDB");
+      logger.info("connected to MongoDB");
     } catch (err: unknown) {
       if (err instanceof Error) {
-        throw new Error(err.message);
+        throw new Error(`Failed to connect to MongoDB: ${err.message}`, {
+          cause: err
+        });
       } else {
-        throw new Error(String(err));
+        const unknownError = new Error(String(err));
+        throw new Error(`Failed to connect to MongoDB: ${unknownError.message}`, {
+          cause: err
+        });
       }
     }
   } else {
