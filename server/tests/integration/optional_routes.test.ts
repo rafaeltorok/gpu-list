@@ -12,16 +12,16 @@ import { gpuList } from "../data/data.js";
 
 const api = supertest(app);
 
-// Clear the database and add the testing data
-beforeEach(async () => {
-  await GpuModel.deleteMany({});
-  for (const gpu of gpuList) {
-    const gpuObject = new GpuModel(gpu);
-    await api.post("/api/gpus").send(gpuObject.toJSON());
-  }
-});
+describe("Testing the optional routes", { concurrency: false }, () => {
+  // Clear the database and add the testing data
+  beforeEach(async () => {
+    await GpuModel.deleteMany({});
+    for (const gpu of gpuList) {
+      const gpuObject = new GpuModel(gpu);
+      await api.post("/api/gpus").send(gpuObject.toJSON());
+    }
+  });
 
-describe("Testing the optional routes", () => {
   test("No VRAM route", async () => {
     // Get all cards from the novram route
     const getResponse = await api

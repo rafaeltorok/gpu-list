@@ -15,12 +15,12 @@ const api = supertest(app);
 // Store the initial amount of objects
 const initialDataLength: number = 0;
 
-// Clear the database and add the testing data
-beforeEach(async () => {
-  await GpuModel.deleteMany({});
-});
+describe("POST route", { concurrency: false }, () => {
+  // Clear the database and add the testing data
+  beforeEach(async () => {
+    await GpuModel.deleteMany({});
+  });
 
-describe("POST route", () => {
   test("A new GPU can be added", async () => {
     // Get the first card from the list
     const gpuData = { ...gpuList[0] };

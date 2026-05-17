@@ -12,16 +12,16 @@ import { gpuList } from "../data/data.js";
 
 const api = supertest(app);
 
-// Clear the database and add the testing data
-beforeEach(async () => {
-  await GpuModel.deleteMany({});
-  for (const gpu of gpuList) {
-    const gpuObject = new GpuModel(gpu);
-    await api.post("/api/gpus").send(gpuObject.toJSON());
-  }
-});
+describe("PUT route", { concurrency: false }, () => {
+  // Clear the database and add the testing data
+  beforeEach(async () => {
+    await GpuModel.deleteMany({});
+    for (const gpu of gpuList) {
+      const gpuObject = new GpuModel(gpu);
+      await api.post("/api/gpus").send(gpuObject.toJSON());
+    }
+  });
 
-describe("PUT route", () => {
   test("A card can be updated", async () => {
     const getResponse = await api.get("/api/gpus").expect(200);
 

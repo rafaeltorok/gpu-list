@@ -15,16 +15,16 @@ const api = supertest(app);
 // Store the initial amount of objects
 const initialDataLength: number = gpuList.length;
 
-// Clear the database and add the testing data
-beforeEach(async () => {
-  await GpuModel.deleteMany({});
-  for (const gpu of gpuList) {
-    const gpuObject = new GpuModel(gpu);
-    await api.post("/api/gpus").send(gpuObject.toJSON());
-  }
-});
+describe("DELETE route", { concurrency: false }, () => {
+  // Clear the database and add the testing data
+  beforeEach(async () => {
+    await GpuModel.deleteMany({});
+    for (const gpu of gpuList) {
+      const gpuObject = new GpuModel(gpu);
+      await api.post("/api/gpus").send(gpuObject.toJSON());
+    }
+  });
 
-describe("DELETE route", () => {
   test("A GPU can be deleted", async () => {
     const gpuData = {
       manufacturer: "AMD",
