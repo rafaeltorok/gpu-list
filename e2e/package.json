@@ -3,20 +3,25 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "cypress:open": "cypress open",
-    "cypress:cli": "cypress run"
+    "server": "cd ../server && npm run dev:test",
+    "client": "cd ../client && npm run dev",
+    "dev:test-env": "concurrently 'npm run server' 'npm run client'",
+    "e2e:ui": "start-server-and-test dev:test-env http://localhost:5173 'cypress open'",
+    "e2e:cli": "start-server-and-test dev:test-env http://localhost:5173 'cypress run'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "cypress": "^14.0.3",
     "eslint-plugin-cypress": "^4.1.0",
+    "prettier": "^3.8.1",
+    "start-server-and-test": "^3.0.5",
     "typescript": "5.4"
   },
   "dependencies": {
-    "dotenv": "^17.2.1",
-    "prettier": "^3.8.1"
+    "dotenv": "^17.2.1"
   }
 }

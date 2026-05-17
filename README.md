@@ -366,54 +366,33 @@ App access
 
 ## End-to-End (E2E) Testing
 ### Manual testing
-Enter the `tests` folder and install the dependencies
+The npm script will automatically start both client and server, using the packages [start-server-and-test⇗](https://github.com/bahmutov/start-server-and-test) and [concurrently⇗](https://www.npmjs.com/package/concurrently).
+
+Install the necessary dependencies for Cypress
   ```bash
   cd ./e2e && npm install
   ```
 
-Start the Main UI
-  ```bash
-  cd ./client && npm run dev
-  ```
-
-Start the Backend Server in testing mode 
-- This uses a test database from MongoDB to prevent data loss from the main one.
-
-- Compile the TypeScript code to JavaScript
-  ```bash
-  cd ./server && npm install && npm run tsc
-  ```
-
-- Running the compiled JavaScript code
-  ```bash
-  npm run start:test
-  ```
-
-- Running the TypeScript code with tsx (uses the `watch` flag for hot reloading)
-  ```bash
-  npm run dev:test
-  ```
-
 Run Cypress
-  - UI mode
+  - UI mode (Using a browser window)
     ```bash
-    npm run cypress:open
+    npm run e2e:ui
     ```
 
   - CLI mode
     ```bash
-    npm run cypress:cli
+    npm run e2e:cli
     ``` 
   
 ### Testing via Docker
-- Run the tests
-  ```bash
-  docker compose -f docker-compose.test.yml up --build --abort-on-container-exit && docker compose -f docker-compose.test.yml down -v
-  ```
+Run the tests
+```bash
+docker compose -f docker-compose.test.yml up --build --abort-on-container-exit && docker compose -f docker-compose.test.yml down -v
+```
 
-  - This command will also remove the stopped containers after all tests are finished.
+- This command will also remove the stopped containers after all tests are finished.
 
-Note: ⚠️ E2E tests were designed for the Main UI only
+Note: ⚠️ E2E tests were designed for the Main UI only.
 
 
 ## Integration tests (Backend server)
