@@ -23,7 +23,11 @@ app.use(express.json());
 // Express routes
 app.use("/api/gpus", gpusRouter);
 
-if (process.env.NODE_ENV === "test") {
+// Enable the reset database route only when running E2E or Server integration tests
+if (
+  process.env.NODE_ENV === "test" || 
+  process.env.NODE_ENV === "e2e"
+) {
   app.use("/api/testing", testingRouter);
 }
 
