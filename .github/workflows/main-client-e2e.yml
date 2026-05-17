@@ -1,0 +1,25 @@
+name: Main Client E2E tests
+
+on:
+  push:
+    branches: [ main, testing ]
+
+jobs:
+  main_client_e2e:
+    runs-on: ubuntu-latest
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Install the Main Client dependencies
+        working-directory: ./client
+        run: npm install
+      - name: Install Server dependencies
+        working-directory: ./server
+        run: npm install
+      - name: Run E2E tests in CLI
+        working-directory: ./e2e
+        run: npm install && npm run e2e:cli
