@@ -244,7 +244,7 @@ describe("Testing the calculate performance util", () => {
       };
 
       // Calculate the performance with the invalid data
-      // @ts-expect-error
+      // @ts-expect-error - The invalid object is intentional, no need for type checking
       const performance: string[] = calculatePerformance(invalidData);
 
       // Assert all GPU core related performances are invalid
@@ -258,7 +258,7 @@ describe("Testing the calculate performance util", () => {
       };
 
       // Calculate the performance with the invalid data
-      // @ts-expect-error
+      // @ts-expect-error - The invalid object is intentional, no need for type checking
       const performance: string[] = calculatePerformance(invalidData);
 
       // Assert all GPU core related performances are invalid
@@ -272,7 +272,7 @@ describe("Testing the calculate performance util", () => {
       };
 
       // Calculate the performance with the invalid data
-      // @ts-expect-error
+      // @ts-expect-error - The invalid object is intentional, no need for type checking
       const performance: string[] = calculatePerformance(invalidData);
 
       // Assert the Memory Bandwidth is invalid

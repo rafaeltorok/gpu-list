@@ -80,7 +80,7 @@ describe("Testing the generate GPU DOM ID util", () => {
     });
 
     test("passing no input value", () => {
-      // @ts-expect-error
+      // @ts-expect-error - The empty input is intentional, no need for type checking
       const domId = generateGpuDomId();
 
       // Confirm only an empty string is returned
@@ -88,10 +88,10 @@ describe("Testing the generate GPU DOM ID util", () => {
     });
 
     test("malformed input value", () => {
-      const { manufacturer, model, ...otherFields } = sampleData.rtx5090;
+      const invalidInput = { ...sampleData.rtx5090, manufacturer: undefined, model: undefined };
 
-      // @ts-expect-error
-      const domId = generateGpuDomId(otherFields);
+      // @ts-expect-error - The invalid object is intentional, no need for type checking
+      const domId = generateGpuDomId(invalidInput);
 
       // Confirm only an empty string is returned
       expect(domId).toBe("");
