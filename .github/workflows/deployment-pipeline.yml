@@ -30,6 +30,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: ${{ github.event_name == 'push' }}
+          file: ./server/Dockerfile.prod
           tags: ${{ secrets.DOCKER_USERNAME }}/gpulist:latest
 
   deploy-to-render:
