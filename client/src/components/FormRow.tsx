@@ -1,3 +1,7 @@
+// Dependencies
+import React from "react";
+
+// TypeScript types
 type formRowProps = {
   id: string;
   type: string;
@@ -7,6 +11,7 @@ type formRowProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
+// Component
 export default function FormRow({
   id,
   type,

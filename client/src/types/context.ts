@@ -1,3 +1,4 @@
+import type React from "react";
 import type { GpuType, GpuInputType } from "../../../shared/types/types";
 
 export type UiState = {

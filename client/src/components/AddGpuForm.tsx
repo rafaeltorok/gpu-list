@@ -1,5 +1,5 @@
 // Component dependencies
-import { useState } from "react";
+import React, { useState } from "react";
 import useGpuContext from "../hooks/useGpuContext";
 
 // React components
