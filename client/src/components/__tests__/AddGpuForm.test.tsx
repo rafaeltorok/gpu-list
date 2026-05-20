@@ -232,27 +232,27 @@ describe("Testing the add graphics card form", () => {
     });
 
     test("the gpu line field is optional", async () => {
-      const { gpuline, ...otherFields } = sampleData.rtx5090;
+      const invalidInput = { ...sampleData.rtx5090, gpuline: undefined };
 
       const formFields = getInputFields();
 
-      // @ts-expect-error
-      await fillInputFields(formFields, otherFields);
+      // @ts-expect-error - Ignore the optional line field
+      await fillInputFields(formFields, invalidInput);
 
       // Assert the correct input is present on each respective field
       expect(formFields.manufacturerField).toHaveValue(
-        otherFields.manufacturer,
+        invalidInput.manufacturer,
       );
-      expect(formFields.modelField).toHaveValue(otherFields.model);
-      expect(formFields.coresField).toHaveValue(otherFields.cores);
-      expect(formFields.tmusField).toHaveValue(otherFields.tmus);
-      expect(formFields.ropsField).toHaveValue(otherFields.rops);
-      expect(formFields.vramField).toHaveValue(otherFields.vram);
-      expect(formFields.busField).toHaveValue(otherFields.bus);
-      expect(formFields.memTypeField).toHaveValue(otherFields.memtype);
-      expect(formFields.baseClockField).toHaveValue(otherFields.baseclock);
-      expect(formFields.boostClockField).toHaveValue(otherFields.boostclock);
-      expect(formFields.memClockField).toHaveValue(otherFields.memclock);
+      expect(formFields.modelField).toHaveValue(invalidInput.model);
+      expect(formFields.coresField).toHaveValue(invalidInput.cores);
+      expect(formFields.tmusField).toHaveValue(invalidInput.tmus);
+      expect(formFields.ropsField).toHaveValue(invalidInput.rops);
+      expect(formFields.vramField).toHaveValue(invalidInput.vram);
+      expect(formFields.busField).toHaveValue(invalidInput.bus);
+      expect(formFields.memTypeField).toHaveValue(invalidInput.memtype);
+      expect(formFields.baseClockField).toHaveValue(invalidInput.baseclock);
+      expect(formFields.boostClockField).toHaveValue(invalidInput.boostclock);
+      expect(formFields.memClockField).toHaveValue(invalidInput.memclock);
 
       // Select the Submit button
       const submitButton = screen.getByRole("button", { name: /submit/i });
@@ -265,18 +265,18 @@ describe("Testing the add graphics card form", () => {
 
       // Confirm the correct data has been passed on to the function
       expect(mockContextOpenForm.createGpu).toHaveBeenCalledWith({
-        ...otherFields,
+        ...invalidInput,
         gpuline: "",
       });
     });
 
     test("the manufacturer and model fields are required", async () => {
-      const { manufacturer, model, ...otherFields } = sampleData.rtx5090;
+      const invalidInput = { ...sampleData.rtx5090, manufacturer: undefined, model: undefined };
 
       const formFields = getInputFields();
 
-      // @ts-expect-error
-      await fillInputFields(formFields, otherFields);
+      // @ts-expect-error - The invalid object is intentional, no need for type checking
+      await fillInputFields(formFields, invalidInput);
 
       // Select the Submit button
       const submitButton = screen.getByRole("button", { name: /submit/i });
@@ -347,12 +347,12 @@ describe("Testing the add graphics card form", () => {
     });
 
     test("empty memory type field", async () => {
-      const { memtype, ...otherFields } = sampleData.rtx5090;
+      const invalidInput = { ...sampleData.rtx5090, memtype: undefined };
 
       const formFields = getInputFields();
 
-      // @ts-expect-error
-      await fillInputFields(formFields, otherFields);
+      // @ts-expect-error - The invalid object is intentional, no need for type checking
+      await fillInputFields(formFields, invalidInput);
 
       // Select the Submit button
       const submitButton = screen.getByRole("button", { name: /submit/i });
