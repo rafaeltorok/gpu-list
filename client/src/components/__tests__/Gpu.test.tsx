@@ -90,16 +90,12 @@ describe("Testing the data table component", () => {
         bus: true,
       };
 
-      // Calculate the theoretical performance
-      // @ts-expect-error
-      const performance = calculatePerformance(gpu);
-
       const mockContextValue = createMockContext();
 
       // Render component
       render(
         <GpuContext.Provider value={mockContextValue}>
-          {/* @ts-expect-error */}
+          {/* @ts-expect-error  - The invalid object is intentional, no need for type checking */}
           <Gpu gpu={gpu} />
         </GpuContext.Provider>,
       );
