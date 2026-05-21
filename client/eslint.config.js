@@ -11,7 +11,6 @@ import tseslint from "typescript-eslint";
 // Configuration
 export default [
   js.configs.recommended,
-  ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
 
   { ignores: ["dist", "coverage", "node_modules"] },
