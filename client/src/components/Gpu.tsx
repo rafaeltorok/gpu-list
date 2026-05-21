@@ -188,7 +188,7 @@ export default function Gpu({ gpu }: GpuProps) {
               <td colSpan={2} id="delete-gpu-button">
                 <button
                   aria-label={`Delete ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                  onClick={() => deleteGpu(gpu)}
+                  onClick={() => void deleteGpu(gpu)}
                 >
                   Delete
                 </button>
