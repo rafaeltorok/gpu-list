@@ -12,22 +12,26 @@ declare global {
        * @example cy.get('input').typeRandomWords()
        */
       // setup commands
-      setupDatabase(): Chainable<Cypress.Response<unknown>>,
+      setupDatabase(): Chainable<Cypress.Response<unknown>>;
 
       // addForm commands
-      fillAddForm(gpu: GpuInputType): Chainable<void>,
+      fillAddForm(gpu: GpuInputType): Chainable<void>;
 
       // dataTables commands
-      showData(gpu: GpuInputType): Chainable<void>,
-      checkRowData(gpu: GpuInputType, rowName: string, data: string | number): Chainable<void>,
-      checkSpecs(gpu: GpuInputType, vramSuffix: string): Chainable<void>,
+      showData(gpu: GpuInputType): Chainable<void>;
+      checkRowData(
+        gpu: GpuInputType,
+        rowName: string,
+        data: string | number,
+      ): Chainable<void>;
+      checkSpecs(gpu: GpuInputType, vramSuffix: string): Chainable<void>;
 
       // gpu commands
-      createGpu(gpuObject: GpuInputType): Chainable<Cypress.Response<unknown>>,
-      addSampleData(): Chainable<void>,
+      createGpu(gpuObject: GpuInputType): Chainable<Cypress.Response<unknown>>;
+      addSampleData(): Chainable<void>;
 
       // index commands
-      indexSelector(itemName: string): Chainable<void>
+      indexSelector(itemName: string): Chainable<void>;
     }
   }
 }

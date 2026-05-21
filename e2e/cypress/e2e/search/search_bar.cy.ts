@@ -1,7 +1,7 @@
 // E2E tests
 describe("testing the search bar", function () {
   beforeEach(function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       cy.setupDatabase();
 
       // Add all available cards on the list to test with multiple manufacturers

@@ -271,7 +271,11 @@ describe("Testing the add graphics card form", () => {
     });
 
     test("the manufacturer and model fields are required", async () => {
-      const invalidInput = { ...sampleData.rtx5090, manufacturer: undefined, model: undefined };
+      const invalidInput = {
+        ...sampleData.rtx5090,
+        manufacturer: undefined,
+        model: undefined,
+      };
 
       const formFields = getInputFields();
 

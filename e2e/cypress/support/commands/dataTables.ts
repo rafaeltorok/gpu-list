@@ -5,13 +5,14 @@ import type { GpuInputType } from "../../../../shared/types/types";
 import getFullModel from "../utils/getFullModel";
 
 // Open a card data table to show all data
-Cypress.Commands.add(
-  "showData",
-  (gpu: GpuInputType) => {
-    const fullModelName = getFullModel(gpu);
-    cy.contains(".gpu-data-table", fullModelName).closest("table").find("button").contains("Show").click();
-  }
-);
+Cypress.Commands.add("showData", (gpu: GpuInputType) => {
+  const fullModelName = getFullModel(gpu);
+  cy.contains(".gpu-data-table", fullModelName)
+    .closest("table")
+    .find("button")
+    .contains("Show")
+    .click();
+});
 
 // Check if the data on a row is correct
 Cypress.Commands.add(
@@ -26,22 +27,19 @@ Cypress.Commands.add(
         cy.contains("tr", rowName).within(() => {
           cy.get("td").contains(String(data));
         });
-      })
-  }
+      });
+  },
 );
 
 // Expand the data table and confirm all specifications are correct
-Cypress.Commands.add(
-  "checkSpecs",
-  (gpu: GpuInputType, vramSuffix: string) => {
-    // Open the respective data table and check all specifications
-    cy.checkRowData(gpu, "CORES", gpu.cores);
-    cy.checkRowData(gpu, "TMUs", gpu.tmus);
-    cy.checkRowData(gpu, "ROPs", gpu.rops);
-    cy.checkRowData(gpu, "VRAM", `${gpu.vram}${vramSuffix} ${gpu.memtype}`);
-    cy.checkRowData(gpu, "BUS WIDTH", `${gpu.bus} bit`);
-    cy.checkRowData(gpu, "BASE CLOCK", `${gpu.baseclock} MHz`);
-    cy.checkRowData(gpu, "BOOST CLOCK", `${gpu.boostclock} MHz`);
-    cy.checkRowData(gpu, "MEMORY CLOCK", `${gpu.memclock} Gbps effective`);
-  }
-);
+Cypress.Commands.add("checkSpecs", (gpu: GpuInputType, vramSuffix: string) => {
+  // Open the respective data table and check all specifications
+  cy.checkRowData(gpu, "CORES", gpu.cores);
+  cy.checkRowData(gpu, "TMUs", gpu.tmus);
+  cy.checkRowData(gpu, "ROPs", gpu.rops);
+  cy.checkRowData(gpu, "VRAM", `${gpu.vram}${vramSuffix} ${gpu.memtype}`);
+  cy.checkRowData(gpu, "BUS WIDTH", `${gpu.bus} bit`);
+  cy.checkRowData(gpu, "BASE CLOCK", `${gpu.baseclock} MHz`);
+  cy.checkRowData(gpu, "BOOST CLOCK", `${gpu.boostclock} MHz`);
+  cy.checkRowData(gpu, "MEMORY CLOCK", `${gpu.memclock} Gbps effective`);
+});

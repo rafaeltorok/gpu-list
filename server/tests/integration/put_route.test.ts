@@ -54,7 +54,7 @@ describe("PUT route", { concurrency: false }, () => {
     // Check if the data has been correctly updated
     assert.deepStrictEqual(updatedGpu.body, {
       ...gpuData,
-      id: rtx3060.body.id
+      id: rtx3060.body.id,
     });
   });
 

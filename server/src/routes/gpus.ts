@@ -90,7 +90,11 @@ gpusRouter.get(
 // POST a new graphics card on the database
 gpusRouter.post(
   "/",
-  async (req: Request<object, object, GpuType>, res: Response, next: NextFunction) => {
+  async (
+    req: Request<object, object, GpuType>,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const {
         manufacturer,
@@ -114,11 +118,9 @@ gpusRouter.post(
       });
 
       if (existingGpu) {
-        return res
-          .status(409)
-          .json({
-            error: "The graphics card has already been added to the list",
-          });
+        return res.status(409).json({
+          error: "The graphics card has already been added to the list",
+        });
       }
 
       const newGpu = new Gpu({
@@ -147,7 +149,11 @@ gpusRouter.post(
 // PUT (update) a graphics card data
 gpusRouter.put(
   "/:id",
-  async (req: Request<{ id: string }, object, Partial<GpuType>>, res: Response, next: NextFunction) => {
+  async (
+    req: Request<{ id: string }, object, Partial<GpuType>>,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const updateFields = req.body;
 

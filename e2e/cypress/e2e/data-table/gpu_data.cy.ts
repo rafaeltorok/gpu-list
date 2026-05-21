@@ -10,18 +10,18 @@ describe("testing the GPU data table", function () {
     cy.setupDatabase();
 
     // Load the GPU list and add each item
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Add a new card to the list
       const gpu = gpuList[0];
       cy.createGpu(gpu);
 
       // Reload the page to update the list
-      cy.visit('/');
+      cy.visit("/");
     });
   });
 
   it("the show button displays all specifications for a card", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Select a card form the list
       const gpu = gpuList[0];
 
@@ -29,12 +29,12 @@ describe("testing the GPU data table", function () {
       cy.showData(gpu);
 
       // Check if all the card data is being displayed
-      cy.checkSpecs(gpu, "GB")
+      cy.checkSpecs(gpu, "GB");
     });
   });
 
   it("the theoretical performance is correct", function () {
-    cy.fixture('gpus').then((gpuList: GpuInputType[]) => {
+    cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
       // Select a card from the list
       const gpu = gpuList[0];
 
@@ -53,7 +53,7 @@ describe("testing the GPU data table", function () {
   });
 
   it("a FP32 performance measured in TFLOPS is correctly displayed", function () {
-    cy.fixture('gpus').then((gpuList: GpuInputType[]) => {
+    cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
       // Select a card from the list
       const gpu = gpuList[0];
 
@@ -66,7 +66,7 @@ describe("testing the GPU data table", function () {
   });
 
   it("a FP32 performance measured in GFLOPS is correctly displayed", function () {
-    cy.fixture('gpus').then((gpuList: GpuInputType[]) => {
+    cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
       // Select a card from the list
       const gpu = gpuList[2];
 
@@ -85,7 +85,7 @@ describe("testing the GPU data table", function () {
   });
 
   it("cards with 4 IPC, have their FP32 performance correctly displayed", function () {
-    cy.fixture('gpus').then((gpuList: GpuInputType[]) => {
+    cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
       // Select a card from the list
       const rx9000Series = gpuList[4];
       const rx7000Series = gpuList[5];
@@ -93,7 +93,7 @@ describe("testing the GPU data table", function () {
       // Add each card to the list
       cy.request("POST", "/api/gpus", rx9000Series);
       cy.request("POST", "/api/gpus", rx7000Series);
-      
+
       // Reload the page to update the list
       cy.visit("/");
 
@@ -112,13 +112,13 @@ describe("testing the GPU data table", function () {
   });
 
   it("the GPU can be deleted", function () {
-    cy.fixture('gpus').then((gpuList: GpuInputType[]) => {
+    cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
       // Select a card from the list
       const gpu = gpuList[0];
 
       // Open a card's information table to display all data
       cy.showData(gpu);
-      
+
       // Remove the card and confirm it is not present anymore
       cy.get(".gpu-data-table tfoot #delete-gpu-button").click();
       cy.get(".gpu-data-table").should("not.exist");
@@ -126,7 +126,7 @@ describe("testing the GPU data table", function () {
   });
 
   it("the amount of VRAM is correctly displayed as either GB or MB", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Gets a GPU with a VRAM amount measured in GB
       const gpuInGb = gpuList[0];
       // Gets a GPU with a VRAM amount measured in MB
@@ -146,7 +146,7 @@ describe("testing the GPU data table", function () {
 
       // Add a second GPU with a VRAM amount in MB
       cy.request("POST", "/api/gpus", gpuInMb);
-      
+
       // Reload the page to update the list
       cy.visit("/");
 
@@ -160,7 +160,11 @@ describe("testing the GPU data table", function () {
       cy.showData(gpuInMb);
 
       // Convert the VRAM amount to MB and confirm it is properly displayed
-      cy.checkRowData(gpuInMb, "VRAM", `${(gpuInMb.vram * 1000)}MB ${gpuInMb.memtype}`);
+      cy.checkRowData(
+        gpuInMb,
+        "VRAM",
+        `${gpuInMb.vram * 1000}MB ${gpuInMb.memtype}`,
+      );
     });
   });
 });

@@ -23,7 +23,7 @@ describe("Testing the GPU list", function () {
     });
 
     it("it expands all tables on the page", function () {
-      cy.fixture('gpus').then((gpuList) => {
+      cy.fixture("gpus").then((gpuList) => {
         // Select the first 3 cards of the list
         const firstGpu = gpuList[0];
         const secondGpu = gpuList[1];
