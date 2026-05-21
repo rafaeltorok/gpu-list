@@ -12,8 +12,9 @@ import tseslint from "typescript-eslint";
 export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
 
-  { ignores: ["dist"] },
+  { ignores: ["dist", "coverage", "node_modules"] },
   {
     files: ["**/*.{ts,tsx}"],
 
@@ -25,6 +26,8 @@ export default [
       parserOptions: {
         ecmaFeatures: { jsx: true },
         sourceType: "module",
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
 
@@ -37,7 +40,6 @@ export default [
     },
 
     rules: {
-      ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...react.configs["jsx-runtime"].rules,
       ...reactHooks.configs.recommended.rules,
@@ -50,11 +52,11 @@ export default [
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "caughtErrorsIgnorePattern": "^_"
-        }
-      ]
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 ];
