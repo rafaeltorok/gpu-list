@@ -374,15 +374,15 @@ Install the necessary dependencies for Cypress
   ```
 
 Run Cypress
+  - CLI mode
+    ```bash
+    npm run e2e
+    ```
+
   - UI mode (Using a browser window)
     ```bash
     npm run e2e:ui
     ```
-
-  - CLI mode
-    ```bash
-    npm run e2e:cli
-    ``` 
   
 ### Testing via Docker
 Run the tests
