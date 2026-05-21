@@ -6,8 +6,8 @@
     "server": "cd ../server && npm run dev:e2e",
     "client": "cd ../client && npm run dev",
     "dev:test-env": "concurrently 'npm run server' 'npm run client'",
-    "e2e:ui": "start-server-and-test dev:test-env http://localhost:5173 'cypress open'",
-    "e2e:cli": "start-server-and-test dev:test-env http://localhost:5173 'cypress run'"
+    "e2e": "start-server-and-test dev:test-env http://localhost:5173 'cypress run'",
+    "e2e:ui": "start-server-and-test dev:test-env http://localhost:5173 'cypress open'"
   },
   "keywords": [],
   "author": "",
