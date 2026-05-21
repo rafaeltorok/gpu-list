@@ -24,7 +24,7 @@ function App() {
   const [uiState, uiDispatch] = useReducer(uiReducer, initialUiState);
 
   useEffect(() => {
-    async function getData() {
+    async function getData(): Promise<void> {
       try {
         dataDispatch({ type: "FETCH_START" });
         const data: GpuType[] = await gpuService.getAll();
@@ -37,7 +37,7 @@ function App() {
         }
       }
     }
-    getData();
+    void getData();
   }, []);
 
   // Debounce search input

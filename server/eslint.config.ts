@@ -12,7 +12,7 @@ export default tseslint.config({
 
   extends: [
     eslint.configs.recommended,
-    
+
     // Base JavaScript recommended rules
     js.configs.recommended,
 
@@ -75,10 +75,10 @@ export default tseslint.config({
     // Backend logging is acceptable
     "no-console": "off",
 
-    '@typescript-eslint/no-unsafe-assignment': 'error',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/restrict-template-expressions': 'off',
-    '@typescript-eslint/restrict-plus-operands': 'off',
+    "@typescript-eslint/no-unsafe-assignment": "error",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
   },
 });

@@ -23,20 +23,23 @@ export default async function connectToDatabase() {
   // If the MongoDB URI is present, connect to the database
   if (config.MONGODB_URI) {
     logger.info("connecting to", config.MONGODB_URI);
-    
+
     try {
       await mongoose.connect(config.MONGODB_URI);
       logger.info("connected to MongoDB");
     } catch (err: unknown) {
       if (err instanceof Error) {
         throw new Error(`Failed to connect to MongoDB: ${err.message}`, {
-          cause: err
+          cause: err,
         });
       } else {
         const unknownError = new Error(String(err));
-        throw new Error(`Failed to connect to MongoDB: ${unknownError.message}`, {
-          cause: err
-        });
+        throw new Error(
+          `Failed to connect to MongoDB: ${unknownError.message}`,
+          {
+            cause: err,
+          },
+        );
       }
     }
   } else {

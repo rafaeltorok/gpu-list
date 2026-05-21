@@ -51,7 +51,7 @@ describe("Testing the optional routes", { concurrency: false }, () => {
 
     // Remove the fields that are not present on this route
     const { baseclock, boostclock, memclock, ...otherFields } = gpuList[0];
-    
+
     // Confirm the fields are not present on the response data
     assert.deepStrictEqual(rtx3060, { ...otherFields, id: rtx3060.id });
   });

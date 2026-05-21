@@ -75,5 +75,5 @@ export const gpuList: GpuInputType[] = [
     baseclock: 1590,
     boostclock: 2617,
     memclock: 28,
-  }
+  },
 ];

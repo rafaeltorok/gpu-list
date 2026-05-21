@@ -26,68 +26,83 @@ export default function AddGpuForm() {
     memclock: "",
   });
 
-  const addGpu = async (event: React.FormEvent<HTMLFormElement>) => {
+  const addGpu = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     event.preventDefault();
 
-    const base = Number(gpu.baseclock.trim());
-    const boost = Number(gpu.boostclock.trim());
+    try {
+      const base = Number(gpu.baseclock.trim());
+      const boost = Number(gpu.boostclock.trim());
 
-    if (
-      gpu.manufacturer.trim() === "" ||
-      gpu.model.trim() === "" ||
-      Number(gpu.cores.trim()) < 1 ||
-      Number(gpu.tmus.trim()) < 1 ||
-      Number(gpu.rops.trim()) < 1 ||
-      Number(gpu.vram.trim()) < 0.016 ||
-      Number(gpu.bus.trim()) < 1 ||
-      gpu.memtype.trim() === "" ||
-      !Number.isInteger(base) ||
-      !Number.isInteger(boost) ||
-      Number(gpu.memclock.trim()) < 0.1
-    ) {
-      alert("Invalid GPU data");
-      return false;
-    }
+      if (
+        gpu.manufacturer.trim() === "" ||
+        gpu.model.trim() === "" ||
+        Number(gpu.cores.trim()) < 1 ||
+        Number(gpu.tmus.trim()) < 1 ||
+        Number(gpu.rops.trim()) < 1 ||
+        Number(gpu.vram.trim()) < 0.016 ||
+        Number(gpu.bus.trim()) < 1 ||
+        gpu.memtype.trim() === "" ||
+        !Number.isInteger(base) ||
+        !Number.isInteger(boost) ||
+        Number(gpu.memclock.trim()) < 0.1
+      ) {
+        alert("Invalid GPU data");
+        return;
+      }
 
-    const response: boolean = await createGpu({
-      manufacturer: gpu.manufacturer.trim(),
-      gpuline: gpu.gpuline.trim(),
-      model: gpu.model.trim(),
-      cores: Number(gpu.cores.trim()),
-      tmus: Number(gpu.tmus.trim()),
-      rops: Number(gpu.rops.trim()),
-      vram: Number(gpu.vram.trim()),
-      bus: Number(gpu.bus.trim()),
-      memtype: gpu.memtype.trim(),
-      baseclock: Number(gpu.baseclock.trim()),
-      boostclock: Number(gpu.boostclock.trim()),
-      memclock: Number(gpu.memclock.trim()),
-    });
-
-    if (response) {
-      setGpu({
-        manufacturer: "",
-        gpuline: "",
-        model: "",
-        cores: "",
-        tmus: "",
-        rops: "",
-        vram: "",
-        bus: "",
-        memtype: "",
-        baseclock: "",
-        boostclock: "",
-        memclock: "",
+      const response: boolean = await createGpu({
+        manufacturer: gpu.manufacturer.trim(),
+        gpuline: gpu.gpuline.trim(),
+        model: gpu.model.trim(),
+        cores: Number(gpu.cores.trim()),
+        tmus: Number(gpu.tmus.trim()),
+        rops: Number(gpu.rops.trim()),
+        vram: Number(gpu.vram.trim()),
+        bus: Number(gpu.bus.trim()),
+        memtype: gpu.memtype.trim(),
+        baseclock: Number(gpu.baseclock.trim()),
+        boostclock: Number(gpu.boostclock.trim()),
+        memclock: Number(gpu.memclock.trim()),
       });
-      uiDispatch({
-        type: "TOGGLE_ADD_FORM",
-      });
+
+      if (response) {
+        setGpu({
+          manufacturer: "",
+          gpuline: "",
+          model: "",
+          cores: "",
+          tmus: "",
+          rops: "",
+          vram: "",
+          bus: "",
+          memtype: "",
+          baseclock: "",
+          boostclock: "",
+          memclock: "",
+        });
+        uiDispatch({
+          type: "TOGGLE_ADD_FORM",
+        });
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err);
+      } else {
+        console.error(String(err));
+      }
     }
   };
 
   return (
     <div>
-      <form onSubmit={addGpu} className="add-gpu-form">
+      <form
+        onSubmit={(event) => {
+          void addGpu(event);
+        }}
+        className="add-gpu-form"
+      >
         <button
           className="add-gpu-button"
           type="button"

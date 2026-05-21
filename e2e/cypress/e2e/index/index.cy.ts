@@ -14,14 +14,19 @@ describe("Testing the index", function () {
 
   it("the index can be shown", function () {
     // Click on the button to expand the index
-    cy.get("#page-index-container").find("button").contains("Show index").click();
+    cy.get("#page-index-container")
+      .find("button")
+      .contains("Show index")
+      .click();
 
     // Confirm the hide button is visible
-    cy.get("#page-index-container").find("button").should("contain", "Hide index");
+    cy.get("#page-index-container")
+      .find("button")
+      .should("contain", "Hide index");
   });
 
   it("checking if the graphics cards are present in the index", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Select the sample data form the data file
       const firstGpu = gpuList[0];
       const secondGpu = gpuList[1];
@@ -34,9 +39,7 @@ describe("Testing the index", function () {
         .click();
 
       // Confirm all cards are present on the index
-      cy.get(".index-list li")
-        .eq(0)
-        .contains(getFullModel(firstGpu));
+      cy.get(".index-list li").eq(0).contains(getFullModel(firstGpu));
 
       cy.get(".index-list li").eq(1).contains(getFullModel(secondGpu));
 
@@ -45,42 +48,58 @@ describe("Testing the index", function () {
   });
 
   it("clicking on an index item expands the respective data table", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a test card from the list
       const gpu = gpuList[0];
 
       // Open the index
-      cy.get("#page-index-container").find("button").contains("Show index").click();
+      cy.get("#page-index-container")
+        .find("button")
+        .contains("Show index")
+        .click();
 
       // Selects the respective card name on the index
       cy.indexSelector(getFullModel(gpu));
 
       // Confirm all specifications are being displayed
-      cy.checkSpecs(gpu, "GB")
+      cy.checkSpecs(gpu, "GB");
     });
   });
 
   it("the index can be hidden", function () {
     // Open the index
-    cy.get("#page-index-container").find("button").contains("Show index").click();
+    cy.get("#page-index-container")
+      .find("button")
+      .contains("Show index")
+      .click();
 
     // Confirm it has been opened
-    cy.get("#page-index-container").find("button").should("contain", "Hide index");
+    cy.get("#page-index-container")
+      .find("button")
+      .should("contain", "Hide index");
 
     // Click on the hide button
-    cy.get("#page-index-container").find("button").contains("Hide index").click();
+    cy.get("#page-index-container")
+      .find("button")
+      .contains("Hide index")
+      .click();
 
     // Confirm it is hidden
-    cy.get("#page-index-container").find("button").should("contain", "Show index");
+    cy.get("#page-index-container")
+      .find("button")
+      .should("contain", "Show index");
   });
 
   it("the back to index button works properly", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a test card from the list
       const gpu = gpuList[0];
 
       // Open the index
-      cy.get("#page-index-container").find("button").contains("Show index").click();
+      cy.get("#page-index-container")
+        .find("button")
+        .contains("Show index")
+        .click();
 
       // Click on the first index item
       cy.indexSelector(getFullModel(gpu));

@@ -232,7 +232,7 @@ describe("Testing the data table component", () => {
       ).not.toBeInTheDocument();
     });
 
-    test("the Show All Data button automatically opens the GPU table", async () => {
+    test("the Show All Data button automatically opens the GPU table", () => {
       // Get a sample card to test
       const gpu = {
         ...sampleData.rtx5090,
@@ -307,7 +307,7 @@ describe("Testing the data table component", () => {
   });
 
   describe("CSS classes", () => {
-    test("each of the manufacturer CSS classes are correctly applied", async () => {
+    test("each of the manufacturer CSS classes are correctly applied", () => {
       // Get sample cards to test
       const nvidiaGpu = {
         ...sampleData.rtx5090,

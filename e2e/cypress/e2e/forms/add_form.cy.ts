@@ -10,9 +10,9 @@ describe("Testing the add form", function () {
     // Access the main page
     cy.visit("/");
   });
-  
+
   it("a new GPU can be added", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a test card from the list
       const gpu = gpuList[0];
 
@@ -73,7 +73,7 @@ describe("Testing the add form", function () {
   });
 
   it("the GPU Line field is not required to add a new card", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a card from the list without a specific line
       const gpu = gpuList[3];
 
@@ -88,7 +88,7 @@ describe("Testing the add form", function () {
   });
 
   it("an empty name cannot be added", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a card from the list
       const gpu = gpuList[0];
 
@@ -100,7 +100,7 @@ describe("Testing the add form", function () {
         model: " ",
       });
       cy.get(".add-gpu-submit-button").click();
-      
+
       // Assert an alert message is displayed and no card has been added
       cy.on("window:alert", (text) => {
         expect(text).to.equal("Invalid GPU data");
@@ -110,7 +110,7 @@ describe("Testing the add form", function () {
   });
 
   it("invalid specifications", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a card from the list
       const gpu = gpuList[0];
 
@@ -135,7 +135,7 @@ describe("Testing the add form", function () {
   });
 
   it("invalid clock speeds", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a card from the list
       const gpu = gpuList[0];
 
@@ -157,14 +157,14 @@ describe("Testing the add form", function () {
   });
 
   it("invalid data does not hide the add form", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a card from the list
       const gpu = gpuList[0];
 
       // Fill the form and click on the add button
       cy.fillAddForm({
         ...gpu,
-        cores: 0
+        cores: 0,
       });
 
       // Assert an alert message is displayed and that the add form is still visible
@@ -179,14 +179,14 @@ describe("Testing the add form", function () {
   });
 
   it("invalid data does not erase the current inputs", function () {
-    cy.fixture('gpus').then((gpuList) => {
+    cy.fixture("gpus").then((gpuList) => {
       // Get a card from the list
       const gpu = gpuList[0];
 
       // Fill the form and click on the add button
       cy.fillAddForm({
         ...gpu,
-        cores: 0
+        cores: 0,
       });
       cy.get(".add-gpu-submit-button").click();
 

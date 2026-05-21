@@ -115,8 +115,8 @@ gpuSchema.set("toJSON", {
       memtype: obj.memtype,
       baseclock: obj.baseclock,
       boostclock: obj.boostclock,
-      memclock: obj.memclock
-    }
+      memclock: obj.memclock,
+    };
     return transformedGpuObject;
   },
 });

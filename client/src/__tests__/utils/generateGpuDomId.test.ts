@@ -88,7 +88,11 @@ describe("Testing the generate GPU DOM ID util", () => {
     });
 
     test("malformed input value", () => {
-      const invalidInput = { ...sampleData.rtx5090, manufacturer: undefined, model: undefined };
+      const invalidInput = {
+        ...sampleData.rtx5090,
+        manufacturer: undefined,
+        model: undefined,
+      };
 
       // @ts-expect-error - The invalid object is intentional, no need for type checking
       const domId = generateGpuDomId(invalidInput);
