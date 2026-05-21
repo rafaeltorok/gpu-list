@@ -43,7 +43,7 @@ const dataReducer = (state: DataState, action: DataActions): DataState => {
 };
 
 function assertNever(x: never): never {
-  throw new Error("Unexpected action: " + x);
+  throw new Error("Unexpected action: " + String(x));
 }
 
 export default dataReducer;
