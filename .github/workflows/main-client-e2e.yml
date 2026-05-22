@@ -5,7 +5,7 @@ on:
     branches: [ main, testing ]
 
 jobs:
-  main_client_e2e:
+  main-client-e2e:
     runs-on: ubuntu-latest
     env:
       E2E_MONGODB_URI: ${{ secrets.E2E_MONGODB_URI }}
