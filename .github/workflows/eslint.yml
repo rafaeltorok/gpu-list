@@ -5,11 +5,26 @@ on:
     branches: [ main, testing ]
 
 jobs:
-  server_linting:
+  server-linting:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./server
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm install
+      - name: Run ESLint
+        run: npm run lint
+
+  main-client-linting:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
