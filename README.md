@@ -62,7 +62,12 @@ Built with:
 - Frontend: React + Axios
 - The entire project was written with TypeScript
 
-App available on Render: https://gpulist.onrender.com and https://gpulist.onrender.com/alt
+#### App available on Render: https://gpulist.onrender.com and https://gpulist.onrender.com/alt
+
+#### Container image available on the Docker Hub
+```bash
+docker pull rafaeltorok/gpulist:latest
+```
 
 
 ## Tech Stack
@@ -82,7 +87,9 @@ Database
 
 Testing
 - Cypress (E2E)
-- node:test + supertest (integration)
+- node:test + supertest (Server integration tests)
+- Vitest + React Testing Library (Main client component tests)
+- Vitest (Main client unit tests)
 
 DevOps
 - Docker
@@ -144,7 +151,7 @@ $ cd ./server && npm install && npm run start
     "baseclock": number,    // in MHz
     "boostclock": number,   // in MHz
     "memclock": number,     // in Gbps
-    "_id": ObjectId            // The MongoDB object id
+    "_id": ObjectId         // The MongoDB object id
   },
   ```
 
@@ -160,7 +167,8 @@ $ cd ./server && npm install && npm run start
 - The `.env` file should have the following **three** fields (examples)
   ```conf
   MONGODB_URI=mongodb+srv://myDatabaseUser:myPassword@cluster0.example.mongodb.net/?retryWrites=true&w=majority
-  TEST_MONGODB_URI=mongodb+srv://myTestDatabaseUser:myPassword@cluster0.example.mongodb.net/?retryWrites=true&w=majority
+  TEST_MONGODB_URI=mongodb+srv://myTestDatabaseUser:myPassword@cluster0.example.mongodb.net/test?retryWrites=true&w=majority
+  E2E_MONGODB_URI=mongodb+srv://myTestDatabaseUser:myPassword@cluster0.example.mongodb.net/e2e?retryWrites=true&w=majority
   PORT=3001
   ```
 
@@ -168,7 +176,13 @@ $ cd ./server && npm install && npm run start
 
 - The frontend uses a **dev proxy** on `vite.config.ts` currently configured to fetch data from port **3001** on the backend server.
 
-- The backend server will always use the main database as default. For the test one, you must pass the correct flag when starting the server: `NODE_ENV=test`, or add this variable to the `.env` file.
+- The backend server will always use the main database as default. For the test one, you must pass the correct flag when starting the server: 
+  
+  - `NODE_ENV=test` : For the server integration tests
+  - `NODE_ENV=e2e` : For the main client E2E tests
+  - or add one of these variables to the `.env` file.
+
+- The E2E tests database env, must follow the same pattern as the other test one, passing the flag
 
 
 ## Starting the web app
