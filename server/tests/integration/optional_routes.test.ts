@@ -22,6 +22,27 @@ describe("Testing the optional routes", { concurrency: false }, () => {
     }
   });
 
+  test("No ID route", async () => {
+    // Get all cards from the noid route
+    const getResponse = await api
+      .get("/api/gpus/noid")
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+
+    // Select the first one
+    const rtx3060 = getResponse.body[0];
+
+    // Confirm id is absent
+    assert.ok(!("id" in rtx3060));
+
+    // Confirm the Mongo fields are absent too
+    assert.ok(!("_id" in rtx3060));
+    assert.ok(!("__v" in rtx3060));
+
+    // Confirm the expected data still exists
+    assert.strictEqual(rtx3060.model, gpuList[0].model);
+  });
+
   test("No VRAM route", async () => {
     // Get all cards from the novram route
     const getResponse = await api

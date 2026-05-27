@@ -102,6 +102,7 @@ gpuSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
     // Explicitly type the Mongo object, since the original is of any type
     const obj = returnedObject as GpuMongoDocument;
+
     const transformedGpuObject: GpuType = {
       id: obj._id.toString(),
       manufacturer: obj.manufacturer,

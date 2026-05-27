@@ -29,6 +29,8 @@ export type GpuType = {
   memclock: number;
 };
 
+export type HideId = Omit<GpuType, "id">;
+
 export type HideClockSpeeds = Omit<
   GpuType,
   "baseclock" | "boostclock" | "memclock"
