@@ -7,6 +7,7 @@ import type { Request, Response, NextFunction } from "express";
 import type {
   GpuType,
   FormatGpuCalc,
+  HideId,
   HideClockSpeeds,
   HideVram,
 } from "../../../shared/types/types.js";
@@ -20,6 +21,19 @@ gpusRouter.get(
     try {
       const gpuList = await Gpu.find();
       return res.status(200).json(gpuList);
+    } catch (err: unknown) {
+      next(err);
+    }
+  },
+);
+
+// Omit the ID value
+gpusRouter.get(
+  "/noid",
+  async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const gpus: HideId[] = await Gpu.find().select("-_id -__v").lean();
+      return res.json(gpus);
     } catch (err: unknown) {
       next(err);
     }
