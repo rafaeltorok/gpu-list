@@ -1,0 +1,16 @@
+FROM node:20-alpine
+
+WORKDIR /usr/src/app/server
+
+COPY --chown=node:node ./server/package*.json ./
+RUN npm ci
+
+COPY --chown=node:node ./server .
+
+EXPOSE 3001
+
+ENV PORT=3001
+
+USER node
+
+CMD ["npm", "run", "dev"]
