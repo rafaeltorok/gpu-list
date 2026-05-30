@@ -1,7 +1,6 @@
 services:
   webapp-server:
     build:
-      context: ./
       dockerfile: ./server/Dockerfile
     container_name: gpulist-webapp-server
     networks:
@@ -13,7 +12,6 @@ services:
 
   webapp-client:
     build:
-      context: ./
       dockerfile: ./client/Dockerfile
     container_name: gpulist-webapp-client
     networks:
@@ -25,8 +23,7 @@ services:
 
   webapp-alt-client:
     build:
-      context: ./alternative-client
-      dockerfile: Dockerfile
+      dockerfile: ./alternative-client/Dockerfile
     container_name: gpulist-webapp-alt-client
     networks:
       - webapp-network
