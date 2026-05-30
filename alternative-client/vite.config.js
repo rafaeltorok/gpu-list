@@ -6,6 +6,7 @@ const serverUrl = process.env.VITE_SERVER_URL || "http://localhost:3001";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/alt",
   server: {
     proxy: {
       "/api": {
