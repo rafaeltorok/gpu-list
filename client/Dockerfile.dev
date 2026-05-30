@@ -1,0 +1,17 @@
+FROM node:20-alpine AS build
+
+WORKDIR /usr/src/app/client
+
+COPY --chown=node:node ./client/package*.json ./
+COPY --chown=node:node ./shared/utils/generateGpuDomId.ts /usr/src/app/shared/utils/generateGpuDomId.ts
+COPY --chown=node:node ./shared/utils/calculatePerformance.ts /usr/src/app/shared/utils/calculatePerformance.ts
+
+RUN npm ci
+
+COPY --chown=node:node ./client .
+
+EXPOSE 5173
+
+USER node
+
+CMD ["npm", "run", "dev"]

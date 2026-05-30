@@ -1,0 +1,14 @@
+FROM node:20-alpine AS build
+
+WORKDIR /usr/src/app/alt-client
+
+COPY --chown=node:node ./alternative-client/package*.json ./
+RUN npm ci
+
+COPY --chown=node:node ./alternative-client .
+
+EXPOSE 5173
+
+USER node
+
+CMD ["npm", "run", "dev"]

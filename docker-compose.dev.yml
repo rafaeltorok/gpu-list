@@ -1,0 +1,68 @@
+services:
+  dev-mongodb:
+    image: mongo
+    ports:
+      - 3456:27017
+    networks:
+      - dev-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=gpulist
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=gpus
+    volumes:
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+
+  dev-server:
+    depends_on:
+      - dev-mongodb
+    build:
+      context: ./
+      dockerfile: ./server/Dockerfile.dev
+    container_name: gpulist-dev-server
+    networks:
+      - dev-network
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=mongodb://gpulist:password@dev-mongodb:27017/gpus
+    volumes:
+      - ./server:/usr/src/app/server
+      - /usr/src/app/server/node_modules
+
+  dev-client:
+    depends_on:
+      - dev-server 
+    build:
+      context: ./
+      dockerfile: ./client/Dockerfile.dev
+    container_name: gpulist-dev-client
+    networks:
+      - dev-network
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/usr/src/app/client
+      - /usr/src/app/client/node_modules
+    environment:
+      - VITE_SERVER_URL=http://dev-server:3001
+
+  dev-alt-client:
+    depends_on:
+      - dev-server
+    build:
+      context: ./
+      dockerfile: ./alternative-client/Dockerfile.dev
+    container_name: gpulist-dev-alt-client
+    networks:
+      - dev-network
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./alternative-client:/usr/src/app/alt-client
+      - /usr/src/app/alt-client/node_modules
+    environment:
+      - VITE_SERVER_URL=http://dev-server:3001
+
+networks:
+  dev-network:
+    driver: bridge

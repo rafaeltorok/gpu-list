@@ -1,4 +1,5 @@
 # GPU List
+
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![Node](https://img.shields.io/badge/node-18+-green)
 ![NPM](https://img.shields.io/badge/npm-%3E=10.8.2-blue)
@@ -39,11 +40,13 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
 
 
 ## License
+
 This project is licensed under the GNU GPLv3 License.
 See the LICENSE file for details.
 
 
 ## About
+
 GPU List is a full-stack Single Page Application for storing graphics card specifications and calculating their theoretical performance.
 
 This project was built as a portfolio project to practice and demonstrate modern web development concepts, including:
@@ -65,12 +68,14 @@ Built with:
 #### App available on Render: https://gpulist.onrender.com and https://gpulist.onrender.com/alt
 
 #### Container image available on the Docker Hub
+
 ```bash
 docker pull rafaeltorok/gpulist:latest
 ```
 
 
 ## Tech Stack
+
 Frontend
 - React
 - Axios
@@ -97,6 +102,7 @@ DevOps
 
 
 ## Features
+
 The application allows users to add, delete, search, and list GPUs through a simple frontend UI.
 
 The Web UI automatically displays performance metrics such as:
@@ -106,6 +112,7 @@ The Web UI automatically displays performance metrics such as:
 - Memory Bandwidth
 
 ### Screenshots
+
 Main UI
 
 <img src="./github/img/gpulist_main-ui.png" alt="GPU List app main UI" width="420"/>
@@ -118,6 +125,7 @@ Alternative UI
 
 
 ## Prerequisites
+
 - [Node.js](https://nodejs.org)↗ v18.20.5 or higher
 - [npm](https://www.npmjs.com)↗ v10.8.2 or higher
 - Internet connection to access the remote MongoDB database
@@ -125,6 +133,7 @@ Alternative UI
 
 
 ## Quick Start
+
 ```bash
 $ git clone https://github.com/rafaeltorok/WebApps.git
 $ cd ./server && npm install && npm run start
@@ -134,6 +143,7 @@ $ cd ./server && npm install && npm run start
 
 
 ## Database
+
 - The backend server utilizes a remote MongoDB database stored on Atlas.
 
 - Example GPU object:
@@ -164,6 +174,7 @@ $ cd ./server && npm install && npm run start
 
 
 ## Environment variables
+
 - The `.env` file should have the following **three** fields (examples)
   ```conf
   MONGODB_URI=mongodb+srv://myDatabaseUser:myPassword@cluster0.example.mongodb.net/?retryWrites=true&w=majority
@@ -186,7 +197,9 @@ $ cd ./server && npm install && npm run start
 
 
 ## Starting the web app
+
 ### Frontend
+
 Main UI
   ```bash
   cd ./client && npm install && npm run dev
@@ -202,55 +215,66 @@ Vite auto-selects ports:
   - Alternative UI → http://localhost:5174/alt/
 
 ### Backend
+
 #### Development mode (watch mode with tsx)
+
 ```bash
 cd ./server && npm install && npm run dev
 ```
 
 #### Production mode
-  - Build the main client
-    ```bash
-    cd ./client && npm run build && cp -r ./dist/* ../server/dist/main-client
-    ```
 
-  - And the Alternative UI
-    ```bash
-    cd ./alternate-client && npm run build && cp -r ./dist/* ../server/dist/alt-client
-    ```
+- Build the main client
+  ```bash
+  cd ./client && npm run build && cp -r ./dist/* ../server/dist/main-client
+  ```
 
-  - Compile the backend server into JavaScript code
-    ```bash
-    cd ./server && npm install && npm run tsc
-    ```
+- And the Alternative UI
+  ```bash
+  cd ./alternate-client && npm run build && cp -r ./dist/* ../server/dist/alt-client
+  ```
 
-  - Start the backend server
-    ```bash
-    npm run start
-    ```
+- Compile the backend server into JavaScript code
+  ```bash
+  cd ./server && npm install && npm run tsc
+  ```
 
-  - Access the frontend via the backend URL → http://localhost:3001 or http://localhost:3001/alt/
+- Start the backend server
+  ```bash
+  npm run start
+  ```
+
+- Access the frontend via the backend URL → http://localhost:3001 or http://localhost:3001/alt/
 
 
 ## Navigating the UI
+
 ### Main UI
+
 #### Displaying a graphics card data
+
 Click the `Show` button for a single card or `Show all data` for all cards.
 
 #### Adding a new graphics card
+
 Click the `Add Graphics Card` button → Fill all the required fields, none can be left empty.
 
 #### Using the search button
+
 Click the `Search` button, search by manufacturer, GPU line or model (e.g., `rtx 40`).
 
 #### Using the index
+
 - Click the `Show index` button → a scrollable card list will be displayed.
 - Clicking on a card → the page will scroll to the data table and expand it.
 - Click on `Back to Index` button → The table collapses and returns you to the index.
 
 #### Removing a graphics card
+
 Expand the card table → on the bottom, click on the `Delete` → when prompted, click on confirm.
 
 ### Alternative UI
+
 - Displaying a graphics card data → click the `View details` button.
 - Adding a new graphics card → click on the `Add GPU` button, follow the same steps as the Main UI.
 - Using the search button → on the `Search GPUs` bar, type the desired keywords.
@@ -258,6 +282,7 @@ Expand the card table → on the bottom, click on the `Delete` → when prompted
 
 
 ## Performing CRUD operations via Backend
+
 Create
   ```
   POST http://localhost:3001/api/gpus
@@ -305,7 +330,13 @@ Delete
   ```
 
 ## Running with Docker
-### Docker Compose (recommended)
+
+The default `docker-compose.yml` file runs the production-oriented container setup.
+
+For hot reload and development containers, see the [Development Environment](#development-environment) section.
+
+### Production (Docker Compose)
+
 ```bash
 docker compose up -d
 ```
@@ -315,7 +346,8 @@ App access
 - Main UI → http://localhost:5173
 - Alternative UI → http://localhost:5174/alt/
 
-### Manual Docker setup (advanced)
+### Production (Manual Containers)
+
 1. Create a custom network
     ```bash
     docker network create gpulist_webapp-network
@@ -324,21 +356,21 @@ App access
 2. Build the images
     - Main UI
       ```bash
-      docker build -f ./client/Dockerfile -t gpulist-webapp-client ./
+      docker build -f ./client/Dockerfile -t gpulist-webapp-client .
       ```
 
     - Alternative UI
       ```bash
-      docker build -f ./alternative-client/Dockerfile -t gpulist-webapp-alt-client ./
+      docker build -f ./alternative-client/Dockerfile -t gpulist-webapp-alt-client .
       ```
 
     - Backend Server
       ```bash
-      docker -f ./server/Dockerfile build -t gpulist-webapp-server ./
+      docker build -f ./server/Dockerfile -t gpulist-webapp-server .
       ```
 
 3. Run the containers
-    - **The server must be started before any of the clients, due to Nginx requirements.**
+    - **The backend server must be running before the frontend containers start, so NGINX can correctly resolve and proxy API requests.**
 
     - Backend Server
       ```bash
@@ -360,7 +392,8 @@ App access
     - Main UI → http://localhost:5173
     - Alternative UI → http://localhost:5174/alt/
 
-### Backend server (Serving static builds for both clients)
+### Backend-only Deployment
+
 1. Build the backend server image only
     ```bash
     docker build -f ./server/Dockerfile.prod -t gpulist-app ./
@@ -376,10 +409,27 @@ App access
     - Main UI → http://localhost:3001
     - Alternative UI → http://localhost:3001/alt/
 
+### Development Environment
+
+Docker orchestration to run containers for the server, main client and alternative client with hot reload support. Using a containerized MongoDB database for testing purposes.
+
+- **Note**: MongoDB data is ephemeral in the development environment because no persistent Docker volume is configured.
+
+- Usage
+  ```bash
+  docker compose -f ./docker-compose.dev.yml up --build
+  ```
+
+App access
+- API → http://localhost:3001/api/gpus
+- Main UI → http://localhost:5173
+- Alternative UI → http://localhost:5174/alt/
 
 
 ## End-to-End (E2E) Testing
+
 ### Manual testing
+
 The npm script will automatically start both client and server, using the packages [start-server-and-test⇗](https://github.com/bahmutov/start-server-and-test) and [concurrently⇗](https://www.npmjs.com/package/concurrently).
 
 Install the necessary dependencies for Cypress
@@ -399,6 +449,7 @@ Run Cypress
     ```
   
 ### Testing via Docker
+
 Run the tests
 ```bash
 docker compose -f docker-compose.test.yml up --build --abort-on-container-exit && docker compose -f docker-compose.test.yml down -v
@@ -410,6 +461,7 @@ Note: ⚠️ E2E tests were designed for the Main UI only.
 
 
 ## Integration tests (Backend server)
+
 Running the tests (uses the test database instead of the main one)
 ```bash
 cd ./server && npm install && npm run test
@@ -417,6 +469,7 @@ cd ./server && npm install && npm run test
 
 
 ## Component tests (Main client)
+
 **All frontend related tests have been implemented with Vitest alongside the React Testing Library.**
 
 Install dependencies
@@ -446,6 +499,7 @@ npm run coverage
 
 
 ## Unit tests (Frontend / Main client)
+
 Install dependencies
 ```bash
 cd ./client && npm install
@@ -458,7 +512,9 @@ npm run test:run -- ./src/__tests__
 
 
 ## Project overview (folder structure)
+
 ### Frontend (Main client)
+
 ```bash
 /client/
 ├── src
@@ -532,6 +588,7 @@ npm run test:run -- ./src/__tests__
 ```
 
 ### Backend server
+
 ```bash
 /server/
 ├── src
@@ -570,30 +627,37 @@ npm run test:run -- ./src/__tests__
 
 
 ## Troubleshooting
+
 ### Frontend won’t start
+
 Check the versions of Node.js ≥18 & npm ≥10.
 
 ---
 
 ### Backend cannot connect to DB
+
 Ensure .env file has the correct MongoDB URI.
 
 ---
 
 ### Port already in use
+
 Kill the process using the port or change the Vite/Express port in config.
 
 ---
 
 ### Docker containers can’t communicate with each other
+
 Verify the network `gpulist_webapp-network` exists.
 
 ---
 
 ### E2E tests fail
+
 Confirm the Main UI is running on http://localhost:5173.
 
 
 ## Author
+
 Rafael G. Torok
 GitHub: https://github.com/rafaeltorok
