@@ -1,5 +1,11 @@
 services:
   webapp-server:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     build: 
       context: ./
       dockerfile: ./server/Dockerfile
@@ -13,30 +19,37 @@ services:
     environment:
       NODE_ENV: e2e
 
-  webapp-client:
-    build: 
-      context: ./
-      dockerfile: ./client/Dockerfile
-    container_name: gpulist-webapp-client
+  webapp-nginx:
+    depends_on:
+      webapp-server:
+        condition: service_healthy
+    build:
+      dockerfile: ./nginx/Dockerfile
+    container_name: gpulist-webapp-nginx
     networks:
       - webapp-network
     ports:
-      - "5173:80"
-    depends_on:
-      - webapp-server
+      - "8000:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   webapp-cypress:
+    depends_on:
+      webapp-nginx:
+        condition: service_healthy
+      webapp-server:
+        condition: service_healthy
     build: 
       context: ./
       dockerfile: ./e2e/Dockerfile
+    container_name: gpulist-webapp-cypress
     working_dir: /e2e
     networks:
       - webapp-network
-    env_file:
-      - ./e2e/.docker.env
-    depends_on:
-      - webapp-server
-      - webapp-client
 
 networks:
   webapp-network:

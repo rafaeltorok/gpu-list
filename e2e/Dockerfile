@@ -6,9 +6,9 @@ COPY ./e2e/package*.json .
 COPY ./e2e .
 COPY ./shared ../shared
 
-RUN npm install
+RUN npm ci
 
-ENV CYPRESS_FRONTEND=http://gpulist-webapp-client:80
-ENV CYPRESS_BACKEND=http://gpulist-webapp-server:3001
+ENV CYPRESS_FRONTEND=http://webapp-nginx:80
+ENV CYPRESS_BACKEND=http://webapp-server:3001
 
 CMD ["npx", "cypress", "run"]
