@@ -9,8 +9,17 @@ services:
       - "3001:3001"
     env_file:
       - ./server/.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   webapp-client:
+    depends_on:
+      webapp-server:
+        condition: service_healthy
     build:
       dockerfile: ./client/Dockerfile
     container_name: gpulist-webapp-client
@@ -18,10 +27,17 @@ services:
       - webapp-network
     ports:
       - "5173:80"
-    depends_on:
-      - webapp-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   webapp-alt-client:
+    depends_on:
+      webapp-server:
+        condition: service_healthy
     build:
       dockerfile: ./alternative-client/Dockerfile
     container_name: gpulist-webapp-alt-client
@@ -29,8 +45,12 @@ services:
       - webapp-network
     ports:
       - "5174:80"
-    depends_on:
-      - webapp-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 networks:
   webapp-network:
