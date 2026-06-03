@@ -9,6 +9,7 @@ import middleware from "./middlewares/errorHandler.js";
 // Controllers
 import gpusRouter from "./routes/gpus.js";
 import testingRouter from "./routes/testing.js";
+import healthCheckRouter from "./routes/healthcheck.js";
 
 // Setting the Express server
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.json());
 
 // Express routes
 app.use("/api/gpus", gpusRouter);
+app.use("/health", healthCheckRouter);
 
 // Enable the reset database route only when running E2E or Server integration tests
 if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "e2e") {
