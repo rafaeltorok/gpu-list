@@ -1,0 +1,15 @@
+name: Periodic deployed service health check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  health_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v5
+        with:
+          url: https://gpulist.onrender.com/health

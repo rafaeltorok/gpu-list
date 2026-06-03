@@ -335,7 +335,7 @@ The default `docker-compose.yml` file runs the production-oriented container set
 
 For hot reload and development containers, see the [Development Environment](#development-environment) section.
 
-### Production (Docker Compose)
+### Production build
 
 ```bash
 docker compose up -d
@@ -343,54 +343,13 @@ docker compose up -d
 
 App access
 - API → http://localhost:3001/api/gpus
-- Main UI → http://localhost:5173
-- Alternative UI → http://localhost:5174/alt/
+- Main UI → http://localhost:8000
+- Alternative UI → http://localhost:8000/alt/
 
-### Production (Manual Containers)
-
-1. Create a custom network
-    ```bash
-    docker network create gpulist_webapp-network
-    ```
-
-2. Build the images
-    - Main UI
-      ```bash
-      docker build -f ./client/Dockerfile -t gpulist-webapp-client .
-      ```
-
-    - Alternative UI
-      ```bash
-      docker build -f ./alternative-client/Dockerfile -t gpulist-webapp-alt-client .
-      ```
-
-    - Backend Server
-      ```bash
-      docker build -f ./server/Dockerfile -t gpulist-webapp-server .
-      ```
-
-3. Run the containers
-    - **The backend server must be running before the frontend containers start, so NGINX can correctly resolve and proxy API requests.**
-
-    - Backend Server
-      ```bash
-      cd ./server && docker run -d --env-file .env --name gpulist-webapp-server --network gpulist_webapp-network -p 3001:3001 -ti gpulist-webapp-server
-      ```
-
-    - Main UI
-      ```bash
-      cd .. && docker run -d --name gpulist-webapp-client --network gpulist_webapp-network -p 5173:80 gpulist-webapp-client
-      ```
-      
-    - Alternative UI
-      ```bash
-      cd .. && docker run -d --name gpulist-webapp-alt-client --network gpulist_webapp-network -p 5174:80 gpulist-webapp-alt-client
-      ```
-
-4. Access the app
-    - API → http://localhost:3001/api/gpus
-    - Main UI → http://localhost:5173
-    - Alternative UI → http://localhost:5174/alt/
+- Cleanup
+  ```bash
+  docker compose down -v
+  ```
 
 ### Backend-only Deployment
 
@@ -411,9 +370,9 @@ App access
 
 ### Development Environment
 
-Docker orchestration to run containers for the server, main client and alternative client with hot reload support. Using a containerized MongoDB database for testing purposes.
+Docker orchestration with hot reload support. Using a containerized MongoDB database.
 
-- **Note**: MongoDB data is ephemeral in the development environment because no persistent Docker volume is configured.
+- **Note**: MongoDB data is ephemeral in the development environment.
 
 - Usage
   ```bash
@@ -424,6 +383,11 @@ App access
 - API → http://localhost:3001/api/gpus
 - Main UI → http://localhost:5173
 - Alternative UI → http://localhost:5174/alt/
+
+- Cleanup
+  ```bash
+  docker compose -f ./docker-compose.dev.yml down -v
+  ```
 
 
 ## End-to-End (E2E) Testing
@@ -452,12 +416,15 @@ Run Cypress
 
 Run the tests
 ```bash
-docker compose -f docker-compose.test.yml up --build --abort-on-container-exit && docker compose -f docker-compose.test.yml down -v
+docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
 ```
 
-- This command will also remove the stopped containers after all tests are finished.
+Cleanup
+```bash
+docker compose -f ./docker-compose.test.yml down -v
+```
 
-Note: ⚠️ E2E tests were designed for the Main UI only.
+**Note**: ⚠️ E2E tests were designed for the **Main UI** only.
 
 
 ## Integration tests (Backend server)

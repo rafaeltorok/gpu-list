@@ -37,7 +37,7 @@ services:
       - ./server:/usr/src/app/server
       - /usr/src/app/server/node_modules
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
       interval: 30s
       timeout: 10s
       retries: 3

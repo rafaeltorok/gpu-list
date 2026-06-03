@@ -17,6 +17,10 @@ FROM node:20-alpine AS production
 
 WORKDIR /usr/src/app/server
 
+# Install curl for the healthcheck
+RUN apk add --no-cache curl
+
+# Install dependencies
 COPY ./server/package*.json .
 COPY --from=build /usr/src/app/server/build .
 
