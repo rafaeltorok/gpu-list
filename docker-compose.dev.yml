@@ -1,6 +1,7 @@
 services:
   dev-mongodb:
     image: mongo
+    container_name: gpulist-dev-mongodb
     ports:
       - 3456:27017
     networks:
@@ -11,10 +12,17 @@ services:
       - MONGO_INITDB_DATABASE=gpus
     volumes:
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   dev-server:
     depends_on:
-      - dev-mongodb
+      dev-mongodb:
+        condition: service_healthy
     build:
       context: ./
       dockerfile: ./server/Dockerfile.dev
@@ -28,14 +36,21 @@ services:
     volumes:
       - ./server:/usr/src/app/server
       - /usr/src/app/server/node_modules
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   dev-client:
     depends_on:
-      - dev-server 
+      dev-server:
+        condition: service_healthy
+    container_name: gpulist-dev-client
     build:
       context: ./
       dockerfile: ./client/Dockerfile.dev
-    container_name: gpulist-dev-client
     networks:
       - dev-network
     ports:
@@ -45,14 +60,21 @@ services:
       - /usr/src/app/client/node_modules
     environment:
       - VITE_SERVER_URL=http://dev-server:3001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   dev-alt-client:
     depends_on:
-      - dev-server
+      dev-server:
+        condition: service_healthy
+    container_name: gpulist-dev-alt-client
     build:
       context: ./
       dockerfile: ./alternative-client/Dockerfile.dev
-    container_name: gpulist-dev-alt-client
     networks:
       - dev-network
     ports:
@@ -62,6 +84,12 @@ services:
       - /usr/src/app/alt-client/node_modules
     environment:
       - VITE_SERVER_URL=http://dev-server:3001
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 networks:
   dev-network:
