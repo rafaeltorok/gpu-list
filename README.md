@@ -540,11 +540,10 @@ npm run test:run -- ./src/__tests__
 │   │       └── fixtures.ts         # Example data to be used for testing purposes
 │   └── types                         # TypeScript types exclusive to the main client frontend
 │       └── context.ts
-├── Dockerfile                        # Docker setup file to serve the main client with Nginx
+├── Dockerfile.dev                    # Build an image to be used with the Dev Composer script
 ├── eslint.config.js                  # ESLint custom config file
 ├── index.html
 ├── manifest.json
-├── nginx.conf                        # The Nginx config to be used with the Docker container
 ├── package.json
 ├── package-lock.json
 ├── tsconfig.app.json
@@ -588,7 +587,9 @@ npm run test:run -- ./src/__tests__
 ├── package.json              # Project dependencies and scripts
 ├── tsconfig.json             # Main TypeScript configuration file
 ├── environment.d.ts          # Declares TypeScript types for the process.env variables to ensure type safety
-├── Dockerfile                # Build an image for the server, used in both the Composer scripts
+├── eslint.config.ts          # ESLint configuration focused on TypeScript
+├── Dockerfile                # Build an image for the server, used in the production Composer script
+├── Dockerfile.dev            # Build a dev image for the server, capable of hot reloading the code
 └── Dockerfile.prod           # Build a production version of the server, capable of serving static builds
 ```
 
