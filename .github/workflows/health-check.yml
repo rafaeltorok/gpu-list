@@ -12,4 +12,4 @@ jobs:
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v5
         with:
-          url: https://gpulist.onrender.com/health
+          url: https://gpulist.onrender.com/api/health
