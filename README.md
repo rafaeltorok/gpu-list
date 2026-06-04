@@ -342,7 +342,7 @@ docker compose up -d
 ```
 
 App access
-- API → http://localhost:3001/api/gpus
+- API → http://localhost:8000/api/gpus
 - Main UI → http://localhost:8000
 - Alternative UI → http://localhost:8000/alt/
 
@@ -380,9 +380,9 @@ Docker orchestration with hot reload support. Using a containerized MongoDB data
   ```
 
 App access
-- API → http://localhost:3001/api/gpus
-- Main UI → http://localhost:5173
-- Alternative UI → http://localhost:5174/alt/
+- API → http://localhost:8000/api/gpus
+- Main UI → http://localhost:8000
+- Alternative UI → http://localhost:8000/alt/
 
 - Cleanup
   ```bash

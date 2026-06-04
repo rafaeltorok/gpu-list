@@ -8,7 +8,7 @@ COPY ./shared ../shared
 
 RUN npm ci
 
-ENV CYPRESS_FRONTEND=http://webapp-nginx:80
-ENV CYPRESS_BACKEND=http://webapp-server:3001
+ENV CYPRESS_FRONTEND=http://nginx:80
+ENV CYPRESS_BACKEND=http://nginx:80
 
 CMD ["npx", "cypress", "run"]
