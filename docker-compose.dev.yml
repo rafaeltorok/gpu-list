@@ -32,7 +32,6 @@ services:
       - MONGODB_URI=mongodb://gpulist:password@dev-mongodb:27017/gpus
     volumes:
       - ./server:/usr/src/app/server
-      - /usr/src/app/server/node_modules
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
       interval: 30s
@@ -53,7 +52,6 @@ services:
       - dev-network
     volumes:
       - ./client:/usr/src/app/client
-      - /usr/src/app/client/node_modules
     environment:
       - VITE_SERVER_URL=http://localhost:8000
     healthcheck:
@@ -76,7 +74,6 @@ services:
       - dev-network
     volumes:
       - ./alternative-client:/usr/src/app/alt-client
-      - /usr/src/app/alt-client/node_modules
     environment:
       - VITE_SERVER_URL=http://localhost:8000
     healthcheck:
