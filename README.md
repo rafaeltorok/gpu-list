@@ -372,12 +372,13 @@ App access
 
 Docker orchestration with hot reload support. Using a containerized MongoDB database.
 
-- Usage
-  ```bash
-  docker compose -f ./docker-compose.dev.yml up --build
-  ```
+#### Usage
+```bash
+docker compose -f ./docker-compose.dev.yml up --build
+```
 
-App access
+#### App access
+
 - API → http://localhost:8000/api/gpus
 - Main UI → http://localhost:8000
 - Alternative UI → http://localhost:8000/alt/
@@ -386,6 +387,21 @@ App access
   ```bash
   docker compose -f ./docker-compose.dev.yml down -v
   ```
+
+#### Database access
+
+- Via **mongosh**
+  ```bash
+  mongosh mongodb://gpulist:password@localhost:27017/gpus
+  ```
+
+- Via **MongoDB Compass**:
+
+  - Select **Add new connection**
+
+  - Add the **URI**: `mongodb://gpulist:password@localhost:27017/gpus`
+
+  - Click on **Save and connect**
 
 
 ## End-to-End (E2E) Testing
