@@ -372,8 +372,6 @@ App access
 
 Docker orchestration with hot reload support. Using a containerized MongoDB database.
 
-- **Note**: MongoDB data is ephemeral in the development environment.
-
 - Usage
   ```bash
   docker compose -f ./docker-compose.dev.yml up --build
