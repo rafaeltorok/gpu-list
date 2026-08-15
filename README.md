@@ -321,7 +321,7 @@ Read
 Update
   - You can update any number of fields
     ```
-    PUT http://localhost:3001/api/gpus/:id
+    PATCH http://localhost:3001/api/gpus/:id
     ```
 
 Delete
@@ -443,9 +443,14 @@ docker compose -f ./docker-compose.test.yml down -v
 
 ## Integration tests (Backend server)
 
-Running the tests (uses the test database instead of the main one)
+Install the Server dependencies
 ```bash
-cd ./server && npm install && npm run test
+cd ./server && npm install
+```
+
+Run the tests (automatically uses the test database)
+```bash
+npm run test
 ```
 
 

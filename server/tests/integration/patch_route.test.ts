@@ -12,7 +12,7 @@ import { gpuList } from "../data/data.js";
 
 const api = supertest(app);
 
-describe("PUT route", { concurrency: false }, () => {
+describe("PATCH route", { concurrency: false }, () => {
   // Clear the database and add the testing data
   beforeEach(async () => {
     await GpuModel.deleteMany({});
@@ -46,7 +46,7 @@ describe("PUT route", { concurrency: false }, () => {
 
     // Send the updated data
     const updatedGpu = await api
-      .put(`/api/gpus/${rtx3060.body.id}`)
+      .patch(`/api/gpus/${rtx3060.body.id}`)
       .send(gpuData)
       .expect(200)
       .expect("Content-Type", /application\/json/);
@@ -75,24 +75,24 @@ describe("PUT route", { concurrency: false }, () => {
     };
 
     // Send an update request with invalid data
-    const putResponse = await api
-      .put(`/api/gpus/${originalSpecs.body.id}`)
+    const patchResponse = await api
+      .patch(`/api/gpus/${originalSpecs.body.id}`)
       .send(gpuData)
       .expect(400);
 
     // Check if the error response messages exists for the invalid values
     assert.notStrictEqual(
-      putResponse.body.errors.cores,
+      patchResponse.body.errors.cores,
       undefined,
       "Data should be defined",
     );
     assert.notStrictEqual(
-      putResponse.body.errors.tmus,
+      patchResponse.body.errors.tmus,
       undefined,
       "Data should be defined",
     );
     assert.notStrictEqual(
-      putResponse.body.errors.rops,
+      patchResponse.body.errors.rops,
       undefined,
       "Data should be defined",
     );
@@ -119,13 +119,13 @@ describe("PUT route", { concurrency: false }, () => {
     };
 
     // Send an update request with invalid data
-    const putResponse = await api
-      .put(`/api/gpus/${originalSpecs.body.id}`)
+    const patchResponse = await api
+      .patch(`/api/gpus/${originalSpecs.body.id}`)
       .send(gpuData)
       .expect(400);
 
     // Check if the error response message contains the Mongoose cast error
-    assert.strictEqual(putResponse.body.errors.cores, "Invalid Number");
+    assert.strictEqual(patchResponse.body.errors.cores, "Invalid Number");
 
     // Fetch the card data to make sure it hasn't been updated
     const rtx3060 = await api
@@ -144,12 +144,15 @@ describe("PUT route", { concurrency: false }, () => {
       .expect("Content-Type", /application\/json/);
 
     // Send an empty update request to the server
-    const putResponse = await api
-      .put(`/api/gpus/${originalSpecs.body.id}`)
+    const patchResponse = await api
+      .patch(`/api/gpus/${originalSpecs.body.id}`)
       .expect(400);
 
     // Check the error response message
-    assert.strictEqual(putResponse.body.error, "No fields provided for update");
+    assert.strictEqual(
+      patchResponse.body.error,
+      "No fields provided for update",
+    );
 
     // Fetch the card again to check if the data remained the same
     const updatedGpu = await api
@@ -166,13 +169,13 @@ describe("PUT route", { concurrency: false }, () => {
     };
 
     // Send the updated request with a non-existing id
-    const putResponse = await api
-      .put("/api/gpus/0000a00a0a00aaa000000aa0")
+    const patchResponse = await api
+      .patch("/api/gpus/0000a00a0a00aaa000000aa0")
       .send(gpuData)
       .expect(404);
 
     // Check if an error message is properly returned
-    assert.strictEqual(putResponse.body.error, "GPU not found");
+    assert.strictEqual(patchResponse.body.error, "GPU not found");
   });
 
   test("An invalid id returns a proper error message", async () => {
@@ -182,12 +185,12 @@ describe("PUT route", { concurrency: false }, () => {
     };
 
     // Send the updated request with a non-existing id
-    const putResponse = await api
-      .put("/api/gpus/abc")
+    const patchResponse = await api
+      .patch("/api/gpus/abc")
       .send(gpuData)
       .expect(400);
 
     // Check if an error message is properly returned
-    assert.strictEqual(putResponse.body.error, "Invalid ID format");
+    assert.strictEqual(patchResponse.body.error, "Invalid ID format");
   });
 });
