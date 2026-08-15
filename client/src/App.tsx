@@ -100,6 +100,18 @@ function App() {
     }
   }
 
+  async function editGpu(gpu: GpuType): Promise<boolean> {
+    try {
+      await gpuService.update(gpu.id, gpu);
+      const data: GpuType[] = await gpuService.getAll();
+      dataDispatch({ type: "FETCH_SUCCESS", payload: data });
+      return true;
+    } catch (err: unknown) {
+      if (err instanceof Error) console.error("Error updating data:", err);
+      return false;
+    }
+  }
+
   if (dataState.loading) return <h2>Loading GPU data, please wait...</h2>;
 
   if (dataState.error)
@@ -110,6 +122,7 @@ function App() {
       value={{
         createGpu,
         deleteGpu,
+        editGpu,
         dataState,
         dataDispatch,
         uiState,
