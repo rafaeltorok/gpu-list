@@ -10,6 +10,7 @@ export default function createMockContext() {
     // Functions: vi.fn() track calls and return promises
     createGpu: vi.fn().mockResolvedValue(true),
     deleteGpu: vi.fn().mockResolvedValue(undefined),
+    editGpu: vi.fn().mockResolvedValue(undefined),
 
     // States
     dataState: {

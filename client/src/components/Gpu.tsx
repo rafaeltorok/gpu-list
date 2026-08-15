@@ -8,6 +8,7 @@ import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
 
 // React components
 import GpuDataRow from "./GpuDataRow";
+import GpuPerformanceRow from "./GpuPerformanceRow";
 
 // TypeScript types
 import type { GpuType } from "../../../shared/types/types";
@@ -22,10 +23,13 @@ type GpuProps = {
 
 export default function Gpu({ gpu }: GpuProps) {
   const [showBody, setShowBody] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [gpuData, setGpuData] = useState<GpuType>(gpu);
 
   // Access the React context
   const {
     deleteGpu,
+    editGpu,
     uiState: { showAll },
   } = useGpuContext();
 
@@ -53,6 +57,20 @@ export default function Gpu({ gpu }: GpuProps) {
       return "intel-model-header";
     }
     return "model-header";
+  }
+
+  async function updateGpuData(): Promise<void> {
+    const updateSuccess = await editGpu(gpuData);
+    if (updateSuccess) {
+      alert(
+        `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs were updated!`,
+      );
+      setEditMode(false);
+    } else {
+      alert(
+        `Failed to update ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs`,
+      );
+    }
   }
 
   const gpuHeaderClass = getClass(
@@ -101,28 +119,53 @@ export default function Gpu({ gpu }: GpuProps) {
             </tr>
             <GpuDataRow
               header="CORES"
-              data={`${gpu.cores}`}
+              data={`${gpuData.cores}`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.cores}
+              id="cores"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
             <GpuDataRow
               header="TMUs"
-              data={`${gpu.tmus}`}
+              data={`${gpuData.tmus}`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.tmus}
+              id="tmus"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
             <GpuDataRow
               header="ROPs"
-              data={`${gpu.rops}`}
+              data={`${gpuData.rops}`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.rops}
+              id="rops"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
             <GpuDataRow
               header="VRAM"
-              data={`${vramToDisplay} ${gpu.memtype}`}
+              data={`${vramToDisplay} ${gpuData.memtype}`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.vram}
+              id="vram"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
             <GpuDataRow
               header="BUS WIDTH"
-              data={`${gpu.bus} bit`}
+              data={`${gpuData.bus} bit`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.bus}
+              id="bus"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
           </tbody>
 
@@ -137,18 +180,33 @@ export default function Gpu({ gpu }: GpuProps) {
             </tr>
             <GpuDataRow
               header="BASE CLOCK"
-              data={`${gpu.baseclock} MHz`}
+              data={`${gpuData.baseclock} MHz`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.baseclock}
+              id="baseclock"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
             <GpuDataRow
               header="BOOST CLOCK"
-              data={`${gpu.boostclock} MHz`}
+              data={`${gpuData.boostclock} MHz`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.boostclock}
+              id="boostclock"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
             <GpuDataRow
               header="MEMORY CLOCK"
-              data={`${gpu.memclock} Gbps effective`}
+              data={`${gpuData.memclock} Gbps effective`}
               headerClass={gpuHeaderClass}
+              editMode={editMode}
+              value={gpuData.memclock}
+              id="memclock"
+              gpuData={gpuData}
+              setGpuData={setGpuData}
             />
           </tbody>
 
@@ -161,22 +219,22 @@ export default function Gpu({ gpu }: GpuProps) {
                 THEORETICAL PERFORMANCE
               </th>
             </tr>
-            <GpuDataRow
+            <GpuPerformanceRow
               header="FP32(float)"
               data={`${gpuPerformance[0]}`}
               headerClass={gpuHeaderClass}
             />
-            <GpuDataRow
+            <GpuPerformanceRow
               header="TEXTURE RATE"
               data={`${gpuPerformance[1]}`}
               headerClass={gpuHeaderClass}
             />
-            <GpuDataRow
+            <GpuPerformanceRow
               header="PIXEL RATE"
               data={`${gpuPerformance[2]}`}
               headerClass={gpuHeaderClass}
             />
-            <GpuDataRow
+            <GpuPerformanceRow
               header="BANDWIDTH"
               data={`${gpuPerformance[3]}`}
               headerClass={gpuHeaderClass}
@@ -184,6 +242,25 @@ export default function Gpu({ gpu }: GpuProps) {
           </tbody>
 
           <tfoot id={`${gpu.id}-delete`}>
+            <tr>
+              <td colSpan={2} id="edit-gpu-button">
+                {editMode ? (
+                  <button
+                    aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                    onClick={() => void updateGpuData()}
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button
+                    aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                    onClick={() => void setEditMode(true)}
+                  >
+                    Edit
+                  </button>
+                )}
+              </td>
+            </tr>
             <tr>
               <td colSpan={2} id="delete-gpu-button">
                 <button
