@@ -160,8 +160,8 @@ gpusRouter.post(
   },
 );
 
-// PUT (update) a graphics card data
-gpusRouter.put(
+// PATCH (update) a graphics card data
+gpusRouter.patch(
   "/:id",
   async (
     req: Request<{ id: string }, object, Partial<GpuType>>,
