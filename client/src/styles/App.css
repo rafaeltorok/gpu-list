@@ -69,6 +69,11 @@ button:focus {
 .back-to-index-button:active {
   margin-top: 0.1rem;
   margin-bottom: 2.5rem;
+  width: 90%;
+  padding: 0.5rem 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  border-color: gray;
 }
 
 @media only screen and (hover: none) and (pointer: coarse) {
