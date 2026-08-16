@@ -115,13 +115,13 @@ The Web UI automatically displays performance metrics such as:
 
 Main UI
 
-<img src="./github/img/gpulist_main-ui.png" alt="GPU List app main UI" width="420"/>
-<img src="./github/img/gpulist_main-ui_table-view.png" alt="GPU List app main UI data table" width="400"/>
+<img src="./img/gpulist_main-ui.png" alt="GPU List app main UI" width="400"/>
+<img src="./img/gpulist_main-ui_table-view.png" alt="GPU List app main UI data table" width="400"/>
 
 Alternative UI
 
-<img src="./github/img/gpulist_alt-ui.png" alt="GPU List app alternative UI" width="500"/>
-<img src="./github/img/gpulist_alt-ui_card-view.png" alt="GPU List app alternative UI card info" width="500"/>
+<img src="./img/gpulist_alt-ui.png" alt="GPU List app alternative UI" width="500"/>
+<img src="./img/gpulist_alt-ui_card-view.png" alt="GPU List app alternative UI card info" width="500"/>
 
 
 ## Prerequisites
