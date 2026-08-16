@@ -97,7 +97,10 @@ export default function Gpu({ gpu }: GpuProps) {
           <th colSpan={2} className="table-header">
             <button
               className="show-hide-button"
-              onClick={() => setShowBody(!showBody)}
+              onClick={() => {
+                setShowBody(!showBody);
+                setEditMode(false);
+              }}
               aria-expanded={showBody}
               aria-controls={`${gpu.id}-specs ${gpu.id}-clocks ${gpu.id}-performance ${gpu.id}-delete`}
             >
