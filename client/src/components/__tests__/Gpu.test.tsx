@@ -306,6 +306,97 @@ describe("Testing the data table component", () => {
     });
   });
 
+  describe("the Edit button", () => {
+    beforeEach(async () => {
+      // Get a sample card to test
+      const gpu = {
+        ...sampleData.rtx5090,
+        id: "679a7283008a75d4667c342a",
+      };
+
+      const mockContextValue = createMockContext();
+
+      // Render the component
+      render(
+        <GpuContext.Provider value={mockContextValue}>
+          <Gpu gpu={gpu} />
+        </GpuContext.Provider>
+      );
+
+      // Get the Show button to display all the data
+      const showButton = screen.getByRole("button", { name: /show/i });
+      await user.click(showButton);
+
+      // Click on the edit button
+      const editButton = screen.getByRole("button", { name: /edit/i });
+      await user.click(editButton);
+    });
+
+    test("clicking on the button should display the input fields", () => {
+      // Get a sample card to test
+      const gpu = {
+        ...sampleData.rtx5090,
+        id: "679a7283008a75d4667c342a",
+      };
+
+      // Assert each input field has the correct data being displayed
+      const coresRow = screen.getByRole("row", { name: /cores/i });
+      expect(within(coresRow).getByRole("spinbutton")).toHaveValue(gpu.cores);
+
+      const tmusRow = screen.getByRole("row", { name: /tmus/i });
+      expect(within(tmusRow).getByRole("spinbutton")).toHaveValue(gpu.tmus);
+
+      const ropsRow = screen.getByRole("row", { name: /rops/i });
+      expect(within(ropsRow).getByRole("spinbutton")).toHaveValue(gpu.rops);
+
+      const vramRow = screen.getByRole("row", { name: /vram/i });
+      expect(within(vramRow).getByRole("spinbutton")).toHaveValue(gpu.vram);
+
+      const busRow = screen.getByRole("row", { name: /bus width/i });
+      expect(within(busRow).getByRole("spinbutton")).toHaveValue(gpu.bus);
+
+      const baseClockRow = screen.getByRole("row", { name: /base clock/i });
+      expect(within(baseClockRow).getByRole("spinbutton")).toHaveValue(gpu.baseclock);
+
+      const boostClockRow = screen.getByRole("row", { name: /boost clock/i });
+      expect(within(boostClockRow).getByRole("spinbutton")).toHaveValue(gpu.boostclock);
+
+      const memClockRow = screen.getByRole("row", { name: /memory clock/i });
+      expect(within(memClockRow).getByRole("spinbutton")).toHaveValue(gpu.memclock);
+    });
+
+    test("an input field can be edited", async () => {
+      // Get an input field to edit
+      let coresRow = screen.getByRole("row", { name: /cores/i });
+      const coresInputField = within(coresRow).getByRole("spinbutton");
+
+      // Enter a new value
+      await user.clear(coresInputField);
+      await user.type(coresInputField, "16384");
+
+      coresRow = screen.getByRole("row", { name: /cores/i });
+      expect(within(coresRow).getByRole("spinbutton")).toHaveValue(16384);
+    });
+
+    test("clicking on the hide button should cancel the edit mode", async () => {
+      // Assert the table has been correctly set to edit mode
+      let coresRow = screen.getByRole("row", { name: /cores/i });
+      expect(within(coresRow).getByRole("spinbutton")).toBeInTheDocument();
+
+      // Get the Hide button and click on it
+      const hideButton = screen.getByRole("button", { name: /hide/i });
+      await user.click(hideButton);
+
+      // Click on the Show button again
+      const showButton = screen.getByRole("button", { name: /show/i });
+      await user.click(showButton);
+
+      // Assert the edit mode has been disabled
+      coresRow = screen.getByRole("row", { name: /cores/i });
+      expect(within(coresRow).queryByRole("spinbutton")).not.toBeInTheDocument();
+    });
+  });
+
   describe("CSS classes", () => {
     test("each of the manufacturer CSS classes are correctly applied", () => {
       // Get sample cards to test
