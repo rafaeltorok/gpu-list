@@ -519,16 +519,14 @@ npm run test:run -- ./src/__tests__
 │   ├── components                    # Presentational and state-driven UI components
 │   │   ├── AddGpuForm.tsx            # Handles the logic for the frontend validation, submissions state and form handling
 │   │   ├── FormRow.tsx               # Render a single row for the add form component, helper component for the add form
-│   │   ├── GpuDataRow.tsx            # Render a single row for the GPU data table, helper component for the data tables
-│   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
 │   │   ├── Gpu.tsx                   # Display a single graphics card data table, presentational component
+│   │   ├── GpuDataRow.tsx            # Render a single specification row for the GPU data table, being a data-only row or an input field for the "Edit" mode. Helper component for the data table
+│   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
+│   │   ├── GpuPerformanceRow.tsx     # Render a single performance row for the Theoretical Performance section. Helper component for the data table
 │   │   ├── PageIndex.tsx             # Render the main page index
 │   │   ├── SearchBar.tsx             # Responsible for displaying and handling the search terms, interacting with the React context
 │   │   ├── ShowAllButton.tsx         # Render the button on the main page
 │   │   └── __tests__                 # Component integration tests
-│   │       ├── AddGpuForm.test.tsx
-│   │       ├── GpuList.test.tsx
-│   │       └── Gpu.test.tsx
 │   ├── context                       # React context API folder
 │   │   └── GpuContext.ts             # Defines the shared React context for both the UI and GPU-related states
 │   ├── fonts                         # Custom font for the web UI
