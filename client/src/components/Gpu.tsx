@@ -10,21 +10,63 @@ import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
 import GpuDataRow from "./GpuDataRow";
 import GpuPerformanceRow from "./GpuPerformanceRow";
 
-// TypeScript types
-import type { GpuType } from "../../../shared/types/types";
-
 // CSS Styles
 import "../styles/Gpu.css";
 import "../styles/ManufacturerColors.css";
 
-type GpuProps = {
-  gpu: GpuType;
-};
+// TypeScript types
+import type { GpuType } from "../../../shared/types/types";
 
+interface GpuProps {
+  gpu: GpuType;
+}
+
+interface UpdateGpuDataProps {
+  gpu: GpuType;
+  setEditMode: (editMode: boolean) => void;
+  editGpu: (gpu: GpuType) => Promise<boolean>;
+}
+
+// Helper functions
+// Style the table color scheme respective to the manufacturer colors
+function getClass(fullModelName: string): string {
+  if (fullModelName.includes("nvidia") || fullModelName.includes("geforce")) {
+    return "nvidia-model-header";
+  } else if (
+    fullModelName.includes("amd") ||
+    fullModelName.includes("radeon")
+  ) {
+    return "amd-model-header";
+  } else if (fullModelName.includes("intel") || fullModelName.includes("arc")) {
+    return "intel-model-header";
+  }
+  return "model-header";
+}
+
+// Update the GPU data when clicking on the "Edit" button
+async function updateGpuData({
+  gpu,
+  setEditMode,
+  editGpu,
+}: UpdateGpuDataProps): Promise<void> {
+  const updateSuccess = await editGpu(gpu);
+  if (updateSuccess) {
+    alert(
+      `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs were updated!`,
+    );
+    setEditMode(false);
+  } else {
+    alert(
+      `Failed to update ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs`,
+    );
+  }
+}
+
+// Component
 export default function Gpu({ gpu }: GpuProps) {
+  const [gpuData, setGpuData] = useState<GpuType>(gpu);
   const [showBody, setShowBody] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [gpuData, setGpuData] = useState<GpuType>(gpu);
 
   // Access the React context
   const {
@@ -33,46 +75,18 @@ export default function Gpu({ gpu }: GpuProps) {
     uiState: { showAll },
   } = useGpuContext();
 
-  // Utilities
-  const gpuPerformance = calculatePerformance(gpu);
-  const vramToDisplay = gpu.vram < 1 ? `${gpu.vram * 1000}MB` : `${gpu.vram}GB`;
-
   // Sync individual state with global "Show All" toggle
   useEffect(() => {
     setShowBody(showAll);
   }, [showAll]);
 
-  function getClass(fullModelName: string): string {
-    if (fullModelName.includes("nvidia") || fullModelName.includes("geforce")) {
-      return "nvidia-model-header";
-    } else if (
-      fullModelName.includes("amd") ||
-      fullModelName.includes("radeon")
-    ) {
-      return "amd-model-header";
-    } else if (
-      fullModelName.includes("intel") ||
-      fullModelName.includes("arc")
-    ) {
-      return "intel-model-header";
-    }
-    return "model-header";
-  }
+  // Calculate the theoretical performance for the current graphics card
+  const gpuPerformance = calculatePerformance(gpu);
 
-  async function updateGpuData(): Promise<void> {
-    const updateSuccess = await editGpu(gpuData);
-    if (updateSuccess) {
-      alert(
-        `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs were updated!`,
-      );
-      setEditMode(false);
-    } else {
-      alert(
-        `Failed to update ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs`,
-      );
-    }
-  }
+  // Format the VRAM amount in either GB or MB
+  const vramToDisplay = gpu.vram < 1 ? `${gpu.vram * 1000}MB` : `${gpu.vram}GB`;
 
+  // Get the classname to customize the table color scheme based on the manufacturer
   const gpuHeaderClass = getClass(
     `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`.toLowerCase(),
   );
@@ -250,7 +264,9 @@ export default function Gpu({ gpu }: GpuProps) {
                 {editMode ? (
                   <button
                     aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                    onClick={() => void updateGpuData()}
+                    onClick={() =>
+                      void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
+                    }
                   >
                     Save
                   </button>
