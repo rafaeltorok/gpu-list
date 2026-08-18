@@ -114,6 +114,7 @@ export default function Gpu({ gpu }: GpuProps) {
               onClick={() => {
                 setShowBody(!showBody);
                 setEditMode(false);
+                setGpuData({ ...gpu });
               }}
               aria-expanded={showBody}
               aria-controls={`${gpu.id}-specs ${gpu.id}-clocks ${gpu.id}-performance ${gpu.id}-delete`}
@@ -136,7 +137,7 @@ export default function Gpu({ gpu }: GpuProps) {
             </tr>
             <GpuDataRow
               header="CORES"
-              data={`${gpuData.cores}`}
+              data={`${gpu.cores}`}
               headerClass={gpuHeaderClass}
               editMode={editMode}
               value={gpuData.cores}
@@ -273,7 +274,10 @@ export default function Gpu({ gpu }: GpuProps) {
                 ) : (
                   <button
                     aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                    onClick={() => void setEditMode(true)}
+                    onClick={() => {
+                      void setGpuData({ ...gpu });
+                      void setEditMode(true);
+                    }}
                   >
                     Edit
                   </button>
