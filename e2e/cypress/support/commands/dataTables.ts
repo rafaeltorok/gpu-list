@@ -43,3 +43,16 @@ Cypress.Commands.add("checkSpecs", (gpu: GpuInputType, vramSuffix: string) => {
   cy.checkRowData(gpu, "BOOST CLOCK", `${gpu.boostclock} MHz`);
   cy.checkRowData(gpu, "MEMORY CLOCK", `${gpu.memclock} Gbps effective`);
 });
+
+// Edit a spec field from the table in edit mode
+Cypress.Commands.add("editSpecField", (fieldName: string, fullModelName: string, value: string) => {
+  cy.contains(".gpu-data-table", fullModelName)
+    .closest("table")
+    .within(() => {
+      // Find the row and confirm the data is correctly being displayed
+      cy.contains("tr", fieldName).within(() => {
+        // Select all forces the default 0 value to be replaced
+        cy.get("td").get("input[type='number']").clear().type(`{selectall}${value}`);
+      });
+    });
+});
