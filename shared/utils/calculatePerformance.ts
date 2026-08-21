@@ -19,7 +19,7 @@ export default function calculatePerformance(gpu: GpuType | GpuInputType): strin
 function getFp32(model: string, cores: number, coreclock: number): string {
   // Guard against invalid values
   if (
-    model.trim() === "" || 
+    model?.trim() === "" || 
     !isValidData(cores) ||
     !isValidData(coreclock)
   ) {
