@@ -48,17 +48,17 @@ export default function PageIndex() {
             >
               <span
                 className={
-                  gpu.manufacturer.toLowerCase() === "nvidia"
+                  gpu.manufacturer?.toLowerCase() === "nvidia"
                     ? "nvidia-model-header"
-                    : gpu.manufacturer.toLowerCase() === "amd"
+                    : gpu.manufacturer?.toLowerCase() === "amd"
                       ? "amd-model-header"
-                      : gpu.manufacturer.toLowerCase() === "intel"
+                      : gpu.manufacturer?.toLowerCase() === "intel"
                         ? "intel-model-header"
-                        : gpu.gpuline.toLowerCase() === "geforce"
+                        : gpu.gpuline?.toLowerCase() === "geforce"
                           ? "nvidia-model-header"
-                          : gpu.gpuline.toLowerCase() === "radeon"
+                          : gpu.gpuline?.toLowerCase() === "radeon"
                             ? "amd-model-header"
-                            : gpu.gpuline.toLowerCase() === "arc"
+                            : gpu.gpuline?.toLowerCase() === "arc"
                               ? "intel-model-header"
                               : "model-header"
                 }
