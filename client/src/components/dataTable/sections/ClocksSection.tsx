@@ -13,7 +13,7 @@ export default function ClocksSection({
   gpuHeaderClass,
   gpuData,
   setGpuData,
-  editMode
+  editMode,
 }: ClocksSectionProps) {
   return (
     <tbody

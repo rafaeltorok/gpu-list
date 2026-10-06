@@ -15,16 +15,13 @@ export default function SpecsSection({
   gpuHeaderClass,
   gpuData,
   setGpuData,
-  editMode
+  editMode,
 }: SpecsSectionProps) {
   // Format the VRAM amount in either GB or MB
   const vramToDisplay = gpu.vram < 1 ? `${gpu.vram * 1000}MB` : `${gpu.vram}GB`;
 
   return (
-    <tbody
-      id={`${gpu.id}-specs`}
-      aria-labelledby={`${gpu.id}-specs-heading`}
-    >
+    <tbody id={`${gpu.id}-specs`} aria-labelledby={`${gpu.id}-specs-heading`}>
       <tr>
         <th className="table-header" colSpan={2}>
           SPECIFICATIONS

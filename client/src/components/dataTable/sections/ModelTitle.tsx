@@ -10,9 +10,7 @@ export default function ModelTitle({ gpu, gpuHeaderClass }: ModelTitleProps) {
     <tr>
       <th id={`${gpu.id}-heading`} className={gpuHeaderClass} colSpan={2}>
         {/* Filters out an empty GPU line to prevent two whitespaces in the full model name */}
-        {[gpu.manufacturer, gpu.gpuline, gpu.model]
-          .filter(Boolean)
-          .join(" ")}
+        {[gpu.manufacturer, gpu.gpuline, gpu.model].filter(Boolean).join(" ")}
       </th>
     </tr>
   );

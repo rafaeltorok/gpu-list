@@ -22,10 +22,7 @@ export default function TableControls({
   setEditMode,
   updateGpuData,
 }: TableControlsProps) {
-  const {
-    deleteGpu,
-    editGpu,
-  } = useGpuContext();
+  const { deleteGpu, editGpu } = useGpuContext();
 
   return (
     <tfoot id={`${gpu.id}-delete`}>

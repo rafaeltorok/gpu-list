@@ -320,7 +320,7 @@ describe("Testing the data table component", () => {
       render(
         <GpuContext.Provider value={mockContextValue}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Get the Show button to display all the data
@@ -356,13 +356,19 @@ describe("Testing the data table component", () => {
       expect(within(busRow).getByRole("spinbutton")).toHaveValue(gpu.bus);
 
       const baseClockRow = screen.getByRole("row", { name: /base clock/i });
-      expect(within(baseClockRow).getByRole("spinbutton")).toHaveValue(gpu.baseclock);
+      expect(within(baseClockRow).getByRole("spinbutton")).toHaveValue(
+        gpu.baseclock,
+      );
 
       const boostClockRow = screen.getByRole("row", { name: /boost clock/i });
-      expect(within(boostClockRow).getByRole("spinbutton")).toHaveValue(gpu.boostclock);
+      expect(within(boostClockRow).getByRole("spinbutton")).toHaveValue(
+        gpu.boostclock,
+      );
 
       const memClockRow = screen.getByRole("row", { name: /memory clock/i });
-      expect(within(memClockRow).getByRole("spinbutton")).toHaveValue(gpu.memclock);
+      expect(within(memClockRow).getByRole("spinbutton")).toHaveValue(
+        gpu.memclock,
+      );
     });
 
     test("an input field can be edited", async () => {
@@ -393,7 +399,9 @@ describe("Testing the data table component", () => {
 
       // Assert the edit mode has been disabled
       coresRow = screen.getByRole("row", { name: /cores/i });
-      expect(within(coresRow).queryByRole("spinbutton")).not.toBeInTheDocument();
+      expect(
+        within(coresRow).queryByRole("spinbutton"),
+      ).not.toBeInTheDocument();
     });
   });
 
