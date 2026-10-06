@@ -19,17 +19,17 @@ export default function PerformanceSection({
   const gpuPerformance = calculatePerformance(gpu);
 
   return (
-    <tbody
+    <div
       id={`${gpuData.id}-performance`}
       aria-labelledby={`${gpuData.id}-performance-heading`}
+      className="table-data-section-column"
     >
-      <tr>
-        <th className="table-header" colSpan={2}>
-          THEORETICAL PERFORMANCE
-        </th>
-      </tr>
+      <div className="table-division-header">
+        THEORETICAL PERFORMANCE
+      </div>
+
       <PerformanceRow
-        header="FP32(float)"
+        header="FP32 (float)"
         data={`${gpuPerformance[0]}`}
         headerClass={gpuHeaderClass}
       />
@@ -48,6 +48,6 @@ export default function PerformanceSection({
         data={`${gpuPerformance[3]}`}
         headerClass={gpuHeaderClass}
       />
-    </tbody>
+    </div>
   );
 }

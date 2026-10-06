@@ -21,12 +21,15 @@ export default function SpecsSection({
   const vramToDisplay = gpu.vram < 1 ? `${gpu.vram * 1000}MB` : `${gpu.vram}GB`;
 
   return (
-    <tbody id={`${gpu.id}-specs`} aria-labelledby={`${gpu.id}-specs-heading`}>
-      <tr>
-        <th className="table-header" colSpan={2}>
-          SPECIFICATIONS
-        </th>
-      </tr>
+    <div
+      id={`${gpu.id}-specs`}
+      aria-labelledby={`${gpu.id}-specs-heading`}
+      className="table-data-section-column"
+    >
+      <div className="table-division-header">
+        SPECIFICATIONS
+      </div>
+
       <DataRow
         header="CORES"
         data={`${gpu.cores}`}
@@ -77,6 +80,6 @@ export default function SpecsSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-    </tbody>
+    </div>
   );
 }

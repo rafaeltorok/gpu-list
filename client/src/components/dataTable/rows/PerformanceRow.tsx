@@ -10,9 +10,9 @@ export default function PerformanceRow({
   headerClass,
 }: PerformanceRowProps) {
   return (
-    <tr>
-      <th>{header}</th>
-      <td className={headerClass}>{data}</td>
-    </tr>
+    <div className="table-row">
+      <div className="table-row-label">{header}</div>
+      <div className={`${headerClass} table-row-data`}>{data}</div>
+    </div>
   );
 }

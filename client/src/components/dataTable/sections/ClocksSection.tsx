@@ -16,15 +16,15 @@ export default function ClocksSection({
   editMode,
 }: ClocksSectionProps) {
   return (
-    <tbody
+    <div
       id={`${gpuData.id}-clocks`}
       aria-labelledby={`${gpuData.id}-clocks-heading`}
+      className="table-data-section-column"
     >
-      <tr>
-        <th className="table-header" colSpan={2}>
-          CLOCK SPEEDS
-        </th>
-      </tr>
+      <div className="table-division-header">
+        CLOCK SPEEDS
+      </div>
+
       <DataRow
         header="BASE CLOCK"
         data={`${gpuData.baseclock} MHz`}
@@ -55,6 +55,6 @@ export default function ClocksSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-    </tbody>
+    </div>
   );
 }

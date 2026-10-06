@@ -85,59 +85,60 @@ export default function Gpu({ gpu }: GpuProps) {
   );
 
   return (
-    <table
+    <div
       id={generateGpuDomId(gpu)}
       className="gpu-data-table"
       aria-label={`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
       data-testid="gpu-data-table"
     >
-      <thead>
+      <div className="top-table-section">
         {/* Full model name for the data table main title */}
         <ModelTitle gpu={gpu} gpuHeaderClass={gpuHeaderClass} />
 
         {/* Hide button row */}
-        <tr>
-          <th colSpan={2} className="table-header">
-            <button
-              className="show-hide-button"
-              onClick={() => {
-                setShowBody(!showBody);
-                setEditMode(false);
-                setGpuData({ ...gpu }); // Reset any modifications when clicking on Hide
-              }}
-              aria-expanded={showBody}
-              aria-controls={`${gpu.id}-specs ${gpu.id}-clocks ${gpu.id}-performance ${gpu.id}-delete`}
-            >
-              {showBody ? "Hide" : "Show"}
-            </button>
-          </th>
-        </tr>
-      </thead>
+        <div className="table-header">
+          <button
+            className="show-hide-button"
+            onClick={() => {
+              setShowBody(!showBody);
+              setEditMode(false);
+              setGpuData({ ...gpu }); // Reset any modifications when clicking on Hide
+            }}
+            aria-expanded={showBody}
+            aria-controls={`${gpu.id}-specs ${gpu.id}-clocks ${gpu.id}-performance ${gpu.id}-delete`}
+          >
+            {showBody ? "Hide" : "Show"}
+          </button>
+        </div>
+      </div>
 
       {/* Data section - main table body */}
       {showBody && (
         <>
-          <SpecsSection
-            gpu={gpu}
-            gpuHeaderClass={gpuHeaderClass}
-            gpuData={gpuData}
-            setGpuData={setGpuData}
-            editMode={editMode}
-          />
+          <div className="table-data-section">
+            <SpecsSection
+              gpu={gpu}
+              gpuHeaderClass={gpuHeaderClass}
+              gpuData={gpuData}
+              setGpuData={setGpuData}
+              editMode={editMode}
+            />
 
-          <ClocksSection
-            gpuData={gpuData}
-            gpuHeaderClass={gpuHeaderClass}
-            setGpuData={setGpuData}
-            editMode={editMode}
-          />
+            <ClocksSection
+              gpuData={gpuData}
+              gpuHeaderClass={gpuHeaderClass}
+              setGpuData={setGpuData}
+              editMode={editMode}
+            />
 
-          <PerformanceSection
-            gpu={gpu}
-            gpuData={gpuData}
-            gpuHeaderClass={gpuHeaderClass}
-          />
+            <PerformanceSection
+              gpu={gpu}
+              gpuData={gpuData}
+              gpuHeaderClass={gpuHeaderClass}
+            />
+          </div>
 
+          {/* Controls section - handles edit mode and removing a card */}
           <TableControls
             gpu={gpu}
             gpuData={gpuData}
@@ -148,6 +149,6 @@ export default function Gpu({ gpu }: GpuProps) {
           />
         </>
       )}
-    </table>
+    </div>
   );
 }

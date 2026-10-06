@@ -24,9 +24,9 @@ export default function DataRow({
   return (
     <>
       {editMode ? (
-        <tr>
-          <th>{header}</th>
-          <td className={headerClass}>
+        <div className="table-row">
+          <div className="table-row-label">{header}</div>
+          <div className={headerClass}>
             <input
               className="gpu-data-table-edit-field"
               type="number"
@@ -35,13 +35,13 @@ export default function DataRow({
                 setGpuData({ ...gpuData, [id]: Number(e.target.value) })
               }
             />
-          </td>
-        </tr>
+          </div>
+        </div>
       ) : (
-        <tr>
-          <th>{header}</th>
-          <td className={headerClass}>{data}</td>
-        </tr>
+        <div className="table-row">
+          <div className="table-row-label">{header}</div>
+          <div className={`${headerClass} table-row-data`}>{data}</div>
+        </div>
       )}
     </>
   );

@@ -25,56 +25,52 @@ export default function TableControls({
   const { deleteGpu, editGpu } = useGpuContext();
 
   return (
-    <tfoot id={`${gpu.id}-delete`}>
+    <div id={`${gpu.id}-delete`}>
       {/* Edit/Save button row */}
-      <tr>
-        <td colSpan={2} id="edit-gpu-button">
-          {editMode ? (
-            <button
-              aria-label={`Save ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-              onClick={() =>
-                void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
-              }
-            >
-              Save
-            </button>
-          ) : (
-            <button
-              aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-              onClick={() => {
-                void setGpuData({ ...gpu });
-                void setEditMode(true);
-              }}
-            >
-              Edit
-            </button>
-          )}
-        </td>
-      </tr>
+      <div id="edit-gpu-button">
+        {editMode ? (
+          <button
+            aria-label={`Save ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+            onClick={() =>
+              void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
+            }
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+            onClick={() => {
+              void setGpuData({ ...gpu });
+              void setEditMode(true);
+            }}
+          >
+            Edit
+          </button>
+        )}
+      </div>
 
       {/* Delete/Cancel button row */}
-      <tr>
-        <td colSpan={2} id="delete-gpu-button">
-          {editMode ? (
-            <button
-              aria-label={`Cancel ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-              onClick={() => {
-                setEditMode(false);
-                setGpuData({ ...gpu });
-              }}
-            >
-              Cancel
-            </button>
-          ) : (
-            <button
-              aria-label={`Delete ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-              onClick={() => void deleteGpu(gpu)}
-            >
-              Delete
-            </button>
-          )}
-        </td>
-      </tr>
-    </tfoot>
+      <div id="delete-gpu-button">
+        {editMode ? (
+          <button
+            aria-label={`Cancel ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+            onClick={() => {
+              setEditMode(false);
+              setGpuData({ ...gpu });
+            }}
+          >
+            Cancel
+          </button>
+        ) : (
+          <button
+            aria-label={`Delete ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+            onClick={() => void deleteGpu(gpu)}
+          >
+            Delete
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
