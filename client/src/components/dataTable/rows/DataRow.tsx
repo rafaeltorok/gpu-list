@@ -1,6 +1,6 @@
-import type { GpuType } from "../../../../shared/types/types";
+import type { GpuType } from "../../../../../shared/types/types";
 
-type GpuDataRowProps = {
+type DataRowProps = {
   header: string;
   data: string | number;
   headerClass: string;
@@ -11,7 +11,7 @@ type GpuDataRowProps = {
   setGpuData: (gpu: GpuType) => void;
 };
 
-export default function GpuDataRow({
+export default function DataRow({
   header,
   data,
   headerClass,
@@ -20,7 +20,7 @@ export default function GpuDataRow({
   id,
   gpuData,
   setGpuData,
-}: GpuDataRowProps) {
+}: DataRowProps) {
   return (
     <>
       {editMode ? (

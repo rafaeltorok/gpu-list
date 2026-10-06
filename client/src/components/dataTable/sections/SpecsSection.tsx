@@ -1,4 +1,4 @@
-import GpuDataRow from "../GpuDataRow";
+import DataRow from "../rows/DataRow";
 
 import type { GpuType } from "../../../../../shared/types/types";
 
@@ -27,7 +27,7 @@ export default function SpecsSection({
           SPECIFICATIONS
         </th>
       </tr>
-      <GpuDataRow
+      <DataRow
         header="CORES"
         data={`${gpu.cores}`}
         headerClass={gpuHeaderClass}
@@ -37,7 +37,7 @@ export default function SpecsSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-      <GpuDataRow
+      <DataRow
         header="TMUs"
         data={`${gpuData.tmus}`}
         headerClass={gpuHeaderClass}
@@ -47,7 +47,7 @@ export default function SpecsSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-      <GpuDataRow
+      <DataRow
         header="ROPs"
         data={`${gpuData.rops}`}
         headerClass={gpuHeaderClass}
@@ -57,7 +57,7 @@ export default function SpecsSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-      <GpuDataRow
+      <DataRow
         header="VRAM"
         data={`${vramToDisplay} ${gpuData.memtype}`}
         headerClass={gpuHeaderClass}
@@ -67,7 +67,7 @@ export default function SpecsSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-      <GpuDataRow
+      <DataRow
         header="BUS WIDTH"
         data={`${gpuData.bus} bit`}
         headerClass={gpuHeaderClass}

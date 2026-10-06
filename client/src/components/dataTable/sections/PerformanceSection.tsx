@@ -1,6 +1,6 @@
 import calculatePerformance from "../../../../../shared/utils/calculatePerformance";
 
-import GpuPerformanceRow from "../GpuPerformanceRow";
+import PerformanceRow from "../rows/PerformanceRow";
 
 import type { GpuType } from "../../../../../shared/types/types";
 
@@ -28,22 +28,22 @@ export default function PerformanceSection({
           THEORETICAL PERFORMANCE
         </th>
       </tr>
-      <GpuPerformanceRow
+      <PerformanceRow
         header="FP32(float)"
         data={`${gpuPerformance[0]}`}
         headerClass={gpuHeaderClass}
       />
-      <GpuPerformanceRow
+      <PerformanceRow
         header="TEXTURE RATE"
         data={`${gpuPerformance[1]}`}
         headerClass={gpuHeaderClass}
       />
-      <GpuPerformanceRow
+      <PerformanceRow
         header="PIXEL RATE"
         data={`${gpuPerformance[2]}`}
         headerClass={gpuHeaderClass}
       />
-      <GpuPerformanceRow
+      <PerformanceRow
         header="BANDWIDTH"
         data={`${gpuPerformance[3]}`}
         headerClass={gpuHeaderClass}

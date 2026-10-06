@@ -1,14 +1,14 @@
-type GpuPerformanceRowProps = {
+type PerformanceRowProps = {
   header: string;
   data: string | number;
   headerClass: string;
 };
 
-export default function GpuPerformanceRow({
+export default function PerformanceRow({
   header,
   data,
   headerClass,
-}: GpuPerformanceRowProps) {
+}: PerformanceRowProps) {
   return (
     <tr>
       <th>{header}</th>

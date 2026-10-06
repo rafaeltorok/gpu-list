@@ -1,4 +1,4 @@
-import GpuDataRow from "../GpuDataRow";
+import DataRow from "../rows/DataRow";
 
 import type { GpuType } from "../../../../../shared/types/types";
 
@@ -25,7 +25,7 @@ export default function ClocksSection({
           CLOCK SPEEDS
         </th>
       </tr>
-      <GpuDataRow
+      <DataRow
         header="BASE CLOCK"
         data={`${gpuData.baseclock} MHz`}
         headerClass={gpuHeaderClass}
@@ -35,7 +35,7 @@ export default function ClocksSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-      <GpuDataRow
+      <DataRow
         header="BOOST CLOCK"
         data={`${gpuData.boostclock} MHz`}
         headerClass={gpuHeaderClass}
@@ -45,7 +45,7 @@ export default function ClocksSection({
         gpuData={gpuData}
         setGpuData={setGpuData}
       />
-      <GpuDataRow
+      <DataRow
         header="MEMORY CLOCK"
         data={`${gpuData.memclock} Gbps effective`}
         headerClass={gpuHeaderClass}
