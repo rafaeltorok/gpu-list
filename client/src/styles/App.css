@@ -1,15 +1,19 @@
 #root {
-  max-width: 550px;
   width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   font-family: "digital-dreamers", "sans-serif";
+  box-sizing: border-box;
 }
 
 @font-face {
   font-family: "digital-dreamers";
   src: url("../fonts/DigitalDreamers-jy99.ttf") format("truetype");
+}
+
+.top-page-controls {
+  width: 95%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 h1,
@@ -51,11 +55,12 @@ button:focus {
 }
 
 .button-area {
-  width: 100%;
+  width: 500px;
   max-width: 100%;
   background-color: rgba(12, 12, 12, 0.6);
   border-radius: 1rem;
   box-sizing: border-box; /* Prevents the are to be wider than the others */
+  margin: 0 auto;
   margin-bottom: 2rem;
   border: 0.15rem solid #222222;
 }
@@ -79,14 +84,14 @@ button:focus {
   background-color: rgba(12, 12, 12, 0.75);
 }
 
+.table-container {
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
   #root {
     padding: 0.5rem;
-  }
-}
-
-@media only screen and (hover: none) and (pointer: coarse) and (orientation: landscape) {
-  #root {
-    max-width: 500px;
   }
 }
