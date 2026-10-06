@@ -28,7 +28,7 @@ export default function DataRow({
           <div className="table-row-label">{header}</div>
           <div className={headerClass}>
             <input
-              className="gpu-data-table-edit-field"
+              className="table-row-edit-field"
               type="number"
               value={value}
               onChange={(e) =>
