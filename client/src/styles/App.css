@@ -18,20 +18,22 @@ table {
 }
 
 h1 {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.6);
   border: 0.15rem solid;
   border-style: double;
+  border-color: #222222;
   font-size: 2.5rem;
   text-decoration: underline;
   padding: 1rem;
 }
 
 button {
-  background-color: #050505;
+  background-color: rgba(5, 5, 5, 0.75);
   font-size: 1rem;
   font-family: "digital-dreamers";
   margin-top: 1rem;
   border-style: outset;
+  border-color: #222222;
 }
 
 button:active {
@@ -51,12 +53,11 @@ button:focus {
 .button-area {
   width: 100%;
   max-width: 100%;
-  background-color: rgba(12, 12, 12, 0.9);
+  background-color: rgba(12, 12, 12, 0.6);
   border-radius: 1rem;
   box-sizing: border-box; /* Prevents the are to be wider than the others */
   margin-bottom: 2rem;
-  border: 0.25rem solid black;
-  border-style: groove;
+  border: 0.15rem solid #222222;
 }
 
 .button-area button {
@@ -73,7 +74,9 @@ button:focus {
   padding: 0.5rem 1rem;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  border-color: gray;
+  border-color: #222222;
+  border-style: solid;
+  background-color: rgba(12, 12, 12, 0.75);
 }
 
 @media only screen and (hover: none) and (pointer: coarse) {
