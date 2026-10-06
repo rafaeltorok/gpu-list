@@ -15,7 +15,6 @@
   font-weight: bold;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-  padding: 1rem;
 }
 
 .table-data-section {
@@ -95,5 +94,9 @@
 
   .table-data-section-column {
     width: 100%;
+  }
+
+  .table-main-title {
+    font-size: 1.25rem;
   }
 }

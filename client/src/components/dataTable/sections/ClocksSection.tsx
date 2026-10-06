@@ -21,9 +21,11 @@ export default function ClocksSection({
       aria-labelledby={`${gpuData.id}-clocks-heading`}
       className="table-data-section-column"
     >
-      <div className="table-division-header">
+      <h3
+        className="table-division-header"
+      >
         CLOCK SPEEDS
-      </div>
+      </h3>
 
       <DataRow
         header="BASE CLOCK"
