@@ -273,7 +273,7 @@ describe("the Graphics Card data table", function () {
       });
     });
 
-    it("clicking on the Cancel button should not save any changes", function () {
+    it("clicking on the Hide button should cancel any changes", function () {
       cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
         // Select a card from the list
         const gpu = gpuList[0];
@@ -287,10 +287,31 @@ describe("the Graphics Card data table", function () {
         cy.editSpecField("CORES", fullModelName, "3840");
 
         // Click on the hide button
-        cy.get(".gpu-data-table thead button").contains("Cancel").click();
+        cy.get(".gpu-data-table thead button").contains("Hide").click();
 
         // Open the card's information table to display all data
         cy.showData(gpu);
+
+        // Assert the Cores row has not been updated
+        cy.checkRowData(gpu, "CORES", String(gpu.cores));
+      });
+    });
+
+    it("clicking on the Cancel button should reset any changes", function () {
+      cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
+        // Select a card from the list
+        const gpu = gpuList[0];
+        const fullModelName = getFullModel(gpu);
+
+        // Enter edit mode
+        cy.showData(gpu);
+        cy.get(".gpu-data-table tfoot #edit-gpu-button").click();
+
+        // Edit a specification
+        cy.editSpecField("CORES", fullModelName, "3840");
+
+        // Click on the cancel button
+        cy.get(".gpu-data-table thead button").contains("Cancel").click();
 
         // Assert the Cores row has not been updated
         cy.checkRowData(gpu, "CORES", String(gpu.cores));
