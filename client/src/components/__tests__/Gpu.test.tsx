@@ -107,9 +107,13 @@ describe("Testing the data table component", () => {
       // Theoretical performance section
       const fp32Row = screen.getByText(/fp32\(float\)/i).closest(".table-row");
       expect(within(fp32Row).getByText("N/A")).toBeInTheDocument();
-      const textureRateRow = screen.getByText(/texture rate/i).closest(".table-row");
+      const textureRateRow = screen
+        .getByText(/texture rate/i)
+        .closest(".table-row");
       expect(within(textureRateRow).getByText("N/A")).toBeInTheDocument();
-      const pixelRateRow = screen.getByText(/pixel rate/i).closest(".table-row");
+      const pixelRateRow = screen
+        .getByText(/pixel rate/i)
+        .closest(".table-row");
       expect(within(pixelRateRow).getByText("N/A")).toBeInTheDocument();
       const bandwidthRow = screen.getByText(/bandwidth/i).closest(".table-row");
       expect(within(bandwidthRow).getByText("N/A")).toBeInTheDocument();
@@ -171,11 +175,15 @@ describe("Testing the data table component", () => {
       // Theoretical performance
       const fp32Row = screen.getByText(/fp32\(float\)/i).closest(".table-row");
       expect(within(fp32Row).getByText(performance[0])).toBeInTheDocument();
-      const textureRateRow = screen.getByText(/texture rate/i).closest(".table-row");
+      const textureRateRow = screen
+        .getByText(/texture rate/i)
+        .closest(".table-row");
       expect(
         within(textureRateRow).getByText(performance[1]),
       ).toBeInTheDocument();
-      const pixelRateRow = screen.getByText(/pixel rate/i).closest(".table-row");
+      const pixelRateRow = screen
+        .getByText(/pixel rate/i)
+        .closest(".table-row");
       expect(
         within(pixelRateRow).getByText(performance[2]),
       ).toBeInTheDocument();
@@ -373,17 +381,23 @@ describe("Testing the data table component", () => {
       const busRow = screen.getByText(/bus width/i).closest(".table-row");
       expect(within(busRow).getByRole("spinbutton")).toHaveValue(gpu.bus);
 
-      const baseClockRow = screen.getByText(/base clock/i).closest(".table-row");
+      const baseClockRow = screen
+        .getByText(/base clock/i)
+        .closest(".table-row");
       expect(within(baseClockRow).getByRole("spinbutton")).toHaveValue(
         gpu.baseclock,
       );
 
-      const boostClockRow = screen.getByText(/boost clock/i).closest(".table-row");
+      const boostClockRow = screen
+        .getByText(/boost clock/i)
+        .closest(".table-row");
       expect(within(boostClockRow).getByRole("spinbutton")).toHaveValue(
         gpu.boostclock,
       );
 
-      const memClockRow = screen.getByText(/memory clock/i).closest(".table-row");
+      const memClockRow = screen
+        .getByText(/memory clock/i)
+        .closest(".table-row");
       expect(within(memClockRow).getByRole("spinbutton")).toHaveValue(
         gpu.memclock,
       );

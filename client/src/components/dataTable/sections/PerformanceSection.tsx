@@ -24,11 +24,7 @@ export default function PerformanceSection({
       aria-labelledby={`${gpuData.id}-performance-heading`}
       className="table-data-section-column"
     >
-      <h3
-        className="table-division-header"
-      >
-        THEORETICAL PERFORMANCE
-      </h3>
+      <h3 className="table-division-header">THEORETICAL PERFORMANCE</h3>
 
       <PerformanceRow
         header="FP32 (float)"

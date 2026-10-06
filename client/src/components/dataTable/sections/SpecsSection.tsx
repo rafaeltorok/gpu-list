@@ -26,11 +26,7 @@ export default function SpecsSection({
       aria-labelledby={`${gpu.id}-specs-heading`}
       className="table-data-section-column"
     >
-      <h3
-        className="table-division-header"
-      >
-        SPECIFICATIONS
-      </h3>
+      <h3 className="table-division-header">SPECIFICATIONS</h3>
 
       <DataRow
         header="CORES"
