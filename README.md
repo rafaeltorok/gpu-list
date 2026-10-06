@@ -113,15 +113,32 @@ The Web UI automatically displays performance metrics such as:
 
 ### Screenshots
 
-Main UI
+#### Main UI
 
-<img src="./img/gpulist_main-ui.png" alt="GPU List app main UI" width="400"/>
-<img src="./img/gpulist_main-ui_table-view.png" alt="GPU List app main UI data table" width="400"/>
+Desktop view
 
-Alternative UI
+<div style="display: flex; gap: 1rem;">
+  <img src="./img/gpulist_main-ui_desktop.png" alt="GPU List app main UI on desktops" height="400"/>
+  <img src="./img/gpulist_main-ui_table-view_desktop.png" alt="GPU List app main UI data table on desktops" height="400"/>
+</div>
 
-<img src="./img/gpulist_alt-ui.png" alt="GPU List app alternative UI" width="500"/>
-<img src="./img/gpulist_alt-ui_card-view.png" alt="GPU List app alternative UI card info" width="500"/>
+<br>
+
+Mobile view
+
+<div style="display: flex; gap: 1rem;">
+  <img src="./img/gpulist_main-ui_mobile.png" alt="GPU List app main UI on mobile devices" height="500"/>
+  <img src="./img/gpulist_main-ui_table-view_mobile.png" alt="GPU List app main UI data table on mobile devices" height="500"/>
+</div>
+
+<br>
+
+#### Alternative UI
+
+<div style="display: flex; gap: 1rem;">
+  <img src="./img/gpulist_alt-ui.png" alt="GPU List app alternative UI" height="300"/>
+<img src="./img/gpulist_alt-ui_card-view.png" alt="GPU List app alternative UI card info" height="300"/>
+</div>
 
 
 ## Prerequisites
@@ -517,15 +534,23 @@ npm run test:run -- ./src/__tests__
 │   │   ├── favicon.ico
 │   │   └── favicon.png
 │   ├── components                    # Presentational and state-driven UI components
-│   │   ├── AddGpuForm.tsx            # Handles the logic for the frontend validation, submissions state and form handling
-│   │   ├── FormRow.tsx               # Render a single row for the add form component, helper component for the add form
-│   │   ├── Gpu.tsx                   # Display a single graphics card data table, presentational component
-│   │   ├── GpuDataRow.tsx            # Render a single specification row for the GPU data table, being a data-only row or an input field for the "Edit" mode. Helper component for the data table
-│   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
-│   │   ├── GpuPerformanceRow.tsx     # Render a single performance row for the Theoretical Performance section. Helper component for the data table
-│   │   ├── PageIndex.tsx             # Render the main page index
-│   │   ├── SearchBar.tsx             # Responsible for displaying and handling the search terms, interacting with the React context
-│   │   ├── ShowAllButton.tsx         # Render the button on the main page
+│   │   ├── AddGpuForm.tsx            # Handles the logic for the frontend validation, submissions state and form handling
+│   │   ├── dataTable
+│   │   │   ├── Gpu.tsx               # Display a single graphics card data table, presentational component
+│   │   │   ├── rows
+│   │   │   │   ├── DataRow.tsx       # Render a single specification row for the GPU data table, being a data-only row or an input field for the "Edit" mode. Helper component for the data table
+│   │   │   │   └── PerformanceRow.tsx # Render a single performance row for the Theoretical Performance section. Helper component for the data table
+│   │   │   └── sections
+│   │   │       ├── ClocksSection.tsx       # Render the clock speeds fields
+│   │   │       ├── ModelTitle.tsx          # Render the full model name for the table title
+│   │   │       ├── PerformanceSection.tsx  # Render the theoretical performance fields
+│   │   │       ├── SpecsSection.tsx        # Render the specifications fields
+│   │   │       └── TableControls.tsx       # Render the edit, save and delete buttons
+│   │   ├── FormRow.tsx               # Render a single row for the add form component, helper component for the add form
+│   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
+│   │   ├── PageIndex.tsx             # Render the main page index
+│   │   ├── SearchBar.tsx             # Responsible for displaying and handling the search terms, interacting with the React context
+│   │   ├── ShowAllButton.tsx         # Render the button on the main page
 │   │   └── __tests__                 # Component integration tests
 │   ├── context                       # React context API folder
 │   │   └── GpuContext.ts             # Defines the shared React context for both the UI and GPU-related states
@@ -556,7 +581,8 @@ npm run test:run -- ./src/__tests__
 │   │   └── data
 │   │       └── fixtures.ts         # Example data to be used for testing purposes
 │   └── types                         # TypeScript types exclusive to the main client frontend
-│       └── context.ts
+│       ├── context.ts
+│       └── componentProps.ts
 ├── Dockerfile.dev                    # Build an image to be used with the Dev Composer script
 ├── eslint.config.js                  # ESLint custom config file
 ├── index.html
