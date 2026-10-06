@@ -1,14 +1,17 @@
-// Component dependencies
 import { useState, useEffect } from "react";
+
+// Custom hooks
 import useGpuContext from "../../hooks/useGpuContext";
 
 // Utils
-import calculatePerformance from "../../../../shared/utils/calculatePerformance";
 import generateGpuDomId from "../../../../shared/utils/generateGpuDomId";
 
-// React components
-import GpuDataRow from "./GpuDataRow";
-import GpuPerformanceRow from "./GpuPerformanceRow";
+// Components
+import ModelTitle from "./sections/ModelTitle";
+import SpecsSection from "./sections/SpecsSection";
+import ClocksSection from "./sections/ClocksSection";
+import PerformanceSection from "./sections/PerformanceSection";
+import TableControls from "./sections/TableControls";
 
 // CSS Styles
 import "../../styles/Gpu.css";
@@ -16,15 +19,10 @@ import "../../styles/ManufacturerColors.css";
 
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
+import type { UpdateGpuDataProps } from "../../types/componentProps";
 
 interface GpuProps {
   gpu: GpuType;
-}
-
-interface UpdateGpuDataProps {
-  gpu: GpuType;
-  setEditMode: (editMode: boolean) => void;
-  editGpu: (gpu: GpuType) => Promise<boolean>;
 }
 
 // Helper functions
@@ -64,14 +62,15 @@ async function updateGpuData({
 
 // Component
 export default function Gpu({ gpu }: GpuProps) {
+  // Create an editable backup based on the original data
   const [gpuData, setGpuData] = useState<GpuType>(gpu);
+
+  // Table controls
   const [showBody, setShowBody] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   // Access the React context
   const {
-    deleteGpu,
-    editGpu,
     uiState: { showAll },
   } = useGpuContext();
 
@@ -79,12 +78,6 @@ export default function Gpu({ gpu }: GpuProps) {
   useEffect(() => {
     setShowBody(showAll);
   }, [showAll]);
-
-  // Calculate the theoretical performance for the current graphics card
-  const gpuPerformance = calculatePerformance(gpu);
-
-  // Format the VRAM amount in either GB or MB
-  const vramToDisplay = gpu.vram < 1 ? `${gpu.vram * 1000}MB` : `${gpu.vram}GB`;
 
   // Get the classname to customize the table color scheme based on the manufacturer
   const gpuHeaderClass = getClass(
@@ -99,14 +92,10 @@ export default function Gpu({ gpu }: GpuProps) {
       data-testid="gpu-data-table"
     >
       <thead>
-        <tr>
-          <th id={`${gpu.id}-heading`} className={gpuHeaderClass} colSpan={2}>
-            {/* Filters out an empty GPU line to prevent two whitespaces in the full model name */}
-            {[gpu.manufacturer, gpu.gpuline, gpu.model]
-              .filter(Boolean)
-              .join(" ")}
-          </th>
-        </tr>
+        {/* Full model name for the data table main title */}
+        <ModelTitle gpu={gpu} gpuHeaderClass={gpuHeaderClass} />
+
+        {/* Hide button row */}
         <tr>
           <th colSpan={2} className="table-header">
             <button
@@ -114,187 +103,49 @@ export default function Gpu({ gpu }: GpuProps) {
               onClick={() => {
                 setShowBody(!showBody);
                 setEditMode(false);
-                setGpuData({ ...gpu });
+                setGpuData({ ...gpu }); // Reset any modifications when clicking on Hide
               }}
               aria-expanded={showBody}
               aria-controls={`${gpu.id}-specs ${gpu.id}-clocks ${gpu.id}-performance ${gpu.id}-delete`}
             >
-              {showBody ? (editMode ? "Cancel" : "Hide") : "Show"}
+              {showBody ? "Hide" : "Show"}
             </button>
           </th>
         </tr>
       </thead>
+
+      {/* Data section - main table body */}
       {showBody && (
         <>
-          <tbody
-            id={`${gpu.id}-specs`}
-            aria-labelledby={`${gpu.id}-specs-heading`}
-          >
-            <tr>
-              <th className="table-header" colSpan={2}>
-                SPECIFICATIONS
-              </th>
-            </tr>
-            <GpuDataRow
-              header="CORES"
-              data={`${gpu.cores}`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.cores}
-              id="cores"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-            <GpuDataRow
-              header="TMUs"
-              data={`${gpuData.tmus}`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.tmus}
-              id="tmus"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-            <GpuDataRow
-              header="ROPs"
-              data={`${gpuData.rops}`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.rops}
-              id="rops"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-            <GpuDataRow
-              header="VRAM"
-              data={`${vramToDisplay} ${gpuData.memtype}`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.vram}
-              id="vram"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-            <GpuDataRow
-              header="BUS WIDTH"
-              data={`${gpuData.bus} bit`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.bus}
-              id="bus"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-          </tbody>
+          <SpecsSection
+            gpu={gpu}
+            gpuHeaderClass={gpuHeaderClass}
+            gpuData={gpuData}
+            setGpuData={setGpuData}
+            editMode={editMode}
+          />
 
-          <tbody
-            id={`${gpu.id}-clocks`}
-            aria-labelledby={`${gpu.id}-clocks-heading`}
-          >
-            <tr>
-              <th className="table-header" colSpan={2}>
-                CLOCK SPEEDS
-              </th>
-            </tr>
-            <GpuDataRow
-              header="BASE CLOCK"
-              data={`${gpuData.baseclock} MHz`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.baseclock}
-              id="baseclock"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-            <GpuDataRow
-              header="BOOST CLOCK"
-              data={`${gpuData.boostclock} MHz`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.boostclock}
-              id="boostclock"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-            <GpuDataRow
-              header="MEMORY CLOCK"
-              data={`${gpuData.memclock} Gbps effective`}
-              headerClass={gpuHeaderClass}
-              editMode={editMode}
-              value={gpuData.memclock}
-              id="memclock"
-              gpuData={gpuData}
-              setGpuData={setGpuData}
-            />
-          </tbody>
+          <ClocksSection
+            gpuData={gpuData}
+            gpuHeaderClass={gpuHeaderClass}
+            setGpuData={setGpuData}
+            editMode={editMode}
+          />
 
-          <tbody
-            id={`${gpu.id}-performance`}
-            aria-labelledby={`${gpu.id}-performance-heading`}
-          >
-            <tr>
-              <th className="table-header" colSpan={2}>
-                THEORETICAL PERFORMANCE
-              </th>
-            </tr>
-            <GpuPerformanceRow
-              header="FP32(float)"
-              data={`${gpuPerformance[0]}`}
-              headerClass={gpuHeaderClass}
-            />
-            <GpuPerformanceRow
-              header="TEXTURE RATE"
-              data={`${gpuPerformance[1]}`}
-              headerClass={gpuHeaderClass}
-            />
-            <GpuPerformanceRow
-              header="PIXEL RATE"
-              data={`${gpuPerformance[2]}`}
-              headerClass={gpuHeaderClass}
-            />
-            <GpuPerformanceRow
-              header="BANDWIDTH"
-              data={`${gpuPerformance[3]}`}
-              headerClass={gpuHeaderClass}
-            />
-          </tbody>
+          <PerformanceSection
+            gpu={gpu}
+            gpuData={gpuData}
+            gpuHeaderClass={gpuHeaderClass}
+          />
 
-          <tfoot id={`${gpu.id}-delete`}>
-            <tr>
-              <td colSpan={2} id="edit-gpu-button">
-                {editMode ? (
-                  <button
-                    aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                    onClick={() =>
-                      void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
-                    }
-                  >
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                    onClick={() => {
-                      void setGpuData({ ...gpu });
-                      void setEditMode(true);
-                    }}
-                  >
-                    Edit
-                  </button>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td colSpan={2} id="delete-gpu-button">
-                <button
-                  aria-label={`Delete ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                  onClick={() => void deleteGpu(gpu)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tfoot>
+          <TableControls
+            gpu={gpu}
+            gpuData={gpuData}
+            setGpuData={setGpuData}
+            editMode={editMode}
+            setEditMode={setEditMode}
+            updateGpuData={updateGpuData}
+          />
         </>
       )}
     </table>
