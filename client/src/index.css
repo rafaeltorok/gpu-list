@@ -21,9 +21,11 @@
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   display: flex;
   place-items: center;
+  justify-content: center;
   min-width: 320px;
+  max-width: 95%;
   min-height: 100vh;
 }

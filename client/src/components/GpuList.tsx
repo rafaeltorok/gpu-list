@@ -45,7 +45,11 @@ export default function GpuList() {
           <div>No GPUs available</div>
         ) : (
           gpuList.map((gpu) => (
-            <section key={gpu.id} aria-labelledby={`${gpu.id}-heading`}>
+            <section
+              key={gpu.id}
+              className="table-container"
+              aria-labelledby={`${gpu.id}-heading`}
+            >
               <Gpu gpu={gpu} />
               <button
                 className="back-to-index-button"
