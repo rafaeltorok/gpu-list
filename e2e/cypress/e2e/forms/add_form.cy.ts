@@ -27,7 +27,7 @@ describe("Testing the add form", function () {
 
       // Confirm each data row is being correctly displayed
       cy.showData(gpu);
-      cy.get(".gpu-data-table th")
+      cy.get(".gpu-data-table")
         .contains("CORES")
         .siblings()
         .contains(gpu.cores);
@@ -54,7 +54,7 @@ describe("Testing the add form", function () {
         .siblings()
         .contains(`${gpu.memclock} Gbps effective`);
       cy.get(".gpu-data-table")
-        .contains("FP32(float)")
+        .contains("FP32 (float)")
         .siblings()
         .contains(`${performance[0]}`);
       cy.get(".gpu-data-table")

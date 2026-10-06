@@ -38,23 +38,18 @@ describe("testing the search bar", function () {
     // "cy.find() failed because the page updated as a result of this command, but the subject is no longer attached to the DOM."
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce RTX 3060");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce GTX 970");
     cy.get(".gpu-data-table")
       .eq(2)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce GTX 650");
     cy.get(".gpu-data-table")
       .eq(3)
-      .find("thead tr th")
       .should("contain", "NVIDIA RTX PRO 6000 Blackwell");
     cy.get(".gpu-data-table")
       .eq(4)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce GT 210");
 
     // Searches for AMD Radeon cards
@@ -66,11 +61,9 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "AMD Radeon RX 9070 XT");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "AMD Radeon RX 7900 XTX");
 
     // Searches for Intel Arc cards
@@ -82,11 +75,9 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "Intel Arc B580");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "Intel Arc A770");
   });
 
@@ -103,19 +94,15 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce RTX 3060");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce GTX 970");
     cy.get(".gpu-data-table")
       .eq(2)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce GTX 650");
     cy.get(".gpu-data-table")
       .eq(3)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce GT 210");
 
     // Searches for AMD Radeon cards
@@ -127,11 +114,9 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "AMD Radeon RX 9070 XT");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "AMD Radeon RX 7900 XTX");
 
     // Searches for Intel Arc cards
@@ -143,11 +128,9 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "Intel Arc B580");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "Intel Arc A770");
   });
 
@@ -164,11 +147,9 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce RTX 3060");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "NVIDIA RTX PRO 6000 Blackwell");
   });
 
@@ -184,7 +165,6 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "AMD Radeon RX 7900 XTX");
 
     // Search by cards that contain a model name with '70'
@@ -196,15 +176,12 @@ describe("testing the search bar", function () {
     // Confirm the models are correct
     cy.get(".gpu-data-table")
       .eq(0)
-      .find("thead tr th")
       .should("contain", "NVIDIA GeForce GTX 970");
     cy.get(".gpu-data-table")
       .eq(1)
-      .find("thead tr th")
       .should("contain", "AMD Radeon RX 9070 XT");
     cy.get(".gpu-data-table")
       .eq(2)
-      .find("thead tr th")
       .should("contain", "Intel Arc A770");
   });
 
