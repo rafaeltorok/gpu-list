@@ -1,21 +1,21 @@
 // Component dependencies
 import { useState, useEffect } from "react";
-import useGpuContext from "../hooks/useGpuContext";
+import useGpuContext from "../../hooks/useGpuContext";
 
 // Utils
-import calculatePerformance from "../../../shared/utils/calculatePerformance";
-import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
+import calculatePerformance from "../../../../shared/utils/calculatePerformance";
+import generateGpuDomId from "../../../../shared/utils/generateGpuDomId";
 
 // React components
 import GpuDataRow from "./GpuDataRow";
 import GpuPerformanceRow from "./GpuPerformanceRow";
 
 // CSS Styles
-import "../styles/Gpu.css";
-import "../styles/ManufacturerColors.css";
+import "../../styles/Gpu.css";
+import "../../styles/ManufacturerColors.css";
 
 // TypeScript types
-import type { GpuType } from "../../../shared/types/types";
+import type { GpuType } from "../../../../shared/types/types";
 
 interface GpuProps {
   gpu: GpuType;
@@ -119,7 +119,7 @@ export default function Gpu({ gpu }: GpuProps) {
               aria-expanded={showBody}
               aria-controls={`${gpu.id}-specs ${gpu.id}-clocks ${gpu.id}-performance ${gpu.id}-delete`}
             >
-              {showBody ? "Hide" : "Show"}
+              {showBody ? (editMode ? "Cancel" : "Hide") : "Show"}
             </button>
           </th>
         </tr>

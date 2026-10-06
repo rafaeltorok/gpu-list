@@ -273,7 +273,7 @@ describe("the Graphics Card data table", function () {
       });
     });
 
-    it("clicking on the Hide button should cancel any changes", function () {
+    it("clicking on the Cancel button should not save any changes", function () {
       cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
         // Select a card from the list
         const gpu = gpuList[0];
@@ -287,7 +287,7 @@ describe("the Graphics Card data table", function () {
         cy.editSpecField("CORES", fullModelName, "3840");
 
         // Click on the hide button
-        cy.get(".gpu-data-table thead button").contains("Hide").click();
+        cy.get(".gpu-data-table thead button").contains("Cancel").click();
 
         // Open the card's information table to display all data
         cy.showData(gpu);

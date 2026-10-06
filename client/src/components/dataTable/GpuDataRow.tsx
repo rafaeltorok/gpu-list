@@ -1,4 +1,4 @@
-import type { GpuType } from "../../../shared/types/types";
+import type { GpuType } from "../../../../shared/types/types";
 
 type GpuDataRowProps = {
   header: string;

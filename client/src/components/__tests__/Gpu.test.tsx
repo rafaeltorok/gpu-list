@@ -4,7 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Component
-import Gpu from "../Gpu";
+import Gpu from "../dataTable/Gpu";
 
 // Data
 import sampleData from "../../test-utils/data/fixtures";

@@ -2,7 +2,7 @@
 import useGpuContext from "../hooks/useGpuContext";
 
 // Components
-import Gpu from "./Gpu";
+import Gpu from "./dataTable/Gpu";
 
 // Utils
 import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
