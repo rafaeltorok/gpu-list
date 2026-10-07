@@ -118,8 +118,8 @@ The Web UI automatically displays performance metrics such as:
 Desktop view
 
 <div style="display: flex; gap: 1rem;">
-  <img src="./img/gpulist_main-ui_desktop.png" alt="GPU List app main UI on desktops" height="400"/>
-  <img src="./img/gpulist_main-ui_table-view_desktop.png" alt="GPU List app main UI data table on desktops" height="400"/>
+  <img src="./img/gpulist_main-ui_desktop.png" alt="GPU List app main UI on desktops" height="350"/>
+  <img src="./img/gpulist_main-ui_table-view_desktop.png" alt="GPU List app main UI data table on desktops" height="350"/>
 </div>
 
 <br>
