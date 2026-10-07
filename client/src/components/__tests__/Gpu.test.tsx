@@ -105,7 +105,7 @@ describe("Testing the data table component", () => {
       await user.click(showButton);
 
       // Theoretical performance section
-      const fp32Row = screen.getByText(/fp32\(float\)/i).closest(".table-row");
+      const fp32Row = screen.getByText(/fp32 \(float\)/i).closest(".table-row");
       expect(within(fp32Row).getByText("N/A")).toBeInTheDocument();
       const textureRateRow = screen
         .getByText(/texture rate/i)
@@ -145,35 +145,35 @@ describe("Testing the data table component", () => {
       await user.click(showButton);
 
       // Specifications
-      const coresRow = screen.getByRole("row", { name: /cores/i });
+      const coresRow = screen.getByText(/cores/i).closest(".table-row");
       expect(within(coresRow).getByText(gpu.cores)).toBeInTheDocument();
-      const tmusRow = screen.getByRole("row", { name: /tmus/i });
+      const tmusRow = screen.getByText(/tmus/i).closest(".table-row");
       expect(within(tmusRow).getByText(gpu.tmus)).toBeInTheDocument();
-      const ropsRow = screen.getByRole("row", { name: /rops/i });
+      const ropsRow = screen.getByText(/rops/i).closest(".table-row");
       expect(within(ropsRow).getByText(gpu.rops)).toBeInTheDocument();
-      const vramRow = screen.getByRole("row", { name: /vram/i });
+      const vramRow = screen.getByText(/vram/i).closest(".table-row");
       expect(
         within(vramRow).getByText(`${gpu.vram}GB ${gpu.memtype}`),
       ).toBeInTheDocument();
-      const busRow = screen.getByRole("row", { name: /bus width/i });
+      const busRow = screen.getByText(/bus width/i).closest(".table-row");
       expect(within(busRow).getByText(`${gpu.bus} bit`)).toBeInTheDocument();
 
       // Clock speeds
-      const baseClockRow = screen.getByRole("row", { name: /base clock/i });
+      const baseClockRow = screen.getByText(/base clock/i).closest(".table-row");
       expect(
         within(baseClockRow).getByText(`${gpu.baseclock} MHz`),
       ).toBeInTheDocument();
-      const boostClockRow = screen.getByRole("row", { name: /boost clock/i });
+      const boostClockRow = screen.getByText(/boost clock/i).closest(".table-row");
       expect(
         within(boostClockRow).getByText(`${gpu.boostclock} MHz`),
       ).toBeInTheDocument();
-      const memClockRow = screen.getByRole("row", { name: /memory clock/i });
+      const memClockRow = screen.getByText(/memory clock/i).closest(".table-row");
       expect(
         within(memClockRow).getByText(`${gpu.memclock} Gbps effective`),
       ).toBeInTheDocument();
 
       // Theoretical performance
-      const fp32Row = screen.getByText(/fp32\(float\)/i).closest(".table-row");
+      const fp32Row = screen.getByText(/fp32 \(float\)/i).closest(".table-row");
       expect(within(fp32Row).getByText(performance[0])).toBeInTheDocument();
       const textureRateRow = screen
         .getByText(/texture rate/i)
@@ -236,17 +236,17 @@ describe("Testing the data table component", () => {
 
       // Confirm the table sections have been hidden
       expect(
-        screen.getByRole("heading", {
+        screen.queryByRole("heading", {
           name: /specifications/i,
         }),
       ).not.toBeInTheDocument();
       expect(
-        screen.getByRole("heading", {
+        screen.queryByRole("heading", {
           name: /clock speeds/i,
         }),
       ).not.toBeInTheDocument();
       expect(
-        screen.getByRole("heading", {
+        screen.queryByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).not.toBeInTheDocument();
