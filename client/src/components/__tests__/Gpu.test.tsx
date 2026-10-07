@@ -413,7 +413,9 @@ describe("Testing the data table component", () => {
 
       // Assert the edit mode has been disabled
       coresRow = screen.getByRole("row", { name: /cores/i });
-      expect(within(coresRow).queryByRole("spinbutton")).not.toBeInTheDocument();
+      expect(
+        within(coresRow).queryByRole("spinbutton"),
+      ).not.toBeInTheDocument();
     });
   });
 
