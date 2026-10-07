@@ -24,7 +24,7 @@ export default function DataRow({
   return (
     <>
       {editMode ? (
-        <div className="table-row">
+        <div className="table-row" role="row">
           <div className="table-row-label">{header}</div>
           <div className={headerClass}>
             <input
@@ -38,7 +38,7 @@ export default function DataRow({
           </div>
         </div>
       ) : (
-        <div className="table-row">
+        <div className="table-row" role="row">
           <div className="table-row-label">{header}</div>
           <div className={`${headerClass} table-row-data`}>{data}</div>
         </div>

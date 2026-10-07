@@ -73,7 +73,7 @@ describe("Testing the data table component", () => {
       await user.click(showButton);
 
       // Confirm the VRAM amount is displayed in MB
-      const vramRow = screen.getByText(/vram/i).closest(".table-row");
+      const vramRow = screen.getByRole("row", { name: /vram/i });
       expect(
         within(vramRow).getByText(`${vramAmount} ${gpu.memtype}`),
       ).toBeInTheDocument();
@@ -105,17 +105,13 @@ describe("Testing the data table component", () => {
       await user.click(showButton);
 
       // Theoretical performance section
-      const fp32Row = screen.getByText(/fp32 \(float\)/i).closest(".table-row");
+      const fp32Row = screen.getByRole("row", { name: /fp32 \(float\)/i });
       expect(within(fp32Row).getByText("N/A")).toBeInTheDocument();
-      const textureRateRow = screen
-        .getByText(/texture rate/i)
-        .closest(".table-row");
+      const textureRateRow = screen.getByRole("row", { name: /texture rate/i });
       expect(within(textureRateRow).getByText("N/A")).toBeInTheDocument();
-      const pixelRateRow = screen
-        .getByText(/pixel rate/i)
-        .closest(".table-row");
+      const pixelRateRow = screen.getByRole("row", { name: /pixel rate/i });
       expect(within(pixelRateRow).getByText("N/A")).toBeInTheDocument();
-      const bandwidthRow = screen.getByText(/bandwidth/i).closest(".table-row");
+      const bandwidthRow = screen.getByRole("row", { name: /bandwidth/i });
       expect(within(bandwidthRow).getByText("N/A")).toBeInTheDocument();
     });
   });
@@ -145,49 +141,45 @@ describe("Testing the data table component", () => {
       await user.click(showButton);
 
       // Specifications
-      const coresRow = screen.getByText(/cores/i).closest(".table-row");
+      const coresRow = screen.getByRole("row", { name: /cores/i });
       expect(within(coresRow).getByText(gpu.cores)).toBeInTheDocument();
-      const tmusRow = screen.getByText(/tmus/i).closest(".table-row");
+      const tmusRow = screen.getByRole("row", { name: /tmus/i });
       expect(within(tmusRow).getByText(gpu.tmus)).toBeInTheDocument();
-      const ropsRow = screen.getByText(/rops/i).closest(".table-row");
+      const ropsRow = screen.getByRole("row", { name: /rops/i });
       expect(within(ropsRow).getByText(gpu.rops)).toBeInTheDocument();
-      const vramRow = screen.getByText(/vram/i).closest(".table-row");
+      const vramRow = screen.getByRole("row", { name: /vram/i });
       expect(
         within(vramRow).getByText(`${gpu.vram}GB ${gpu.memtype}`),
       ).toBeInTheDocument();
-      const busRow = screen.getByText(/bus width/i).closest(".table-row");
+      const busRow = screen.getByRole("row", { name: /bus width/i });
       expect(within(busRow).getByText(`${gpu.bus} bit`)).toBeInTheDocument();
 
       // Clock speeds
-      const baseClockRow = screen.getByText(/base clock/i).closest(".table-row");
+      const baseClockRow = screen.getByRole("row", { name: /base clock/i });
       expect(
         within(baseClockRow).getByText(`${gpu.baseclock} MHz`),
       ).toBeInTheDocument();
-      const boostClockRow = screen.getByText(/boost clock/i).closest(".table-row");
+      const boostClockRow = screen.getByRole("row", { name: /boost clock/i });
       expect(
         within(boostClockRow).getByText(`${gpu.boostclock} MHz`),
       ).toBeInTheDocument();
-      const memClockRow = screen.getByText(/memory clock/i).closest(".table-row");
+      const memClockRow = screen.getByRole("row", { name: /memory clock/i });
       expect(
         within(memClockRow).getByText(`${gpu.memclock} Gbps effective`),
       ).toBeInTheDocument();
 
       // Theoretical performance
-      const fp32Row = screen.getByText(/fp32 \(float\)/i).closest(".table-row");
+      const fp32Row = screen.getByRole("row", { name: /fp32 \(float\)/i });
       expect(within(fp32Row).getByText(performance[0])).toBeInTheDocument();
-      const textureRateRow = screen
-        .getByText(/texture rate/i)
-        .closest(".table-row");
+      const textureRateRow = screen.getByRole("row", { name: /texture rate/i });
       expect(
         within(textureRateRow).getByText(performance[1]),
       ).toBeInTheDocument();
-      const pixelRateRow = screen
-        .getByText(/pixel rate/i)
-        .closest(".table-row");
+      const pixelRateRow = screen.getByRole("row", { name: /pixel rate/i });
       expect(
         within(pixelRateRow).getByText(performance[2]),
       ).toBeInTheDocument();
-      const bandwidthRow = screen.getByText(/bandwidth/i).closest(".table-row");
+      const bandwidthRow = screen.getByRole("row", { name: /bandwidth/i });
       expect(
         within(bandwidthRow).getByText(performance[3]),
       ).toBeInTheDocument();
@@ -366,38 +358,32 @@ describe("Testing the data table component", () => {
       };
 
       // Assert each input field has the correct data being displayed
-      const coresRow = screen.getByText(/cores/i).closest(".table-row");
+      const coresRow = screen.getByRole("row", { name: /cores/i });
       expect(within(coresRow).getByRole("spinbutton")).toHaveValue(gpu.cores);
 
-      const tmusRow = screen.getByText(/tmus/i).closest(".table-row");
+      const tmusRow = screen.getByRole("row", { name: /tmus/i });
       expect(within(tmusRow).getByRole("spinbutton")).toHaveValue(gpu.tmus);
 
-      const ropsRow = screen.getByText(/rops/i).closest(".table-row");
+      const ropsRow = screen.getByRole("row", { name: /rops/i });
       expect(within(ropsRow).getByRole("spinbutton")).toHaveValue(gpu.rops);
 
-      const vramRow = screen.getByText(/vram/i).closest(".table-row");
+      const vramRow = screen.getByRole("row", { name: /vram/i });
       expect(within(vramRow).getByRole("spinbutton")).toHaveValue(gpu.vram);
 
-      const busRow = screen.getByText(/bus width/i).closest(".table-row");
+      const busRow = screen.getByRole("row", { name: /bus width/i });
       expect(within(busRow).getByRole("spinbutton")).toHaveValue(gpu.bus);
 
-      const baseClockRow = screen
-        .getByText(/base clock/i)
-        .closest(".table-row");
+      const baseClockRow = screen.getByRole("row", { name: /base clock/i });
       expect(within(baseClockRow).getByRole("spinbutton")).toHaveValue(
         gpu.baseclock,
       );
 
-      const boostClockRow = screen
-        .getByText(/boost clock/i)
-        .closest(".table-row");
+      const boostClockRow = screen.getByRole("row", { name: /boost clock/i });
       expect(within(boostClockRow).getByRole("spinbutton")).toHaveValue(
         gpu.boostclock,
       );
 
-      const memClockRow = screen
-        .getByText(/memory clock/i)
-        .closest(".table-row");
+      const memClockRow = screen.getByRole("row", { name: /memory clock/i });
       expect(within(memClockRow).getByRole("spinbutton")).toHaveValue(
         gpu.memclock,
       );
@@ -405,35 +391,29 @@ describe("Testing the data table component", () => {
 
     test("an input field can be edited", async () => {
       // Get an input field to edit
-      let coresRow = screen.getByText(/cores/i).closest(".table-row");
+      let coresRow = screen.getByRole("row", { name: /cores/i });
       const coresInputField = within(coresRow).getByRole("spinbutton");
 
       // Enter a new value
       await user.clear(coresInputField);
       await user.type(coresInputField, "16384");
 
-      coresRow = screen.getByText(/cores/i).closest(".table-row");
+      coresRow = screen.getByRole("row", { name: /cores/i });
       expect(within(coresRow).getByRole("spinbutton")).toHaveValue(16384);
     });
 
-    test("clicking on the hide button should cancel the edit mode", async () => {
+    test("clicking on the cancel button should exit edit mode", async () => {
       // Assert the table has been correctly set to edit mode
-      let coresRow = screen.getByText(/cores/i).closest(".table-row");
+      let coresRow = screen.getByRole("row", { name: /cores/i });
       expect(within(coresRow).getByRole("spinbutton")).toBeInTheDocument();
 
-      // Get the Hide button and click on it
-      const hideButton = screen.getByRole("button", { name: /hide/i });
-      await user.click(hideButton);
-
-      // Click on the Show button again
-      const showButton = screen.getByRole("button", { name: /show/i });
-      await user.click(showButton);
+      // Click on the cancel button
+      const cancelButton = screen.getByRole("button", { name: /cancel/i });
+      await user.click(cancelButton);
 
       // Assert the edit mode has been disabled
-      coresRow = screen.getByText(/cores/i).closest(".table-row");
-      expect(
-        within(coresRow).queryByRole("spinbutton"),
-      ).not.toBeInTheDocument();
+      coresRow = screen.getByRole("row", { name: /cores/i });
+      expect(within(coresRow).queryByRole("spinbutton")).not.toBeInTheDocument();
     });
   });
 
