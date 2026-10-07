@@ -2,7 +2,7 @@
 import useGpuContext from "../hooks/useGpuContext";
 
 // Components
-import Gpu from "./Gpu";
+import Gpu from "./dataTable/Gpu";
 
 // Utils
 import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
@@ -45,7 +45,11 @@ export default function GpuList() {
           <div>No GPUs available</div>
         ) : (
           gpuList.map((gpu) => (
-            <section key={gpu.id} aria-labelledby={`${gpu.id}-heading`}>
+            <section
+              key={gpu.id}
+              className="table-container"
+              aria-labelledby={`${gpu.id}-heading`}
+            >
               <Gpu gpu={gpu} />
               <button
                 className="back-to-index-button"

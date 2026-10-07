@@ -373,15 +373,15 @@ describe("Testing the Gpu List component", () => {
 
       // Confirm the table has been expanded
       expect(
-        within(dataTable).getByRole("columnheader", {
+        within(dataTable).getByRole("heading", {
           name: /specifications/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(dataTable).getByRole("columnheader", { name: /clock speeds/i }),
+        within(dataTable).getByRole("heading", { name: /clock speeds/i }),
       ).toBeInTheDocument();
       expect(
-        within(dataTable).getByRole("columnheader", {
+        within(dataTable).getByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();
@@ -395,17 +395,17 @@ describe("Testing the Gpu List component", () => {
 
       // Confirm the table has collapsed
       expect(
-        within(dataTable).queryByRole("columnheader", {
+        within(dataTable).queryByRole("heading", {
           name: /specifications/i,
         }),
       ).not.toBeInTheDocument();
       expect(
-        within(dataTable).queryByRole("columnheader", {
+        within(dataTable).queryByRole("heading", {
           name: /clock speeds/i,
         }),
       ).not.toBeInTheDocument();
       expect(
-        within(dataTable).queryByRole("columnheader", {
+        within(dataTable).queryByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).not.toBeInTheDocument();
@@ -437,15 +437,15 @@ describe("Testing the Gpu List component", () => {
 
       // Confirm the table has already been expanded
       expect(
-        within(dataTable).getByRole("columnheader", {
+        within(dataTable).getByRole("heading", {
           name: /specifications/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(dataTable).getByRole("columnheader", { name: /clock speeds/i }),
+        within(dataTable).getByRole("heading", { name: /clock speeds/i }),
       ).toBeInTheDocument();
       expect(
-        within(dataTable).getByRole("columnheader", {
+        within(dataTable).getByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();
@@ -459,15 +459,15 @@ describe("Testing the Gpu List component", () => {
 
       // Confirm the table has not collapsed
       expect(
-        within(dataTable).getByRole("columnheader", {
+        within(dataTable).getByRole("heading", {
           name: /specifications/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(dataTable).getByRole("columnheader", { name: /clock speeds/i }),
+        within(dataTable).getByRole("heading", { name: /clock speeds/i }),
       ).toBeInTheDocument();
       expect(
-        within(dataTable).getByRole("columnheader", {
+        within(dataTable).getByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();
@@ -498,33 +498,33 @@ describe("Testing the Gpu List component", () => {
 
       // Confirm both tables have been expanded
       expect(
-        within(firstDataTable).getByRole("columnheader", {
+        within(firstDataTable).getByRole("heading", {
           name: /specifications/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(firstDataTable).getByRole("columnheader", {
+        within(firstDataTable).getByRole("heading", {
           name: /clock speeds/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(firstDataTable).getByRole("columnheader", {
+        within(firstDataTable).getByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();
 
       expect(
-        within(secondDataTable).getByRole("columnheader", {
+        within(secondDataTable).getByRole("heading", {
           name: /specifications/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(secondDataTable).getByRole("columnheader", {
+        within(secondDataTable).getByRole("heading", {
           name: /clock speeds/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(secondDataTable).getByRole("columnheader", {
+        within(secondDataTable).getByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();
@@ -538,33 +538,33 @@ describe("Testing the Gpu List component", () => {
 
       // Confirm only the first table has collapsed
       expect(
-        within(firstDataTable).queryByRole("columnheader", {
+        within(firstDataTable).queryByRole("heading", {
           name: /specifications/i,
         }),
       ).not.toBeInTheDocument();
       expect(
-        within(firstDataTable).queryByRole("columnheader", {
+        within(firstDataTable).queryByRole("heading", {
           name: /clock speeds/i,
         }),
       ).not.toBeInTheDocument();
       expect(
-        within(firstDataTable).queryByRole("columnheader", {
+        within(firstDataTable).queryByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).not.toBeInTheDocument();
 
       expect(
-        within(secondDataTable).getByRole("columnheader", {
+        within(secondDataTable).getByRole("heading", {
           name: /specifications/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(secondDataTable).getByRole("columnheader", {
+        within(secondDataTable).getByRole("heading", {
           name: /clock speeds/i,
         }),
       ).toBeInTheDocument();
       expect(
-        within(secondDataTable).getByRole("columnheader", {
+        within(secondDataTable).getByRole("heading", {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();

@@ -1,63 +1,80 @@
 .gpu-data-table {
-  table-layout: fixed;
+  box-sizing: border-box;
   width: 100%;
-  max-width: 100%;
   background-color: rgba(0, 0, 0, 0.75);
   border: 0.2rem solid;
-  border-style: groove;
-  border-collapse: separate;
-  border-spacing: 0; /* visually the same as collapse */
   border-radius: 1rem;
   overflow: hidden; /* ensures inner cells don’t “leak out” */
+  padding: 0.5rem;
 }
 
-.gpu-data-table th,
-.gpu-data-table td {
-  border: 0.1rem solid black;
-  border-style: groove;
-  padding: 1.2rem;
-  font-size: 0.9rem;
-}
-
-.gpu-data-table th {
-  background-color: rgba(18, 18, 18, 0.9);
-}
-
-.gpu-data-table td {
-  background-color: rgba(0, 0, 0, 0.9);
+.table-main-title {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  font-size: 1.5rem;
   font-weight: bold;
-  border-style: inset;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.table-data-section {
+  display: flex;
+  width: 100%;
+}
+
+.table-data-section-column {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+
+.table-division-header {
+  width: 100%;
+  background-color: rgba(5, 5, 5, 0.75);
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1rem 0;
+  margin: 0 auto;
+}
+
+.table-row {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.table-row-label,
+.table-row-data {
+  border: 0.1rem solid black;
+  border-color: #202020;
+  padding: 1rem 0.25rem;
+  font-size: 0.9rem;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.table-row-label {
+  background-color: rgba(18, 18, 18, 0.5);
+  width: 50%;
+}
+
+.table-row-data {
+  background-color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  width: 50%;
 }
 
 .gpu-data-table #delete-gpu-button {
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  background-color: rgba(5, 5, 5, 0.9);
 }
 
-.gpu-data-table thead tr:first-child th {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  font-size: 1.4rem;
-  font-weight: bold;
-  border-style: groove;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-}
-
-.gpu-data-table .table-header {
-  width: 100%;
-  background-color: rgba(5, 5, 5, 0.9);
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-style: groove;
-}
-
-.gpu-data-table-edit-field {
+.table-row-edit-field {
   font-family: inherit;
   font-size: 0.9rem;
   box-sizing: border-box;
-  width: 100%;
+  width: 90%;
   padding: 0.5rem;
 }
 
@@ -66,5 +83,21 @@
   height: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  border-color: gray;
+  border-color: #303030;
+  border-radius: 1rem;
+  background-color: rgba(5, 5, 5, 0.5);
+}
+
+@media only screen and (max-width: 700px) {
+  .table-data-section {
+    flex-direction: column;
+  }
+
+  .table-data-section-column {
+    width: 100%;
+  }
+
+  .table-main-title {
+    font-size: 1.25rem;
+  }
 }

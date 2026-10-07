@@ -4,7 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Component
-import Gpu from "../Gpu";
+import Gpu from "../dataTable/Gpu";
 
 // Data
 import sampleData from "../../test-utils/data/fixtures";
@@ -42,7 +42,7 @@ describe("Testing the data table component", () => {
       );
 
       // Find the header by its role and name
-      const heading = screen.getByRole("columnheader", {
+      const heading = screen.getByRole("heading", {
         name: /nvidia geforce rtx 5090/i,
       });
 
@@ -105,7 +105,7 @@ describe("Testing the data table component", () => {
       await user.click(showButton);
 
       // Theoretical performance section
-      const fp32Row = screen.getByRole("row", { name: /fp32\(float\)/i });
+      const fp32Row = screen.getByRole("row", { name: /fp32 \(float\)/i });
       expect(within(fp32Row).getByText("N/A")).toBeInTheDocument();
       const textureRateRow = screen.getByRole("row", { name: /texture rate/i });
       expect(within(textureRateRow).getByText("N/A")).toBeInTheDocument();
@@ -169,7 +169,7 @@ describe("Testing the data table component", () => {
       ).toBeInTheDocument();
 
       // Theoretical performance
-      const fp32Row = screen.getByRole("row", { name: /fp32\(float\)/i });
+      const fp32Row = screen.getByRole("row", { name: /fp32 \(float\)/i });
       expect(within(fp32Row).getByText(performance[0])).toBeInTheDocument();
       const textureRateRow = screen.getByRole("row", { name: /texture rate/i });
       expect(
@@ -207,13 +207,19 @@ describe("Testing the data table component", () => {
 
       // Confirm the table has been opened
       expect(
-        screen.getByRole("row", { name: /specifications/i }),
+        screen.getByRole("heading", {
+          name: /specifications/i,
+        }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("row", { name: /clock speeds/i }),
+        screen.getByRole("heading", {
+          name: /clock speeds/i,
+        }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("row", { name: /theoretical performance/i }),
+        screen.getByRole("heading", {
+          name: /theoretical performance/i,
+        }),
       ).toBeInTheDocument();
 
       // Click on the Hide button
@@ -222,13 +228,19 @@ describe("Testing the data table component", () => {
 
       // Confirm the table sections have been hidden
       expect(
-        screen.queryByRole("row", { name: /specifications/i }),
+        screen.queryByRole("heading", {
+          name: /specifications/i,
+        }),
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByRole("row", { name: /clock speeds/i }),
+        screen.queryByRole("heading", {
+          name: /clock speeds/i,
+        }),
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByRole("row", { name: /theoretical performance/i }),
+        screen.queryByRole("heading", {
+          name: /theoretical performance/i,
+        }),
       ).not.toBeInTheDocument();
     });
 
@@ -259,13 +271,19 @@ describe("Testing the data table component", () => {
 
       // Confirm the table has been opened
       expect(
-        screen.getByRole("row", { name: /specifications/i }),
+        screen.getByRole("heading", {
+          name: /specifications/i,
+        }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("row", { name: /clock speeds/i }),
+        screen.getByRole("heading", {
+          name: /clock speeds/i,
+        }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("row", { name: /theoretical performance/i }),
+        screen.getByRole("heading", {
+          name: /theoretical performance/i,
+        }),
       ).toBeInTheDocument();
     });
   });
@@ -320,7 +338,7 @@ describe("Testing the data table component", () => {
       render(
         <GpuContext.Provider value={mockContextValue}>
           <Gpu gpu={gpu} />
-        </GpuContext.Provider>
+        </GpuContext.Provider>,
       );
 
       // Get the Show button to display all the data
@@ -356,13 +374,19 @@ describe("Testing the data table component", () => {
       expect(within(busRow).getByRole("spinbutton")).toHaveValue(gpu.bus);
 
       const baseClockRow = screen.getByRole("row", { name: /base clock/i });
-      expect(within(baseClockRow).getByRole("spinbutton")).toHaveValue(gpu.baseclock);
+      expect(within(baseClockRow).getByRole("spinbutton")).toHaveValue(
+        gpu.baseclock,
+      );
 
       const boostClockRow = screen.getByRole("row", { name: /boost clock/i });
-      expect(within(boostClockRow).getByRole("spinbutton")).toHaveValue(gpu.boostclock);
+      expect(within(boostClockRow).getByRole("spinbutton")).toHaveValue(
+        gpu.boostclock,
+      );
 
       const memClockRow = screen.getByRole("row", { name: /memory clock/i });
-      expect(within(memClockRow).getByRole("spinbutton")).toHaveValue(gpu.memclock);
+      expect(within(memClockRow).getByRole("spinbutton")).toHaveValue(
+        gpu.memclock,
+      );
     });
 
     test("an input field can be edited", async () => {
@@ -378,22 +402,20 @@ describe("Testing the data table component", () => {
       expect(within(coresRow).getByRole("spinbutton")).toHaveValue(16384);
     });
 
-    test("clicking on the hide button should cancel the edit mode", async () => {
+    test("clicking on the cancel button should exit edit mode", async () => {
       // Assert the table has been correctly set to edit mode
       let coresRow = screen.getByRole("row", { name: /cores/i });
       expect(within(coresRow).getByRole("spinbutton")).toBeInTheDocument();
 
-      // Get the Hide button and click on it
-      const hideButton = screen.getByRole("button", { name: /hide/i });
-      await user.click(hideButton);
-
-      // Click on the Show button again
-      const showButton = screen.getByRole("button", { name: /show/i });
-      await user.click(showButton);
+      // Click on the cancel button
+      const cancelButton = screen.getByRole("button", { name: /cancel/i });
+      await user.click(cancelButton);
 
       // Assert the edit mode has been disabled
       coresRow = screen.getByRole("row", { name: /cores/i });
-      expect(within(coresRow).queryByRole("spinbutton")).not.toBeInTheDocument();
+      expect(
+        within(coresRow).queryByRole("spinbutton"),
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -436,22 +458,22 @@ describe("Testing the data table component", () => {
       );
 
       // Confirm the classes have been correctly applied to each data table
-      const nvidiaHeading = screen.getByRole("columnheader", {
+      const nvidiaHeading = screen.getByRole("heading", {
         name: /nvidia geforce rtx 5090/i,
       });
       expect(nvidiaHeading).toHaveClass("nvidia-model-header");
 
-      const amdHeading = screen.getByRole("columnheader", {
+      const amdHeading = screen.getByRole("heading", {
         name: /amd radeon rx 7900 xtx/i,
       });
       expect(amdHeading).toHaveClass("amd-model-header");
 
-      const intelHeading = screen.getByRole("columnheader", {
+      const intelHeading = screen.getByRole("heading", {
         name: /intel arc b580/i,
       });
       expect(intelHeading).toHaveClass("intel-model-header");
 
-      const defaultHeading = screen.getByRole("columnheader", {
+      const defaultHeading = screen.getByRole("heading", {
         name: /default none unknown/i,
       });
       expect(defaultHeading).toHaveClass("model-header");

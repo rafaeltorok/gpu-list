@@ -46,7 +46,7 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Confirm each row of the performance section is correct
-        cy.checkRowData(gpu, "FP32(float)", `${performance[0]}`);
+        cy.checkRowData(gpu, "FP32 (float)", `${performance[0]}`);
         cy.checkRowData(gpu, "TEXTURE RATE", `${performance[1]}`);
         cy.checkRowData(gpu, "PIXEL RATE", `${performance[2]}`);
         cy.checkRowData(gpu, "BANDWIDTH", `${performance[3]}`);
@@ -62,7 +62,7 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Confirm the FP32 row contains the word TFLOPS
-        cy.checkRowData(gpu, "FP32(float)", `TFLOPS`);
+        cy.checkRowData(gpu, "FP32 (float)", `TFLOPS`);
       });
     });
 
@@ -81,7 +81,7 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Confirm the FP32 row contains the word GFLOPS
-        cy.checkRowData(gpu, "FP32(float)", `GFLOPS`);
+        cy.checkRowData(gpu, "FP32 (float)", `GFLOPS`);
       });
     });
 
@@ -104,11 +104,11 @@ describe("the Graphics Card data table", function () {
 
         // Confirm the FP32 performance for the Radeon RX 9000 Series is correct
         cy.showData(rx9000Series);
-        cy.checkRowData(rx9000Series, "FP32(float)", `${performanceRx9000[0]}`);
+        cy.checkRowData(rx9000Series, "FP32 (float)", `${performanceRx9000[0]}`);
 
         // Confirm the FP32 performance for the Radeon RX 7000 Series is correct
         cy.showData(rx7000Series);
-        cy.checkRowData(rx7000Series, "FP32(float)", `${performanceRx7000[0]}`);
+        cy.checkRowData(rx7000Series, "FP32 (float)", `${performanceRx7000[0]}`);
       });
     });
 
@@ -120,7 +120,7 @@ describe("the Graphics Card data table", function () {
         const gpuInMb = gpuList[8];
 
         // Confirm the first model exists
-        cy.get(".gpu-data-table thead tr th").should(
+        cy.get(".gpu-data-table").should(
           "contain",
           getFullModel(gpuInGb),
         );
@@ -138,7 +138,7 @@ describe("the Graphics Card data table", function () {
         cy.visit("/");
 
         // Confirm the second model exists
-        cy.get(".gpu-data-table thead tr th").should(
+        cy.get(".gpu-data-table").should(
           "contain",
           getFullModel(gpuInMb),
         );
@@ -166,7 +166,7 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Remove the card and confirm it is not present anymore
-        cy.get(".gpu-data-table tfoot #delete-gpu-button").click();
+        cy.get(".gpu-data-table #delete-gpu-button").click();
         cy.get(".gpu-data-table").should("not.exist");
       });
     });
@@ -183,13 +183,13 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Enter edit mode
-        cy.get(".gpu-data-table tfoot #edit-gpu-button").click();
+        cy.get(".gpu-data-table #edit-gpu-button").click();
 
         // Edit a specification
         cy.editSpecField("CORES", fullModelName, "3840");
 
         // Click on the save button
-        cy.get(".gpu-data-table tfoot button").contains("Save").click();
+        cy.get(".gpu-data-table").contains("Save").click();
 
         // Assert an alert message is displayed
         cy.on("window:alert", (text) => {
@@ -211,7 +211,7 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Enter edit mode
-        cy.get(".gpu-data-table tfoot #edit-gpu-button").click();
+        cy.get(".gpu-data-table #edit-gpu-button").click();
 
         // Edit the specifications
         cy.editSpecField("CORES", fullModelName, "3840");
@@ -220,7 +220,7 @@ describe("the Graphics Card data table", function () {
         cy.editSpecField("BUS WIDTH", fullModelName, "256");
 
         // Click on the save button
-        cy.get(".gpu-data-table tfoot button").contains("Save").click();
+        cy.get(".gpu-data-table").contains("Save").click();
 
         // Calculate the performance with the updated specs values
         const performance = calculatePerformance({
@@ -232,7 +232,7 @@ describe("the Graphics Card data table", function () {
         });
 
         // Confirm each row of the performance section is correct
-        cy.checkRowData(gpu, "FP32(float)", `${performance[0]}`);
+        cy.checkRowData(gpu, "FP32 (float)", `${performance[0]}`);
         cy.checkRowData(gpu, "TEXTURE RATE", `${performance[1]}`);
         cy.checkRowData(gpu, "PIXEL RATE", `${performance[2]}`);
         cy.checkRowData(gpu, "BANDWIDTH", `${performance[3]}`);
@@ -249,14 +249,14 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Enter edit mode
-        cy.get(".gpu-data-table tfoot #edit-gpu-button").click();
+        cy.get(".gpu-data-table #edit-gpu-button").click();
 
         // Edit the specifications
         cy.editSpecField("BOOST CLOCK", fullModelName, "2000");
         cy.editSpecField("MEMORY CLOCK", fullModelName, "18");
 
         // Click on the save button
-        cy.get(".gpu-data-table tfoot button").contains("Save").click();
+        cy.get(".gpu-data-table button").contains("Save").click();
 
         // Calculate the performance with the updated specs values
         const performance = calculatePerformance({
@@ -266,7 +266,7 @@ describe("the Graphics Card data table", function () {
         });
 
         // Confirm each row of the performance section is correct
-        cy.checkRowData(gpu, "FP32(float)", `${performance[0]}`);
+        cy.checkRowData(gpu, "FP32 (float)", `${performance[0]}`);
         cy.checkRowData(gpu, "TEXTURE RATE", `${performance[1]}`);
         cy.checkRowData(gpu, "PIXEL RATE", `${performance[2]}`);
         cy.checkRowData(gpu, "BANDWIDTH", `${performance[3]}`);
@@ -281,16 +281,37 @@ describe("the Graphics Card data table", function () {
 
         // Enter edit mode
         cy.showData(gpu);
-        cy.get(".gpu-data-table tfoot #edit-gpu-button").click();
+        cy.get(".gpu-data-table #edit-gpu-button").click();
 
         // Edit a specification
         cy.editSpecField("CORES", fullModelName, "3840");
 
         // Click on the hide button
-        cy.get(".gpu-data-table thead button").contains("Hide").click();
+        cy.get(".gpu-data-table button").contains("Hide").click();
 
         // Open the card's information table to display all data
         cy.showData(gpu);
+
+        // Assert the Cores row has not been updated
+        cy.checkRowData(gpu, "CORES", String(gpu.cores));
+      });
+    });
+
+    it("clicking on the Cancel button should reset any changes", function () {
+      cy.fixture("gpus").then((gpuList: GpuInputType[]) => {
+        // Select a card from the list
+        const gpu = gpuList[0];
+        const fullModelName = getFullModel(gpu);
+
+        // Enter edit mode
+        cy.showData(gpu);
+        cy.get(".gpu-data-table #edit-gpu-button").click();
+
+        // Edit a specification
+        cy.editSpecField("CORES", fullModelName, "3840");
+
+        // Click on the cancel button
+        cy.get(".gpu-data-table button").contains("Cancel").click();
 
         // Assert the Cores row has not been updated
         cy.checkRowData(gpu, "CORES", String(gpu.cores));
@@ -307,14 +328,14 @@ describe("the Graphics Card data table", function () {
         cy.showData(gpu);
 
         // Enter edit mode
-        cy.get(".gpu-data-table tfoot #edit-gpu-button").click();
+        cy.get(".gpu-data-table #edit-gpu-button").click();
 
         // Edit a specification
         cy.editSpecField("CORES", fullModelName, "-1");
         cy.editSpecField("BUS WIDTH", fullModelName, "0");
 
         // Click on the save button
-        cy.get(".gpu-data-table tfoot button").contains("Save").click();
+        cy.get(".gpu-data-table button").contains("Save").click();
 
         // Assert an alert message is displayed
         cy.on("window:alert", (text) => {
