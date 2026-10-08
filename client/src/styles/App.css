@@ -90,6 +90,12 @@ button:focus {
   margin: 0 auto;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
   #root {
     padding: 0.5rem;

@@ -10,7 +10,7 @@ import AddGpuForm from "./components/AddGpuForm";
 import SearchBar from "./components/SearchBar";
 import PageIndex from "./components/PageIndex";
 import ShowAllButton from "./components/ShowAllButton";
-import GpuList from "./components/GpuList";
+import ListContainer from "./components/list/ListContainer";
 
 // CSS Styles
 import "./styles/App.css";
@@ -138,7 +138,7 @@ function App() {
           <ShowAllButton />
         </div>
 
-        <GpuList />
+        <ListContainer />
       </div>
     </GpuContext.Provider>
   );

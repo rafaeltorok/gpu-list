@@ -4,7 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Component
-import GpuList from "../GpuList";
+import GpuList from "../list/ListContainer";
 
 // Utils
 import createMockContext from "../../test-utils/createMockContext";
