@@ -15,7 +15,6 @@ export default function PaginationWrapper({
 
   // Handles inserting the current page number into the URL
   const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
-    console.log("Pagination clicked:", page);
     setSearchParams({ page: String(page) });
   };
 
