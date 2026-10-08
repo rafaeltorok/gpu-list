@@ -23,18 +23,19 @@ export default function ListContainer() {
   // Pagination-related variables
   const ITEMS_PER_PAGE = 10;
   const currentPage = Number(searchParams.get("page"));
-  
+
   // Define if the paginated data should be based upon the filtered list or not
   const dataToPaginate = searchGpu ? gpusFound : gpus;
-  const paginatedData: GpuType[] = paginateData(dataToPaginate, ITEMS_PER_PAGE, currentPage);
+  const paginatedData: GpuType[] = paginateData(
+    dataToPaginate,
+    ITEMS_PER_PAGE,
+    currentPage,
+  );
   const totalPages = Math.ceil(dataToPaginate.length / ITEMS_PER_PAGE) || 0;
 
   // Prevents invalid page numbers
   useEffect(() => {
-    if (
-      currentPage > totalPages ||
-      currentPage < 1
-    ) {
+    if (currentPage > totalPages || currentPage < 1) {
       setSearchParams({ page: "1" });
     }
   }, [currentPage, totalPages, setSearchParams]);

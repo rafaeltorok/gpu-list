@@ -22,7 +22,7 @@ export default function List({ gpuList }: ListProps) {
 
   // Search term not found
   if (searchGpu && gpusFound.length === 0) {
-    return <div>No GPUs found</div>; 
+    return <div>No GPUs found</div>;
   }
 
   // Render the list of available cards
