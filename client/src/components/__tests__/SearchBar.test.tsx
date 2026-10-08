@@ -1,8 +1,8 @@
-// Test dependencies
 import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
+import { BrowserRouter } from "react-router";
 
 // Component
 import SearchBar from "../SearchBar";
@@ -65,7 +65,9 @@ describe("Testing the Search Bar component", () => {
 
       render(
         <GpuContext.Provider value={mockContextValue}>
-          <SearchBar />
+          <BrowserRouter>
+            <SearchBar />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -91,7 +93,9 @@ describe("Testing the Search Bar component", () => {
 
       render(
         <GpuContext.Provider value={mockContextOpenSearchBar}>
-          <SearchBar />
+          <BrowserRouter>
+            <SearchBar />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -111,7 +115,9 @@ describe("Testing the Search Bar component", () => {
       // Render the page index component
       render(
         <TestProvider>
-          <SearchBar />
+          <BrowserRouter>
+            <SearchBar />
+          </BrowserRouter>
         </TestProvider>,
       );
 
@@ -134,7 +140,9 @@ describe("Testing the Search Bar component", () => {
       // Render the page index component
       render(
         <GpuContext.Provider value={mockContextValue}>
-          <SearchBar />
+          <BrowserRouter>
+            <SearchBar />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -163,7 +171,9 @@ describe("Testing the Search Bar component", () => {
       // Render the page index component
       render(
         <GpuContext.Provider value={mockContextOpenSearchBar}>
-          <SearchBar />
+          <BrowserRouter>
+            <SearchBar />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
