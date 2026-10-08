@@ -546,6 +546,10 @@ npm run test:run -- ./src/__tests__
 │   │   │       ├── PerformanceSection.tsx  # Render the theoretical performance fields
 │   │   │       ├── SpecsSection.tsx        # Render the specifications fields
 │   │   │       └── TableControls.tsx       # Render the edit, save and delete buttons
+│   │   ├── list
+│   │   │   ├── List.tsx               # Display the list of GPU data tables. Handles scrolling back to the index when clicking on the Back to index buttons
+│   │   │   ├── ListContainer.tsx      # Wraps both the List and the Pagination components. Handles paginating the data and dividing it into slices to fill each one of the pages
+│   │   │   └── PaginationWrapper.tsx  # Display the Material UI Pagination component. Handles the button clicks to navigate between pages
 │   │   ├── FormRow.tsx               # Render a single row for the add form component, helper component for the add form
 │   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
 │   │   ├── PageIndex.tsx             # Render the main page index

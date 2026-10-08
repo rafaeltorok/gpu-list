@@ -90,6 +90,16 @@ button:focus {
   margin: 0 auto;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  padding-bottom: 1rem;
+  position: sticky;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
   #root {
     padding: 0.5rem;

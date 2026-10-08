@@ -1,5 +1,7 @@
-// Component dependencies
 import { useEffect } from "react";
+import { useSearchParams } from "react-router";
+
+// Custom hooks
 import useGpuContext from "../hooks/useGpuContext";
 
 // CSS Styles
@@ -11,11 +13,15 @@ export default function SearchBar() {
     uiDispatch,
   } = useGpuContext();
 
+  const [_searchParams, setSearchParams] = useSearchParams();
+
   const handleSearch = (searchTerm: string) => {
     uiDispatch({
       type: "SET_SEARCH",
       payload: searchTerm.trimStart(),
     });
+    // Reset the page to 1 when the user inputs a search term
+    setSearchParams({ page: "1" });
   };
 
   useEffect(() => {
@@ -32,11 +38,13 @@ export default function SearchBar() {
       <button
         id="show-search-button"
         type="button"
-        onClick={() =>
+        onClick={() => {
           uiDispatch({
             type: "TOGGLE_SEARCH",
-          })
-        }
+          });
+          // Reset the page number when cancelling a search
+          if (showSearch) setSearchParams({ page: "1" });
+        }}
       >
         {showSearch ? "Cancel" : "Search"}
       </button>

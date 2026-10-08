@@ -1,10 +1,10 @@
-// Test dependencies
 import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { BrowserRouter } from "react-router";
 
 // Component
-import GpuList from "../GpuList";
+import ListContainer from "../list/ListContainer";
 
 // Utils
 import createMockContext from "../../test-utils/createMockContext";
@@ -52,7 +52,7 @@ async function expandTable(modelName: string): Promise<HTMLElement> {
 }
 
 // Tests
-describe("Testing the Gpu List component", () => {
+describe("Testing the List container component", () => {
   describe("empty and filled lists", () => {
     test("the list should be displayed when there are items available", () => {
       // Give an unique ID to each available sample card
@@ -70,7 +70,9 @@ describe("Testing the Gpu List component", () => {
       // Render the list component, containing objects
       render(
         <GpuContext.Provider value={mockContextWithCards}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -90,7 +92,9 @@ describe("Testing the Gpu List component", () => {
       // Render the empty list component
       render(
         <GpuContext.Provider value={mockContextValue}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -126,7 +130,9 @@ describe("Testing the Gpu List component", () => {
       // Render the list component, containing objects
       render(
         <GpuContext.Provider value={mockContextWithCards}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
     });
@@ -182,7 +188,9 @@ describe("Testing the Gpu List component", () => {
       // Render the list component, containing only the filtered objects
       render(
         <GpuContext.Provider value={mockContextFiltered}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -257,7 +265,9 @@ describe("Testing the Gpu List component", () => {
       // Render the list component, containing only the filtered objects
       render(
         <GpuContext.Provider value={mockContextFiltered}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -303,7 +313,9 @@ describe("Testing the Gpu List component", () => {
       // Render the list component, containing only the filtered objects
       render(
         <GpuContext.Provider value={mockContextFiltered}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -363,7 +375,9 @@ describe("Testing the Gpu List component", () => {
 
       render(
         <GpuContext.Provider value={mockContextWithCards}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -426,7 +440,9 @@ describe("Testing the Gpu List component", () => {
 
       render(
         <GpuContext.Provider value={mockContextShowAll}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
@@ -483,7 +499,9 @@ describe("Testing the Gpu List component", () => {
 
       render(
         <GpuContext.Provider value={mockContextWithCards}>
-          <GpuList />
+          <BrowserRouter>
+            <ListContainer />
+          </BrowserRouter>
         </GpuContext.Provider>,
       );
 
