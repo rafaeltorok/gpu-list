@@ -1,4 +1,4 @@
-// React context
+// Hooks
 import useGpuContext from "../hooks/useGpuContext";
 
 // Components
@@ -17,6 +17,7 @@ export default function GpuList() {
     uiState: { searchGpu, showAll },
   } = useGpuContext();
 
+  // Handles scrolling back to the index
   function scrollToIndex(gpuTableId: string) {
     // Scroll to the add gpu form position
     const element = document.querySelector(".add-gpu-form");
@@ -38,42 +39,46 @@ export default function GpuList() {
     }
   }
 
-  function renderGpuList(gpuList: GpuType[]) {
-    return (
-      <>
-        {gpuList.length < 1 ? (
-          <div>No GPUs available</div>
-        ) : (
-          gpuList.map((gpu) => (
-            <section
-              key={gpu.id}
-              className="table-container"
-              aria-labelledby={`${gpu.id}-heading`}
-            >
-              <Gpu gpu={gpu} />
-              <button
-                className="back-to-index-button"
-                onClick={() => scrollToIndex(generateGpuDomId(gpu))}
-              >
-                Back to Index
-              </button>
-            </section>
-          ))
-        )}
-      </>
-    );
-  }
-
   return (
     <>
       {searchGpu ? (
         gpusFound.length > 0 ? (
-          renderGpuList(gpusFound)
+          renderGpuList(gpusFound, scrollToIndex)
         ) : (
           <div>No GPUs found</div>
         )
       ) : (
-        renderGpuList(gpus)
+        renderGpuList(gpus, scrollToIndex)
+      )}
+    </>
+  );
+}
+
+// Helper function - renders the entire list of data tables
+function renderGpuList(
+  gpuList: GpuType[],
+  scrollToIndex: (tableId: string) => void
+) {
+  return (
+    <>
+      {gpuList.length < 1 ? (
+        <div>No GPUs available</div>
+      ) : (
+        gpuList.map((gpu) => (
+          <section
+            key={gpu.id}
+            className="table-container"
+            aria-labelledby={`${gpu.id}-heading`}
+          >
+            <Gpu gpu={gpu} />
+            <button
+              className="back-to-index-button"
+              onClick={() => scrollToIndex(generateGpuDomId(gpu))}
+            >
+              Back to Index
+            </button>
+          </section>
+        ))
       )}
     </>
   );
