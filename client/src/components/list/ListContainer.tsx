@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 
 // Hooks
@@ -21,37 +22,29 @@ export default function ListContainer() {
 
   // Pagination-related variables
   const ITEMS_PER_PAGE = 10;
-  const currentPage = Number(searchParams.get("page")) || 1;
-  let paginatedData: GpuType[] = [];
-  let totalPages = 0;
+  const currentPage = Number(searchParams.get("page"));
   
   // Define if the paginated data should be based upon the filtered list or not
-  if (searchGpu) {
-    if (gpusFound.length > 0) {
-      totalPages = Math.ceil(gpusFound.length / ITEMS_PER_PAGE) || 0;
-      paginatedData = paginateData(gpusFound, ITEMS_PER_PAGE, currentPage);
-    }
-  } else {
-    if (gpus.length > 0) {
-      totalPages = Math.ceil(gpus.length / ITEMS_PER_PAGE) || 0;
-      paginatedData = paginateData(gpus, ITEMS_PER_PAGE, currentPage);
-    }
-  }
+  const dataToPaginate = searchGpu ? gpusFound : gpus;
+  const paginatedData: GpuType[] = paginateData(dataToPaginate, ITEMS_PER_PAGE, currentPage);
+  const totalPages = Math.ceil(dataToPaginate.length / ITEMS_PER_PAGE) || 0;
 
   // Prevents invalid page numbers
-  if (
-    currentPage > totalPages ||
-    currentPage < 1
-  ) {
-    setSearchParams({ page: "1" });
-  }
+  useEffect(() => {
+    if (
+      currentPage > totalPages ||
+      currentPage < 1
+    ) {
+      setSearchParams({ page: "1" });
+    }
+  }, [currentPage, totalPages, setSearchParams]);
 
   // Render the list data tables
   return (
     <>
       <List gpuList={paginatedData} />
 
-      <PaginationWrapper totalPages={totalPages} currentPage={currentPage} />
+      <PaginationWrapper totalPages={totalPages} />
     </>
   );
 }
