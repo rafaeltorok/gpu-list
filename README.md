@@ -546,6 +546,9 @@ npm run test:run -- ./src/__tests__
 │   │   │       ├── PerformanceSection.tsx  # Render the theoretical performance fields
 │   │   │       ├── SpecsSection.tsx        # Render the specifications fields
 │   │   │       └── TableControls.tsx       # Render the edit, save and delete buttons
+│   │   ├── index
+│   │   │   ├── IndexEntry.tsx         # Renders each clickable entry for the page index menu. Handles scrolling to the respective GPU data table and opening it
+│   │   │   └── PageIndex.tsx          # Handles displaying the page index container. Serves as a wrapper for the index entries
 │   │   ├── list
 │   │   │   ├── List.tsx               # Display the list of GPU data tables. Handles scrolling back to the index when clicking on the Back to index buttons
 │   │   │   ├── ListContainer.tsx      # Wraps both the List and the Pagination components. Handles paginating the data and dividing it into slices to fill each one of the pages
