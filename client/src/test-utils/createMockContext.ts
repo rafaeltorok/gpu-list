@@ -18,6 +18,7 @@ export default function createMockContext() {
       gpusFound: [],
       loading: false,
       error: null,
+      paginatedData: [],
     },
     uiState: {
       showAll: false,

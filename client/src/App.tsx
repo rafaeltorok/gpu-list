@@ -8,7 +8,7 @@ import uiReducer, { initialUiState } from "./reducers/uiReducer";
 // Components
 import AddGpuForm from "./components/AddGpuForm";
 import SearchBar from "./components/SearchBar";
-import PageIndex from "./components/PageIndex";
+import PageIndex from "./components/index/PageIndex";
 import ShowAllButton from "./components/ShowAllButton";
 import ListContainer from "./components/list/ListContainer";
 

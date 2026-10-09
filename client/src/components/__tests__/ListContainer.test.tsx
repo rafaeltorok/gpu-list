@@ -30,6 +30,7 @@ function createMockContextWithCards(gpus: GpuType[]): GpuContextType {
     dataState: {
       ...mockContextValue.dataState,
       gpus: [...gpus],
+      paginatedData: [...gpus],
     },
   };
 
@@ -178,6 +179,7 @@ describe("Testing the List container component", () => {
           ...mockContextValue.dataState,
           gpus: gpus,
           gpusFound: filteredGpus,
+          paginatedData: filteredGpus,
         },
         uiState: {
           ...mockContextValue.uiState,
@@ -255,6 +257,7 @@ describe("Testing the List container component", () => {
           ...mockContextValue.dataState,
           gpus: gpus,
           gpusFound: [],
+          paginatedData: [],
         },
         uiState: {
           ...mockContextValue.uiState,
@@ -303,6 +306,7 @@ describe("Testing the List container component", () => {
           ...mockContextValue.dataState,
           gpus: gpus,
           gpusFound: filteredGpus,
+          paginatedData: filteredGpus,
         },
         uiState: {
           ...mockContextValue.uiState,
