@@ -30,7 +30,9 @@ export default function IndexEntry({ gpu }: IndexEntryProps) {
         onClick={() => scrollToGpu(generateGpuDomId(gpu))}
       >
         <span
-          className={getManufacturerClass(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`)}
+          className={getManufacturerClass(
+            `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`,
+          )}
         >
           {gpu.manufacturer} {gpu.gpuline} {gpu.model}
         </span>

@@ -35,7 +35,7 @@ export default function PageIndex() {
                 <IndexEntry key={gpu.id} gpu={gpu} />
               ))}
             </ul>
-          ): (
+          ) : (
             <p>No entries</p>
           )}
         </div>

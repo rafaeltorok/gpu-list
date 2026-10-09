@@ -34,7 +34,7 @@ export default function ListContainer() {
       payload: paginateData(dataToPaginate, ITEMS_PER_PAGE, currentPage),
     });
   }, [dataToPaginate, currentPage, dataDispatch]);
-  
+
   const totalPages = Math.ceil(dataToPaginate.length / ITEMS_PER_PAGE) || 0;
 
   // Prevents invalid page numbers
