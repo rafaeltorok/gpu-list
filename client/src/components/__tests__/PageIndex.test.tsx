@@ -3,7 +3,7 @@ import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 
 // Component
-import PageIndex from "../PageIndex";
+import PageIndex from "../index/PageIndex";
 
 // Utils
 import createMockContext from "../../test-utils/createMockContext";

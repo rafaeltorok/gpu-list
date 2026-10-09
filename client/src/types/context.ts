@@ -21,6 +21,7 @@ export type DataState = {
   gpusFound: GpuType[];
   loading: boolean;
   error: string | null;
+  paginatedData: GpuType[];
 };
 
 export type DataActions =
@@ -28,7 +29,8 @@ export type DataActions =
   | { type: "FETCH_SUCCESS"; payload: GpuType[] }
   | { type: "FETCH_FAILURE"; payload: string }
   | { type: "SET_FOUND"; payload: GpuType[] }
-  | { type: "ADD_GPU"; payload: GpuType };
+  | { type: "ADD_GPU"; payload: GpuType }
+  | { type: "SET_PAGINATED_DATA"; payload: GpuType[] };
 
 export type GpuContextType = {
   createGpu: (gpu: GpuInputType) => Promise<boolean>;

@@ -5,6 +5,7 @@ export const initialDataState: DataState = {
   gpusFound: [],
   loading: false,
   error: null,
+  paginatedData: [],
 };
 
 const dataReducer = (state: DataState, action: DataActions): DataState => {
@@ -37,6 +38,11 @@ const dataReducer = (state: DataState, action: DataActions): DataState => {
         ...state,
         gpus: [...state.gpus, action.payload],
       };
+    case "SET_PAGINATED_DATA":
+      return {
+        ...state,
+        paginatedData: action.payload,
+      }
     default:
       return assertNever(action);
   }
