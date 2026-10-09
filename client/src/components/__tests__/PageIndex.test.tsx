@@ -61,6 +61,7 @@ describe("The PageIndex component", () => {
         dataState: {
           ...mockContextValue.dataState,
           gpus: gpu,
+          paginatedData: gpu,
         },
         uiState: {
           ...mockContextValue.uiState,
@@ -130,6 +131,7 @@ describe("The PageIndex component", () => {
           ...mockContextValue.dataState,
           gpus: gpus,
           gpusFound: gpusFound,
+          paginatedData: gpusFound,
         },
         uiState: {
           ...mockContextValue.uiState,
@@ -169,6 +171,7 @@ describe("The PageIndex component", () => {
           ...mockContextValue.dataState,
           gpus: gpus,
           gpusFound: gpusFound,
+          paginatedData: gpus,
         },
         uiState: {
           ...mockContextValue.uiState,
@@ -215,6 +218,7 @@ describe("The PageIndex component", () => {
           ...mockContextValue.dataState,
           gpus: gpus,
           gpusFound: [],
+          paginatedData: [],
         },
         uiState: {
           ...mockContextValue.uiState,
@@ -230,8 +234,11 @@ describe("The PageIndex component", () => {
         </GpuContext.Provider>,
       );
 
-      // Confirm it contains no item list
+      // Confirm it contains no entries
       expect(screen.queryByRole("list")).not.toBeInTheDocument();
+
+      // Confirm a proper message is displayed instead
+      expect(screen.getByText(/no entries/i)).toBeInTheDocument();
     });
   });
 
