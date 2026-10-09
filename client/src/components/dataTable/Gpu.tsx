@@ -5,6 +5,7 @@ import useGpuContext from "../../hooks/useGpuContext";
 
 // Utils
 import generateGpuDomId from "../../../../shared/utils/generateGpuDomId";
+import getManufacturerClass from "../../../../shared/utils/getManufacturerClass";
 
 // Components
 import ModelTitle from "./sections/ModelTitle";
@@ -23,22 +24,6 @@ import type { UpdateGpuDataProps } from "../../types/componentProps";
 
 interface GpuProps {
   gpu: GpuType;
-}
-
-// Helper functions
-// Style the table color scheme respective to the manufacturer colors
-function getClass(fullModelName: string): string {
-  if (fullModelName.includes("nvidia") || fullModelName.includes("geforce")) {
-    return "nvidia-model-header";
-  } else if (
-    fullModelName.includes("amd") ||
-    fullModelName.includes("radeon")
-  ) {
-    return "amd-model-header";
-  } else if (fullModelName.includes("intel") || fullModelName.includes("arc")) {
-    return "intel-model-header";
-  }
-  return "model-header";
 }
 
 // Update the GPU data when clicking on the "Edit" button
@@ -80,8 +65,8 @@ export default function Gpu({ gpu }: GpuProps) {
   }, [showAll]);
 
   // Get the classname to customize the table color scheme based on the manufacturer
-  const gpuHeaderClass = getClass(
-    `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`.toLowerCase(),
+  const gpuHeaderClass = getManufacturerClass(
+    `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`,
   );
 
   return (

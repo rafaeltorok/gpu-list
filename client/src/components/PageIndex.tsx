@@ -3,6 +3,7 @@ import useGpuContext from "../hooks/useGpuContext";
 
 // Utils
 import generateGpuDomId from "../../../shared/utils/generateGpuDomId";
+import getManufacturerClass from "../../../shared/utils/getManufacturerClass";
 
 // CSS Styles
 import "../styles/PageIndex.css";
@@ -47,21 +48,7 @@ export default function PageIndex() {
               onClick={() => scrollToGpu(generateGpuDomId(gpu))}
             >
               <span
-                className={
-                  gpu.manufacturer?.toLowerCase() === "nvidia"
-                    ? "nvidia-model-header"
-                    : gpu.manufacturer?.toLowerCase() === "amd"
-                      ? "amd-model-header"
-                      : gpu.manufacturer?.toLowerCase() === "intel"
-                        ? "intel-model-header"
-                        : gpu.gpuline?.toLowerCase() === "geforce"
-                          ? "nvidia-model-header"
-                          : gpu.gpuline?.toLowerCase() === "radeon"
-                            ? "amd-model-header"
-                            : gpu.gpuline?.toLowerCase() === "arc"
-                              ? "intel-model-header"
-                              : "model-header"
-                }
+                className={getManufacturerClass(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`)}
               >
                 {gpu.manufacturer} {gpu.gpuline} {gpu.model}
               </span>
