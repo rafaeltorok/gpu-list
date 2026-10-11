@@ -91,7 +91,7 @@ export default function TableControls({
             aria-label={`Cancel ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
             onClick={() => {
               setEditMode(false);
-              setOverrideMode(false)
+              setOverrideMode(false);
               setGpuData({ ...gpu });
             }}
           >

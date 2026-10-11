@@ -9,7 +9,7 @@ type DataRowProps = {
   id: string;
   gpuData: GpuType;
   setGpuData: (gpu: GpuType) => void;
-  overrideMode? : boolean;
+  overrideMode?: boolean;
 };
 
 export default function DataRow({
@@ -21,7 +21,7 @@ export default function DataRow({
   id,
   gpuData,
   setGpuData,
-  overrideMode
+  overrideMode,
 }: DataRowProps) {
   return (
     <>
