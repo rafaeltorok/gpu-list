@@ -10,6 +10,8 @@ interface TableControlsProps {
   setGpuData: (data: GpuType) => void;
   editMode: boolean;
   setEditMode: (mode: boolean) => void;
+  overrideMode: boolean;
+  setOverrideMode: (mode: boolean) => void;
   updateGpuData: (props: UpdateGpuDataProps) => Promise<void>;
 }
 
@@ -20,43 +22,76 @@ export default function TableControls({
   setGpuData,
   editMode,
   setEditMode,
+  overrideMode,
+  setOverrideMode,
   updateGpuData,
 }: TableControlsProps) {
   const { deleteGpu, editGpu } = useGpuContext();
 
   return (
     <div id={`${gpu.id}-delete`}>
-      {/* Edit/Save button row */}
+      {/* Edit/Save buttons */}
       <div id="edit-gpu-button">
-        {editMode ? (
-          <button
-            aria-label={`Save ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-            onClick={() =>
-              void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
-            }
-          >
-            Save
-          </button>
-        ) : (
-          <button
-            aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-            onClick={() => {
-              void setGpuData({ ...gpu });
-              void setEditMode(true);
-            }}
-          >
-            Edit
-          </button>
+        {!overrideMode && (
+          <>
+            {editMode ? (
+              <button
+                aria-label={`Save ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                onClick={() =>
+                  void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
+                }
+              >
+                Save
+              </button>
+            ) : (
+              <button
+                aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                onClick={() => {
+                  void setEditMode(true);
+                }}
+              >
+                Edit
+              </button>
+            )}
+          </>
         )}
       </div>
 
-      {/* Delete/Cancel button row */}
+      {/* Override clocks buttons */}
+      <div id="override-clocks-button">
+        {!editMode && (
+          <>
+            {overrideMode ? (
+              <button
+                aria-label={`Confirm override ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                onClick={() => {
+                  void setOverrideMode(false);
+                }}
+              >
+                Confirm
+              </button>
+            ) : (
+              <button
+                aria-label={`Override ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                onClick={() => {
+                  void setOverrideMode(true);
+                }}
+              >
+                Override Clocks
+              </button>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Delete/Cancel buttons */}
       <div id="delete-gpu-button">
-        {editMode ? (
+        {editMode || overrideMode ? (
           <button
             aria-label={`Cancel ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
             onClick={() => {
               setEditMode(false);
+              setOverrideMode(false)
               setGpuData({ ...gpu });
             }}
           >
