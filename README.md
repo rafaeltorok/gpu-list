@@ -103,13 +103,15 @@ DevOps
 
 ## Features
 
-The application allows users to add, delete, search, and list GPUs through a simple frontend UI.
+The application allows users to add, delete, search, edit, and list GPUs through a simple frontend UI.
 
 The Web UI automatically displays performance metrics such as:
 - FP32 throughput
 - Texture Rate
 - Pixel Rate
 - Memory Bandwidth
+
+You can temporarily override both the Boost and Memory clock speeds to test the impact of a potential overclock and/or underclock on the theoretical performance.
 
 ### Screenshots
 
@@ -288,7 +290,15 @@ Click the `Search` button, search by manufacturer, GPU line or model (e.g., `rtx
 
 #### Removing a graphics card
 
-Expand the card table → on the bottom, click on the `Delete` → when prompted, click on confirm.
+Expand the card table → on the table controls section, click on `Delete` → when prompted, click on confirm.
+
+#### Editing a graphics cards specs
+
+Expand the card table → on the table controls section, click on `Edit` → modify any field you want, then click on `Save`. The database entry will be updated with your new input values.
+
+#### Overriding the clock speeds
+
+Expand the card table → on the table controls section, click on `Override Clocks` → add your new values and click on `Confirm`. This will temporarily modify the clock speeds for a specific card, without making any permanent database changes. To reset these values, you can simply click on the `Hide` button.
 
 ### Alternative UI
 
@@ -538,14 +548,14 @@ npm run test:run -- ./src/__tests__
 │   │   ├── dataTable
 │   │   │   ├── Gpu.tsx               # Display a single graphics card data table, presentational component
 │   │   │   ├── rows
-│   │   │   │   ├── DataRow.tsx       # Render a single specification row for the GPU data table, being a data-only row or an input field for the "Edit" mode. Helper component for the data table
+│   │   │   │   ├── DataRow.tsx       # Render a single specification row for the GPU data table, being a data-only row or an input field for both the "Edit" and "Override Clocks" modes. Helper component for the data table
 │   │   │   │   └── PerformanceRow.tsx # Render a single performance row for the Theoretical Performance section. Helper component for the data table
 │   │   │   └── sections
 │   │   │       ├── ClocksSection.tsx       # Render the clock speeds fields
 │   │   │       ├── ModelTitle.tsx          # Render the full model name for the table title
 │   │   │       ├── PerformanceSection.tsx  # Render the theoretical performance fields
 │   │   │       ├── SpecsSection.tsx        # Render the specifications fields
-│   │   │       └── TableControls.tsx       # Render the edit, save and delete buttons
+│   │   │       └── TableControls.tsx       # Render the Edit, Override Clocks and Delete buttons
 │   │   ├── index
 │   │   │   ├── IndexEntry.tsx         # Renders each clickable entry for the page index menu. Handles scrolling to the respective GPU data table and opening it
 │   │   │   └── PageIndex.tsx          # Handles displaying the page index container. Serves as a wrapper for the index entries
