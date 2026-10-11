@@ -9,6 +9,7 @@ type DataRowProps = {
   id: string;
   gpuData: GpuType;
   setGpuData: (gpu: GpuType) => void;
+  overrideMode?: boolean;
 };
 
 export default function DataRow({
@@ -20,17 +21,18 @@ export default function DataRow({
   id,
   gpuData,
   setGpuData,
+  overrideMode,
 }: DataRowProps) {
   return (
     <>
-      {editMode ? (
+      {editMode || overrideMode ? (
         <div className="table-row" role="row">
           <div className="table-row-label">{header}</div>
           <div className={headerClass}>
             <input
               className="table-row-edit-field"
               type="number"
-              value={value}
+              value={value || ""}
               onChange={(e) =>
                 setGpuData({ ...gpuData, [id]: Number(e.target.value) })
               }

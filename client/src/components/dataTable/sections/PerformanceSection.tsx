@@ -5,18 +5,16 @@ import PerformanceRow from "../rows/PerformanceRow";
 import type { GpuType } from "../../../../../shared/types/types";
 
 interface PerformanceSectionProps {
-  gpu: GpuType;
   gpuData: GpuType;
   gpuHeaderClass: string;
 }
 
 export default function PerformanceSection({
-  gpu,
   gpuData,
   gpuHeaderClass,
 }: PerformanceSectionProps) {
   // Calculate the theoretical performance for the current graphics card
-  const gpuPerformance = calculatePerformance(gpu);
+  const gpuPerformance = calculatePerformance(gpuData);
 
   return (
     <div

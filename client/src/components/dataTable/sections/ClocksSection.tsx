@@ -7,6 +7,7 @@ interface ClocksSectionProps {
   gpuData: GpuType;
   setGpuData: (data: GpuType) => void;
   editMode: boolean;
+  overrideMode?: boolean;
 }
 
 export default function ClocksSection({
@@ -14,6 +15,7 @@ export default function ClocksSection({
   gpuData,
   setGpuData,
   editMode,
+  overrideMode,
 }: ClocksSectionProps) {
   return (
     <div
@@ -42,6 +44,7 @@ export default function ClocksSection({
         id="boostclock"
         gpuData={gpuData}
         setGpuData={setGpuData}
+        overrideMode={overrideMode}
       />
       <DataRow
         header="MEMORY CLOCK"
@@ -52,6 +55,7 @@ export default function ClocksSection({
         id="memclock"
         gpuData={gpuData}
         setGpuData={setGpuData}
+        overrideMode={overrideMode}
       />
     </div>
   );

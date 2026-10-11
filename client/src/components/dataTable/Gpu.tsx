@@ -47,12 +47,13 @@ async function updateGpuData({
 
 // Component
 export default function Gpu({ gpu }: GpuProps) {
-  // Create an editable backup based on the original data
+  // Create an editable object based on the original data
   const [gpuData, setGpuData] = useState<GpuType>(gpu);
 
   // Table controls
   const [showBody, setShowBody] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [overrideMode, setOverrideMode] = useState(false);
 
   // Access the React context
   const {
@@ -87,6 +88,7 @@ export default function Gpu({ gpu }: GpuProps) {
             onClick={() => {
               setShowBody(!showBody);
               setEditMode(false);
+              setOverrideMode(false);
               setGpuData({ ...gpu }); // Reset any modifications when clicking on Hide
             }}
             aria-expanded={showBody}
@@ -114,10 +116,10 @@ export default function Gpu({ gpu }: GpuProps) {
               gpuHeaderClass={gpuHeaderClass}
               setGpuData={setGpuData}
               editMode={editMode}
+              overrideMode={overrideMode}
             />
 
             <PerformanceSection
-              gpu={gpu}
               gpuData={gpuData}
               gpuHeaderClass={gpuHeaderClass}
             />
@@ -128,9 +130,11 @@ export default function Gpu({ gpu }: GpuProps) {
             gpu={gpu}
             gpuData={gpuData}
             setGpuData={setGpuData}
+            updateGpuData={updateGpuData}
             editMode={editMode}
             setEditMode={setEditMode}
-            updateGpuData={updateGpuData}
+            overrideMode={overrideMode}
+            setOverrideMode={setOverrideMode}
           />
         </>
       )}
