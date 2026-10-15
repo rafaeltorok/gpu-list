@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router";
+import { useSwipeable } from "react-swipeable";
 
 // Hooks
 import useGpuContext from "../../hooks/useGpuContext";
@@ -10,6 +11,7 @@ import PaginationWrapper from "./PaginationWrapper";
 
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
+import type { SwipeEventData } from "react-swipeable";
 
 // Component
 export default function ListContainer() {
@@ -44,10 +46,46 @@ export default function ListContainer() {
     }
   }, [currentPage, totalPages, setSearchParams]);
 
+  // Handles keyboard navigation
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      // Left arrow key
+      if (event.key === "ArrowLeft" && currentPage > 1) {
+        setSearchParams({ page: String(currentPage - 1) });
+      }
+
+      // Right arrow key
+      if (event.key === "ArrowRight" && currentPage < totalPages) {
+        setSearchParams({ page: String(currentPage + 1) });
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [setSearchParams, currentPage, totalPages]);
+
+  // Handles the Touch screen swipe to change the page
+  const swipeHandler = useSwipeable({
+    onSwiped: (eventData: SwipeEventData) => {
+      // Previous page
+      if (eventData.dir === "Right" && currentPage > 1) {
+        setSearchParams({ page: String(currentPage - 1) });
+      }
+
+      // Next page
+      if (eventData.dir === "Left" && currentPage < totalPages) {
+        setSearchParams({ page: String(currentPage + 1) });
+      }
+    },
+    delta: 50, // Define the min amount of pixels before a swipe is registered
+  });
+
   // Render the list data tables
   return (
     <>
-      <List gpuList={paginatedData} />
+      <div {...swipeHandler}>
+        <List gpuList={paginatedData} />
+      </div>
 
       <PaginationWrapper totalPages={totalPages} />
     </>
