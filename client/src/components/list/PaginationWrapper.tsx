@@ -19,7 +19,7 @@ export default function PaginationWrapper({
   };
 
   return (
-    <div className="pagination">
+    <footer>
       <Pagination
         count={totalPages}
         page={Number(searchParams.get("page")) || 1}
@@ -35,6 +35,6 @@ export default function PaginationWrapper({
           },
         }}
       />
-    </div>
+    </footer>
   );
 }

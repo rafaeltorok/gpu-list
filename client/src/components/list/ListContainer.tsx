@@ -83,9 +83,9 @@ export default function ListContainer() {
   // Render the list data tables
   return (
     <>
-      <div {...swipeHandler}>
+      <main {...swipeHandler}>
         <List gpuList={paginatedData} />
-      </div>
+      </main>
 
       <PaginationWrapper totalPages={totalPages} />
     </>

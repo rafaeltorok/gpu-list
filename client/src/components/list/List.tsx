@@ -27,7 +27,7 @@ export default function List({ gpuList }: ListProps) {
 
   // Render the list of available cards
   return (
-    <div>
+    <section>
       {gpuList.length < 1 ? (
         <div>No GPUs available</div>
       ) : (
@@ -47,7 +47,7 @@ export default function List({ gpuList }: ListProps) {
           </section>
         ))
       )}
-    </div>
+    </section>
   );
 }
 

@@ -129,17 +129,18 @@ function App() {
         uiDispatch,
       }}
     >
-      <div>
-        <div className="top-page-controls">
-          <h1 id="main-page-title">GPU List</h1>
-          <AddGpuForm />
-          <SearchBar />
-          <PageIndex />
-          <ShowAllButton />
-        </div>
+      <header>
+        <h1 id="main-page-title">GPU List</h1>
+      </header>
 
-        <ListContainer />
-      </div>
+      <nav>
+        <AddGpuForm />
+        <SearchBar />
+        <PageIndex />
+        <ShowAllButton />
+      </nav>
+
+      <ListContainer />
     </GpuContext.Provider>
   );
 }
