@@ -15,7 +15,10 @@ export default function PaginationWrapper({
 
   // Handles inserting the current page number into the URL
   const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
-    setSearchParams({ page: String(page) });
+    // Get the current cards per page value if available
+    const limit = searchParams.get("limit") || 10;
+
+    setSearchParams({ page: String(page), limit: String(limit) });
   };
 
   return (

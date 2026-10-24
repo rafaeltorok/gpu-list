@@ -104,6 +104,24 @@ footer nav ul {
   justify-content: center;
 }
 
+.limit-selector {
+  background-color: rgba(12, 12, 12, 0.75);
+  margin: 0 auto;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  border: 2px solid #222222;
+  border-radius: 1rem;
+}
+
+#limit-options {
+  font-family: "digital-dreamers";
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: black;
+  color: white;
+  border-radius: 0.5rem;
+}
+
 @media only screen and (hover: none) and (pointer: coarse) {
   #root {
     padding: 0.5rem;
