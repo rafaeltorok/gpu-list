@@ -52,17 +52,16 @@
   font-size: 0.9rem;
   overflow: auto;
   scrollbar-width: none;
+  width: 50%;
 }
 
 .table-row-label {
   background-color: rgba(18, 18, 18, 0.5);
-  width: 50%;
 }
 
 .table-row-data {
   background-color: rgba(0, 0, 0, 0.5);
   font-weight: bold;
-  width: 50%;
 }
 
 .gpu-data-table #delete-gpu-button {
@@ -75,7 +74,7 @@
   font-size: 0.9rem;
   box-sizing: border-box;
   width: 90%;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .gpu-data-table button {
