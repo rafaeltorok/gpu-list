@@ -121,7 +121,7 @@ Desktop view
 
 <div style="display: flex; gap: 1rem;">
   <img src="./img/gpulist_main-ui_desktop.png" alt="GPU List app main UI on desktops" height="350"/>
-  <img src="./img/gpulist_main-ui_table-view_desktop.png" alt="GPU List app main UI data table on desktops" height="350"/>
+  <img src="./img/gpulist_main-ui_card-view_desktop.png" alt="GPU List app main UI data table on desktops" height="350"/>
 </div>
 
 <br>
@@ -129,17 +129,26 @@ Desktop view
 Mobile view
 
 <div style="display: flex; gap: 1rem;">
-  <img src="./img/gpulist_main-ui_mobile.png" alt="GPU List app main UI on mobile devices" height="500"/>
-  <img src="./img/gpulist_main-ui_table-view_mobile.png" alt="GPU List app main UI data table on mobile devices" height="500"/>
+  <img src="./img/gpulist_main-ui_mobile.png" alt="GPU List app main UI on mobile devices" height="400"/>
+  <img src="./img/gpulist_main-ui_card-view_mobile.png" alt="GPU List app main UI data table on mobile devices" height="400"/>
 </div>
 
 <br>
 
 #### Alternative UI
 
+Desktop view
+
 <div style="display: flex; gap: 1rem;">
-  <img src="./img/gpulist_alt-ui.png" alt="GPU List app alternative UI" height="300"/>
-<img src="./img/gpulist_alt-ui_card-view.png" alt="GPU List app alternative UI card info" height="300"/>
+  <img src="./img/gpulist_alt-ui_desktop.png" alt="GPU List app alternative UI on desktops" width="350"/>
+  <img src="./img/gpulist_alt-ui_card-view_desktop.png" alt="GPU List app alternative UI card info on desktops" width="350"/>
+</div>
+
+Mobile view
+
+<div style="display: flex; gap: 1rem;">
+  <img src="./img/gpulist_alt-ui_mobile.png" alt="GPU List app alternative UI on mobile devices" height="400"/>
+  <img src="./img/gpulist_alt-ui_card-view_mobile.png" alt="GPU List app alternative UI card info on mobile devices" height="400"/>
 </div>
 
 
@@ -565,6 +574,7 @@ npm run test:run -- ./src/__tests__
 │   │   │   └── PaginationWrapper.tsx  # Display the Material UI Pagination component. Handles the button clicks to navigate between pages
 │   │   ├── FormRow.tsx               # Render a single row for the add form component, helper component for the add form
 │   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
+│   │   ├── Limit.tsx                 # Render the Cards per page selector
 │   │   ├── PageIndex.tsx             # Render the main page index
 │   │   ├── SearchBar.tsx             # Responsible for displaying and handling the search terms, interacting with the React context
 │   │   ├── ShowAllButton.tsx         # Render the button on the main page
@@ -573,8 +583,9 @@ npm run test:run -- ./src/__tests__
 │   │   └── GpuContext.ts             # Defines the shared React context for both the UI and GPU-related states
 │   ├── fonts                         # Custom font for the web UI
 │   │   └── DigitalDreamers-jy99.ttf
-│   ├── hooks                         # Allows components to access the GPU context
-│   │   └── useGpuContext.ts
+│   ├── hooks
+│   │   ├── useGpuContext.ts          # Allows components to access the GPU context
+│   │   └── useLimit.ts               # Sets the limit param on the URL - used by the Limit component
 │   ├── index.css                     # Custom CSS rules for the root and body elements
 │   ├── main.tsx                      # Entry point for the React app
 │   ├── reducers                      # State transition logic for the React Context

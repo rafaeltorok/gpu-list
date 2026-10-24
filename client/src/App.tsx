@@ -1,6 +1,7 @@
-// Client base dependencies
 import { useEffect, useReducer } from "react";
 import gpuService from "./services/gpus";
+
+// React context
 import GpuContext from "./context/GpuContext";
 import dataReducer, { initialDataState } from "./reducers/dataReducer";
 import uiReducer, { initialUiState } from "./reducers/uiReducer";
@@ -11,6 +12,7 @@ import SearchBar from "./components/SearchBar";
 import PageIndex from "./components/index/PageIndex";
 import ShowAllButton from "./components/ShowAllButton";
 import ListContainer from "./components/list/ListContainer";
+import Limit from "./components/list/Limit";
 
 // CSS Styles
 import "./styles/App.css";
@@ -138,6 +140,7 @@ function App() {
         <SearchBar />
         <PageIndex />
         <ShowAllButton />
+        <Limit />
       </nav>
 
       <ListContainer />

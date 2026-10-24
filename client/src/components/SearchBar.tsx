@@ -13,7 +13,8 @@ export default function SearchBar() {
     uiDispatch,
   } = useGpuContext();
 
-  const [_searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const limit = searchParams.get("limit") || 10;
 
   const handleSearch = (searchTerm: string) => {
     uiDispatch({
@@ -21,7 +22,8 @@ export default function SearchBar() {
       payload: searchTerm.trimStart(),
     });
     // Reset the page to 1 when the user inputs a search term
-    setSearchParams({ page: "1" });
+    // Maintain the cards per page value, if available
+    setSearchParams({ page: "1", limit: String(limit) });
   };
 
   useEffect(() => {
@@ -43,7 +45,9 @@ export default function SearchBar() {
             type: "TOGGLE_SEARCH",
           });
           // Reset the page number when cancelling a search
-          if (showSearch) setSearchParams({ page: "1" });
+          if (showSearch) {
+            setSearchParams({ page: "1", limit: String(limit) });
+          }
         }}
       >
         {showSearch ? "Cancel" : "Search"}
