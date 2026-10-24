@@ -47,7 +47,7 @@ export default function SearchBar() {
           // Reset the page number when cancelling a search
           if (showSearch) {
             setSearchParams({ page: "1", limit: String(limit) });
-          };
+          }
         }}
       >
         {showSearch ? "Cancel" : "Search"}

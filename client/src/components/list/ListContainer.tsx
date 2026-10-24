@@ -51,12 +51,18 @@ export default function ListContainer() {
     function onKeyDown(event: KeyboardEvent) {
       // Left arrow key
       if (event.key === "ArrowLeft" && currentPage > 1) {
-        setSearchParams({ page: String(currentPage - 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage - 1),
+          limit: String(itemsPerPage),
+        });
       }
 
       // Right arrow key
       if (event.key === "ArrowRight" && currentPage < totalPages) {
-        setSearchParams({ page: String(currentPage + 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage + 1),
+          limit: String(itemsPerPage),
+        });
       }
     }
 
@@ -69,12 +75,18 @@ export default function ListContainer() {
     onSwiped: (eventData: SwipeEventData) => {
       // Previous page
       if (eventData.dir === "Right" && currentPage > 1) {
-        setSearchParams({ page: String(currentPage - 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage - 1),
+          limit: String(itemsPerPage),
+        });
       }
 
       // Next page
       if (eventData.dir === "Left" && currentPage < totalPages) {
-        setSearchParams({ page: String(currentPage + 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage + 1),
+          limit: String(itemsPerPage),
+        });
       }
     },
     delta: 50, // Define the min amount of pixels before a swipe is registered
