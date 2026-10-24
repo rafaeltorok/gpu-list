@@ -28,7 +28,7 @@ export default function DataRow({
       {editMode || overrideMode ? (
         <div className="table-row" role="row">
           <div className="table-row-label">{header}</div>
-          <div className={headerClass}>
+          <div className={`${headerClass} table-row-data`}>
             <input
               className="table-row-edit-field"
               type="number"

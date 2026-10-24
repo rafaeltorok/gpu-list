@@ -30,33 +30,6 @@ export default function TableControls({
 
   return (
     <div id={`${gpu.id}-delete`}>
-      {/* Edit/Save buttons */}
-      <div id="edit-gpu-button">
-        {!overrideMode && (
-          <>
-            {editMode ? (
-              <button
-                aria-label={`Save ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                onClick={() =>
-                  void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
-                }
-              >
-                Save
-              </button>
-            ) : (
-              <button
-                aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                onClick={() => {
-                  void setEditMode(true);
-                }}
-              >
-                Edit
-              </button>
-            )}
-          </>
-        )}
-      </div>
-
       {/* Override clocks buttons */}
       <div id="override-clocks-button">
         {!editMode && (
@@ -78,6 +51,33 @@ export default function TableControls({
                 }}
               >
                 Override Clocks
+              </button>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Edit/Save buttons */}
+      <div id="edit-gpu-button">
+        {!overrideMode && (
+          <>
+            {editMode ? (
+              <button
+                aria-label={`Save ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                onClick={() =>
+                  void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
+                }
+              >
+                Save
+              </button>
+            ) : (
+              <button
+                aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
+                onClick={() => {
+                  void setEditMode(true);
+                }}
+              >
+                Edit
               </button>
             )}
           </>

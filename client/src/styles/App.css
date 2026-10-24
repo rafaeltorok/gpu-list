@@ -10,7 +10,8 @@
   src: url("../fonts/DigitalDreamers-jy99.ttf") format("truetype");
 }
 
-.top-page-controls {
+header,
+nav {
   width: 95%;
   max-width: 500px;
   margin: 0 auto;
@@ -90,14 +91,17 @@ button:focus {
   margin: 0 auto;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
+footer {
   padding: 0.5rem;
   padding-bottom: 1rem;
   position: sticky;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.85);
+}
+
+/* MUI pagination element */
+footer nav ul {
+  justify-content: center;
 }
 
 @media only screen and (hover: none) and (pointer: coarse) {
