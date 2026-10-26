@@ -26,7 +26,7 @@ export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }
 
   // Filter the list by search term, if available
   const gpusFound = gpus.filter((g) => {
-    return `${g.manufacturer} ${g.gpuline} ${g.model}`.toLowerCase().includes(searchTerm)
+    return `${g.manufacturer} ${g.gpuline} ${g.model}`.toLowerCase().includes(searchTerm.toLowerCase())
   });
 
   // Define if the paginated data should be based upon the filtered list or not
