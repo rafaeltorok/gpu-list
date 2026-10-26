@@ -5,7 +5,7 @@ function SearchBar({ onSearch, searchTerm }) {
   return (
     <div className="search-bar">
       <input
-        type="text"
+        type="search"
         placeholder="Search GPUs..."
         value={searchTerm}
         onChange={(e) => onSearch(e.target.value)}
