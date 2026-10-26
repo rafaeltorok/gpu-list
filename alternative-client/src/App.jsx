@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useSearchParams } from "react-router";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -15,6 +16,10 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [scrollToGpu, setScrollToGpu] = useState(null);
 
+  // eslint-disable-next-line no-unused-vars
+  const [_searchParams, setSearchParams] = useSearchParams();
+
+  // Fetch all available cards from the database
   useEffect(() => {
     async function getData() {
       try {
@@ -27,6 +32,7 @@ function App() {
     getData();
   }, []);
 
+  // Handles the add form data
   async function addGpu(gpuObject) {
     if (
       gpuObject.manufacturer === "" ||
@@ -76,6 +82,7 @@ function App() {
 
   function handleSearch(term) {
     setSearchTerm(term);
+    setSearchParams({ page: "1" });
   }
 
   function handleReturn(id) {
