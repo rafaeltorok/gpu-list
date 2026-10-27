@@ -112,9 +112,7 @@ export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }
         swipeHandler={swipeHandler}
       />
 
-      {paginatedData.length > 0 && (
-        <PaginationWrapper totalPages={totalPages} />
-      )}
+      <PaginationWrapper totalPages={totalPages} />
     </div>
   );
 }
