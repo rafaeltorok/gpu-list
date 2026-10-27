@@ -5,10 +5,6 @@ WORKDIR /usr/src/app
 # Install curl for the healthcheck
 RUN apk add --no-cache curl
 
-# Install dependencies
-COPY --chown=node:node ./server/package*.json ./
-RUN npm ci
-
 EXPOSE 3001
 
 ENV PORT=3001

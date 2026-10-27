@@ -9,10 +9,6 @@ RUN apk add --no-cache curl
 COPY --chown=node:node ./shared/utils/generateGpuDomId.ts /usr/src/app/shared/utils/generateGpuDomId.ts
 COPY --chown=node:node ./shared/utils/calculatePerformance.ts /usr/src/app/shared/utils/calculatePerformance.ts
 
-# Install dependencies
-COPY --chown=node:node ./client/package*.json ./
-RUN npm ci
-
 EXPOSE 5173
 
 USER node
