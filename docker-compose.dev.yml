@@ -55,6 +55,7 @@ services:
       - dev-network
     volumes:
       - ./client:/usr/src/app/client
+      - ./shared:/usr/src/app/shared
     environment:
       - VITE_SERVER_URL=http://localhost:8000
     healthcheck:

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSearchParams } from "react-router";
+import useLimit from "./hooks/useLimit";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -18,6 +19,7 @@ function App() {
 
   // eslint-disable-next-line no-unused-vars
   const [_searchParams, setSearchParams] = useSearchParams();
+  const { limit } = useLimit();
 
   // Fetch all available cards from the database
   useEffect(() => {
@@ -82,7 +84,7 @@ function App() {
 
   function handleSearch(term) {
     setSearchTerm(term);
-    setSearchParams({ page: "1" });
+    setSearchParams({ page: "1", limit: String(limit) });
   }
 
   function handleReturn(id) {

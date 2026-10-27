@@ -8,18 +8,15 @@
 }
 
 .gpu-card {
-  max-width: 100%; /* Prevent overflow */
-  min-width: 0; /* Allow shrinking */
-  flex: 1; /* Enable flexible resizing */
+  min-width: 250px;
+  width: 300px;
   box-sizing: border-box; /* Include padding and border in width */
   display: flex;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.9);
   border: 2px solid;
-  border-style: groove;
   border-radius: 1rem;
   overflow: hidden;
-  height: 100%;
   transition: box-shadow 0.3s ease;
 }
 

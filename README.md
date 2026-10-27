@@ -144,12 +144,16 @@ Desktop view
   <img src="./img/gpulist_alt-ui_card-view_desktop.png" alt="GPU List app alternative UI card info on desktops" width="350"/>
 </div>
 
+<br>
+
 Mobile view
 
 <div style="display: flex; gap: 1rem;">
   <img src="./img/gpulist_alt-ui_mobile.png" alt="GPU List app alternative UI on mobile devices" height="400"/>
   <img src="./img/gpulist_alt-ui_card-view_mobile.png" alt="GPU List app alternative UI card info on mobile devices" height="400"/>
 </div>
+
+<br>
 
 
 ## Prerequisites

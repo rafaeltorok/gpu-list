@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router";
 import PropTypes from "prop-types";
 import { useSwipeable } from "react-swipeable";
+import useLimit from "../../hooks/useLimit";
 
 // Components
 import SearchBar from "../ui/SearchBar";
@@ -11,73 +12,90 @@ import PaginationWrapper from "./PaginationWrapper";
 
 import "../../styles/Home.css";
 
-export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }) {
+export default function Home({
+  gpus,
+  onSearch,
+  searchTerm,
+  addGpu,
+  scrollToGpu,
+}) {
   const [showAddForm, setShowAddForm] = useState(false);
+  const { limit } = useLimit();
 
   const toggleAddForm = () => {
     setShowAddForm(!showAddForm);
   };
 
-  const ITEMS_PER_PAGE = 9;
-  
+  const itemsPerPage = limit || 9;
+
   // Handles the page number param
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page"));
 
   // Filter the list by search term, if available
   const gpusFound = gpus.filter((g) => {
-    return `${g.manufacturer} ${g.gpuline} ${g.model}`.toLowerCase().includes(searchTerm.toLowerCase())
+    return `${g.manufacturer} ${g.gpuline} ${g.model}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
   });
 
   // Define if the paginated data should be based upon the filtered list or not
   const dataToPaginate = searchTerm ? gpusFound : gpus;
 
   // Paginate the data into slices for each page
-  const paginatedData = paginateData(
-    dataToPaginate,
-    ITEMS_PER_PAGE,
-    currentPage,
-  );
+  const paginatedData = paginateData(dataToPaginate, itemsPerPage, currentPage);
 
   // Total number of pages to be displayed by the MUI Pagination component
-  const totalPages = Math.ceil(dataToPaginate.length / ITEMS_PER_PAGE) || 0;
+  const totalPages = Math.ceil(dataToPaginate.length / itemsPerPage) || 0;
 
   // Prevents invalid page numbers
   useEffect(() => {
     if (currentPage > totalPages || currentPage < 1) {
-      setSearchParams({ page: "1" });
+      setSearchParams({ page: "1", limit: String(itemsPerPage) });
     }
-  }, [currentPage, totalPages, setSearchParams]);
+  }, [currentPage, totalPages, setSearchParams, itemsPerPage]);
 
   // Handles keyboard navigation
   useEffect(() => {
     function onKeyDown(event) {
       // Left arrow key
       if (event.key === "ArrowLeft" && currentPage > 1) {
-        setSearchParams({ page: String(currentPage - 1) });
+        setSearchParams({
+          page: String(currentPage - 1),
+          limit: String(itemsPerPage),
+        });
       }
 
       // Right arrow key
       if (event.key === "ArrowRight" && currentPage < totalPages) {
-        setSearchParams({ page: String(currentPage + 1) });
+        setSearchParams({
+          page: String(currentPage + 1),
+          limit: String(itemsPerPage),
+        });
       }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [setSearchParams, currentPage, totalPages]);
+  }, [setSearchParams, currentPage, totalPages, itemsPerPage]);
 
   // Handles the Touch screen swipe to change the page
   const swipeHandler = useSwipeable({
     onSwiped: (eventData) => {
       // Previous page
       if (eventData.dir === "Right" && currentPage > 1) {
-        setSearchParams({ page: String(currentPage - 1) });
+        setSearchParams({
+          page: String(currentPage - 1),
+          limit: String(itemsPerPage),
+        });
       }
 
       // Next page
       if (eventData.dir === "Left" && currentPage < totalPages) {
-        setSearchParams({ page: String(currentPage + 1) });
+        setSearchParams({
+          page: String(currentPage + 1),
+          limit: String(itemsPerPage),
+        });
       }
     },
     delta: 50, // Define the min amount of pixels before a swipe is registered
@@ -112,21 +130,15 @@ export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }
         swipeHandler={swipeHandler}
       />
 
-      {paginatedData.length > 0 && (
-        <PaginationWrapper totalPages={totalPages} />
-      )}
+      <PaginationWrapper totalPages={totalPages} />
     </div>
   );
 }
 
 // Helper function to handle the data pagination
-function paginateData(
-  dataToPaginate,
-  ITEMS_PER_PAGE,
-  currentPage,
-) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = offset + ITEMS_PER_PAGE;
+function paginateData(dataToPaginate, itemsPerPage, currentPage) {
+  const offset = (currentPage - 1) * itemsPerPage;
+  const endIndex = offset + itemsPerPage;
 
   return dataToPaginate.slice(offset, endIndex);
 }
