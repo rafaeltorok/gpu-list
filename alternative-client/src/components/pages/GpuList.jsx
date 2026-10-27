@@ -1,5 +1,9 @@
 import { useEffect } from "react";
+
+// Components
 import GpuCard from "../ui/GpuCard";
+import CardsPerPage from "../ui/CardsPerPage";
+
 import PropTypes from "prop-types";
 
 export default function GpuList({ gpus, paginatedData, searchTerm, scrollToGpu, swipeHandler }) {
@@ -33,6 +37,8 @@ export default function GpuList({ gpus, paginatedData, searchTerm, scrollToGpu, 
 
   return (
     <main>
+      <CardsPerPage />
+
       <section { ...swipeHandler }>
         <div className="gpu-grid">
           {paginatedData.map((gpu) => (
