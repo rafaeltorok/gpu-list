@@ -13,24 +13,26 @@ export default function PaginationWrapper({ totalPages }) {
   };
 
   return (
-    <footer className="pagination">
-      <Pagination
-        count={totalPages}
-        page={Number(searchParams.get("page")) || 1}
-        shape="rounded"
-        color="primary"
-        showFirstButton
-        showLastButton
-        siblingCount={0}
-        boundaryCount={0}
-        onChange={handlePageChange}
-        sx={{
-          "& .MuiPaginationItem-root": {
-            color: "#fff",
-          },
-        }}
-      />
-    </footer>
+    <div className="pagination">
+      {totalPages > 0 && (
+        <Pagination
+          count={totalPages}
+          page={Number(searchParams.get("page")) || 1}
+          shape="rounded"
+          color="primary"
+          showFirstButton
+          showLastButton
+          siblingCount={0}
+          boundaryCount={0}
+          onChange={handlePageChange}
+          sx={{
+            "& .MuiPaginationItem-root": {
+              color: "#fff",
+            },
+          }}
+        />
+      )}
+    </div>
   );
 }
 
