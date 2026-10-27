@@ -6,7 +6,13 @@ import CardsPerPage from "../ui/CardsPerPage";
 
 import PropTypes from "prop-types";
 
-export default function GpuList({ gpus, paginatedData, searchTerm, scrollToGpu, swipeHandler }) {
+export default function GpuList({
+  gpus,
+  paginatedData,
+  searchTerm,
+  scrollToGpu,
+  swipeHandler,
+}) {
   useEffect(() => {
     if (scrollToGpu) {
       document
@@ -39,7 +45,7 @@ export default function GpuList({ gpus, paginatedData, searchTerm, scrollToGpu, 
     <main>
       <CardsPerPage />
 
-      <section { ...swipeHandler }>
+      <section {...swipeHandler}>
         <div className="gpu-grid">
           {paginatedData.map((gpu) => (
             <GpuCard key={gpu.id} gpu={gpu} />

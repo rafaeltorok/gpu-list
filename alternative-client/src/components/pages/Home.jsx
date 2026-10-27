@@ -12,7 +12,13 @@ import PaginationWrapper from "./PaginationWrapper";
 
 import "../../styles/Home.css";
 
-export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }) {
+export default function Home({
+  gpus,
+  onSearch,
+  searchTerm,
+  addGpu,
+  scrollToGpu,
+}) {
   const [showAddForm, setShowAddForm] = useState(false);
   const { limit } = useLimit();
 
@@ -21,25 +27,23 @@ export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }
   };
 
   const itemsPerPage = limit || 9;
-  
+
   // Handles the page number param
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page"));
 
   // Filter the list by search term, if available
   const gpusFound = gpus.filter((g) => {
-    return `${g.manufacturer} ${g.gpuline} ${g.model}`.toLowerCase().includes(searchTerm.toLowerCase())
+    return `${g.manufacturer} ${g.gpuline} ${g.model}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
   });
 
   // Define if the paginated data should be based upon the filtered list or not
   const dataToPaginate = searchTerm ? gpusFound : gpus;
 
   // Paginate the data into slices for each page
-  const paginatedData = paginateData(
-    dataToPaginate,
-    itemsPerPage,
-    currentPage,
-  );
+  const paginatedData = paginateData(dataToPaginate, itemsPerPage, currentPage);
 
   // Total number of pages to be displayed by the MUI Pagination component
   const totalPages = Math.ceil(dataToPaginate.length / itemsPerPage) || 0;
@@ -56,12 +60,18 @@ export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }
     function onKeyDown(event) {
       // Left arrow key
       if (event.key === "ArrowLeft" && currentPage > 1) {
-        setSearchParams({ page: String(currentPage - 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage - 1),
+          limit: String(itemsPerPage),
+        });
       }
 
       // Right arrow key
       if (event.key === "ArrowRight" && currentPage < totalPages) {
-        setSearchParams({ page: String(currentPage + 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage + 1),
+          limit: String(itemsPerPage),
+        });
       }
     }
 
@@ -74,12 +84,18 @@ export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }
     onSwiped: (eventData) => {
       // Previous page
       if (eventData.dir === "Right" && currentPage > 1) {
-        setSearchParams({ page: String(currentPage - 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage - 1),
+          limit: String(itemsPerPage),
+        });
       }
 
       // Next page
       if (eventData.dir === "Left" && currentPage < totalPages) {
-        setSearchParams({ page: String(currentPage + 1), limit: String(itemsPerPage) });
+        setSearchParams({
+          page: String(currentPage + 1),
+          limit: String(itemsPerPage),
+        });
       }
     },
     delta: 50, // Define the min amount of pixels before a swipe is registered
@@ -120,11 +136,7 @@ export default function Home({ gpus, onSearch, searchTerm, addGpu, scrollToGpu }
 }
 
 // Helper function to handle the data pagination
-function paginateData(
-  dataToPaginate,
-  itemsPerPage,
-  currentPage,
-) {
+function paginateData(dataToPaginate, itemsPerPage, currentPage) {
   const offset = (currentPage - 1) * itemsPerPage;
   const endIndex = offset + itemsPerPage;
 
