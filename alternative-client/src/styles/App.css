@@ -5,9 +5,9 @@
 
 .app-container {
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 0;
   font-family: "digital-dreamers", "sans-serif";
-  max-width: 900px;
+  max-width: 1200px;
 }
 
 /* Default for large screens */
@@ -15,7 +15,7 @@
 .home-container {
   width: 100%;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 0;
   box-sizing: border-box;
 }
 

@@ -4,6 +4,7 @@
   opacity: 0.7;
   font-size: 0.9rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .pagination {
@@ -12,6 +13,7 @@
   width: 100%;
   padding: 0.5rem;
   margin-top: 1rem;
+  margin-bottom: 0;
   position: sticky;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.75);
