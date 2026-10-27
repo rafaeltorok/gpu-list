@@ -11,20 +11,34 @@ export default function GpuList({ gpus, paginatedData, searchTerm, scrollToGpu, 
     }
   }, [scrollToGpu]);
 
+  // No GPUs available
+  if (gpus.length === 0 && !searchTerm) {
+    return (
+      <main>
+        <div className="no-results">
+          <p>No GPUs available on the database</p>
+        </div>
+      </main>
+    );
+  }
+
+  // No search results
+  if (gpus.length === 0 && searchTerm !== "") {
+    return (
+      <div className="no-results">
+        <p>No GPUs found matching: {searchTerm}</p>
+      </div>
+    );
+  }
+
   return (
     <main>
       <section { ...swipeHandler }>
-        {gpus.length === 0 && searchTerm !== "" ? (
-          <div className="no-results">
-            <p>No GPUs found matching: {searchTerm}</p>
-          </div>
-        ) : (
-          <div className="gpu-grid">
-            {paginatedData.map((gpu) => (
-              <GpuCard key={gpu.id} gpu={gpu} />
-            ))}
-          </div>
-        )}
+        <div className="gpu-grid">
+          {paginatedData.map((gpu) => (
+            <GpuCard key={gpu.id} gpu={gpu} />
+          ))}
+        </div>
       </section>
     </main>
   );
