@@ -557,12 +557,14 @@ npm run test:run -- ./src/__tests__
 │   │   ├── favicon.ico
 │   │   └── favicon.png
 │   ├── components                    # Presentational and state-driven UI components
-│   │   ├── AddGpuForm.tsx            # Handles the logic for the frontend validation, submissions state and form handling
+│   │   ├── addForm
+│   │   │   ├── AddGpuForm.tsx        # Handles the logic for the frontend validation, submissions state and form handling
+│   │   │   └── FormRow.tsx           # Helper component to render a single row on the add form
 │   │   ├── dataTable
 │   │   │   ├── Gpu.tsx               # Display a single graphics card data table, presentational component
-│   │   │   ├── rows
-│   │   │   │   ├── DataRow.tsx       # Render a single specification row for the GPU data table, being a data-only row or an input field for both the "Edit" and "Override Clocks" modes. Helper component for the data table
-│   │   │   │   └── PerformanceRow.tsx # Render a single performance row for the Theoretical Performance section. Helper component for the data table
+│   │   │   ├── rows                  # Helper components for the data table
+│   │   │   │   ├── DataRow.tsx       # Render a single specification row for the GPU data table, being a data-only row or an input field for both the "Edit" and "Override Clocks" modes.
+│   │   │   │   └── PerformanceRow.tsx # Render a single performance row for the Theoretical Performance section.
 │   │   │   └── sections
 │   │   │       ├── ClocksSection.tsx       # Render the clock speeds fields
 │   │   │       ├── ModelTitle.tsx          # Render the full model name for the table title
@@ -576,7 +578,6 @@ npm run test:run -- ./src/__tests__
 │   │   │   ├── List.tsx               # Display the list of GPU data tables. Handles scrolling back to the index when clicking on the Back to index buttons
 │   │   │   ├── ListContainer.tsx      # Wraps both the List and the Pagination components. Handles paginating the data and dividing it into slices to fill each one of the pages
 │   │   │   └── PaginationWrapper.tsx  # Display the Material UI Pagination component. Handles the button clicks to navigate between pages
-│   │   ├── FormRow.tsx               # Render a single row for the add form component, helper component for the add form
 │   │   ├── GpuList.tsx               # Responsible for displaying the main page list of objects, handles conditional rendering for empty and filtered lists
 │   │   ├── Limit.tsx                 # Render the Cards per page selector
 │   │   ├── PageIndex.tsx             # Render the main page index

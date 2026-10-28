@@ -1,12 +1,12 @@
 // Component dependencies
 import React, { useState } from "react";
-import useGpuContext from "../hooks/useGpuContext";
+import useGpuContext from "../../hooks/useGpuContext";
 
 // React components
 import FormRow from "./FormRow";
 
 // CSS Styles
-import "../styles/AddGpuForm.css";
+import "../../styles/AddGpuForm.css";
 
 export default function AddGpuForm() {
   const { createGpu, uiState, uiDispatch } = useGpuContext();
