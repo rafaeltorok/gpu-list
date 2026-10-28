@@ -126,16 +126,3 @@
 .gpu-card:hover .view-details {
   background-color: rgba(255, 255, 255, 0.1);
 }
-
-@media only screen and (hover: none) and (pointer: coarse) {
-  .gpu-card {
-    min-width: 0;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .gpu-card {
-    max-width: 100%; /* Ensure cards fit within the screen */
-  }
-}

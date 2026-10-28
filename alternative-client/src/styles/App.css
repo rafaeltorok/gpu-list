@@ -67,7 +67,7 @@ a {
 }
 
 /* Override for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .main-content,
   .home-container {
     max-width: 100%;
