@@ -6,7 +6,7 @@ import useLimit from "../../hooks/useLimit";
 
 // Components
 import SearchBar from "../ui/SearchBar";
-import AddGpuForm from "../AddGpuForm";
+import AddGpuForm from "../ui/addForm/AddGpuForm";
 import GpuList from "./GpuList";
 import PaginationWrapper from "./PaginationWrapper";
 

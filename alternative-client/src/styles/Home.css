@@ -33,37 +33,6 @@
   min-width: 100%;
 }
 
-.add-form-container {
-  max-width: 600px; /* Allow full width on smaller screens */
-  width: 100%;
-  box-sizing: border-box; /* Include padding in width */
-  padding: 1rem;
-  margin: 1rem auto; /* Center the form */
-  background-color: rgba(0, 0, 0, 0.75);
-  border-radius: 1rem;
-  border: 2px solid;
-  border-style: groove;
-  text-align: left;
-}
-
-.add-form-container input {
-  font-size: 1.5rem; /* Increase font size */
-  height: 3rem; /* Make input fields taller */
-  width: 100%; /* Ensure inputs span full width */
-  padding: 0.5rem; /* Add padding for better usability */
-  box-sizing: border-box; /* Include padding in width */
-  text-align: right;
-  font: inherit;
-}
-
-.add-gpu-button-area {
-  text-align: center;
-}
-
-#add-gpu-submit-button {
-  margin-top: 1rem;
-}
-
 .gpu-grid {
   display: flex;
   flex-wrap: wrap;
@@ -134,17 +103,6 @@
 }
 
 @media (max-width: 768px) {
-  .add-form-container {
-    max-width: 100%; /* Shrink to fit smaller screens */
-    width: 100%;
-    box-sizing: border-box; /* Include padding in width */
-  }
-
-  .add-form-container input {
-    font-size: 1.2rem; /* Slightly smaller font size for mobile */
-    height: 2.5rem; /* Adjust input height */
-  }
-
   .home-actions {
     flex-direction: column; /* Stack elements vertically */
     gap: 1rem; /* Add spacing between elements */
