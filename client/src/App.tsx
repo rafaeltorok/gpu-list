@@ -7,7 +7,7 @@ import dataReducer, { initialDataState } from "./reducers/dataReducer";
 import uiReducer, { initialUiState } from "./reducers/uiReducer";
 
 // Components
-import AddGpuForm from "./components/AddGpuForm";
+import AddGpuForm from "./components/addForm/AddGpuForm";
 import SearchBar from "./components/SearchBar";
 import PageIndex from "./components/index/PageIndex";
 import ShowAllButton from "./components/ShowAllButton";

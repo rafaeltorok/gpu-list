@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 // Component
-import AddGpuForm from "../AddGpuForm";
+import AddGpuForm from "../addForm/AddGpuForm";
 
 // Utils
 import createMockContext from "../../test-utils/createMockContext";

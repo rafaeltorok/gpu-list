@@ -1,0 +1,48 @@
+.add-gpu-form {
+  min-width: 300px;
+  width: 450px;
+  border: 2px solid #222222;
+  border-radius: 1rem;
+  padding: 1rem;
+  padding-top: 0;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  background-color: rgba(12, 12, 12, 0.75);
+  font-family: inherit;
+}
+
+.add-gpu-field {
+  border: none;
+}
+
+.form-row {
+  margin: 1rem;
+}
+
+.add-gpu-field label {
+  display: block; /* Forces label onto its own line */
+  text-align: left;
+  margin-bottom: 0.25rem;
+}
+
+.add-gpu-field input {
+  display: block; /* Ensures inputs are also on their own line */
+  font-family: inherit;
+  padding: 0.5rem;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#add-gpu-submit-button {
+  padding: 0.75rem 2rem;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .add-gpu-form {
+    min-width: 300px;
+    width: 90%;
+    max-width: 400px;
+  }
+}
