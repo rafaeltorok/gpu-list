@@ -102,13 +102,3 @@
   }
 }
 
-@media (max-width: 768px) {
-  .home-actions {
-    flex-direction: column; /* Stack elements vertically */
-    gap: 1rem; /* Add spacing between elements */
-  }
-
-  .home-actions > * {
-    max-width: 100%; /* Ensure elements take full width */
-  }
-}
