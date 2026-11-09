@@ -78,6 +78,7 @@ services:
       - dev-network
     volumes:
       - ./alternative-client:/usr/src/app/alt-client
+      - ./shared:/usr/src/app/shared
     environment:
       - VITE_SERVER_URL=http://localhost:8000
     healthcheck:

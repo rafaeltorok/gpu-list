@@ -1,7 +1,11 @@
-import PropTypes from "prop-types";
 import "../../styles/SearchBar.css";
 
-function SearchBar({ onSearch, searchTerm }) {
+interface SearchBarProps {
+  onSearch: (term: string) => void;
+  searchTerm: string;
+}
+
+export default function SearchBar({ onSearch, searchTerm }: SearchBarProps) {
   return (
     <div className="search-bar">
       <input
@@ -13,10 +17,3 @@ function SearchBar({ onSearch, searchTerm }) {
     </div>
   );
 }
-
-SearchBar.propTypes = {
-  onSearch: PropTypes.func.isRequired,
-  searchTerm: PropTypes.string.isRequired,
-};
-
-export default SearchBar;

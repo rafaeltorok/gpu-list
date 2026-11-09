@@ -1,10 +1,20 @@
 import { Pagination } from "@mui/material";
 import { useSearchParams } from "react-router";
+
 import useLimit from "../../hooks/useLimit";
-import PropTypes from "prop-types";
+
 import "../../styles/Footer.css";
 
-export default function PaginationWrapper({ totalPages }) {
+// TypeScript types
+import type { ChangeEvent } from "react";
+
+interface PaginationWrapperProps {
+  totalPages: number;
+}
+
+export default function PaginationWrapper({
+  totalPages,
+}: PaginationWrapperProps) {
   // Define the search params to access the URL queries
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -12,7 +22,7 @@ export default function PaginationWrapper({ totalPages }) {
   const { limit } = useLimit();
 
   // Handles inserting the current page number into the URL
-  const handlePageChange = (_event, page) => {
+  const handlePageChange = (_event: ChangeEvent<unknown>, page: number) => {
     setSearchParams({ page: String(page), limit: String(limit) });
   };
 
@@ -39,7 +49,3 @@ export default function PaginationWrapper({ totalPages }) {
     </div>
   );
 }
-
-PaginationWrapper.propTypes = {
-  totalPages: PropTypes.number.isRequired,
-};

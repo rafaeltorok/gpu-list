@@ -1,12 +1,19 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
-
 import "../../../styles/AddGpuForm.css";
 
-// React components
+// Components
 import FormRow from "./FormRow";
 
-const AddGpuForm = ({ createGpu, onCancel }) => {
+// TypeScript types
+import type { GpuInputType } from "../../../../../shared/types/types";
+import type { FormEvent } from "react";
+
+interface AddGpuFormProps {
+  createGpu: (gpu: GpuInputType) => Promise<void>;
+  onCancel: () => void;
+}
+
+export default function AddGpuForm({ createGpu, onCancel }: AddGpuFormProps) {
   const [gpu, setGpu] = useState({
     manufacturer: "",
     gpuline: "",
@@ -22,7 +29,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
     memclock: "",
   });
 
-  const addGpu = (event) => {
+  const addGpu = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     if (
@@ -42,7 +49,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
       return;
     }
 
-    createGpu({
+    void createGpu({
       manufacturer: gpu.manufacturer.trim(),
       gpuline: gpu.gpuline.trim(),
       model: gpu.model.trim(),
@@ -85,7 +92,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Manufacturer"
             value={gpu.manufacturer}
             placeholder="NVIDIA"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, manufacturer: e.target.value })}
           />
           <FormRow
             id="gpuline"
@@ -93,7 +100,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Line"
             value={gpu.gpuline}
             placeholder="GeForce"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, gpuline: e.target.value })}
           />
           <FormRow
             id="model"
@@ -101,7 +108,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Model"
             value={gpu.model}
             placeholder="RTX 4090"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, model: e.target.value })}
           />
           <FormRow
             id="cores"
@@ -109,7 +116,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Cores"
             value={gpu.cores}
             placeholder="16384"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, cores: e.target.value })}
           />
           <FormRow
             id="tmus"
@@ -117,7 +124,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="TMUs"
             value={gpu.tmus}
             placeholder="512"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, tmus: e.target.value })}
           />
           <FormRow
             id="rops"
@@ -125,7 +132,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="ROPs"
             value={gpu.rops}
             placeholder="176"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, rops: e.target.value })}
           />
           <FormRow
             id="vram"
@@ -133,7 +140,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="VRAM (in GB)"
             value={gpu.vram}
             placeholder="24"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, vram: e.target.value })}
             step={"0.01"}
           />
           <FormRow
@@ -142,7 +149,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Bus Width"
             value={gpu.bus}
             placeholder="384"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, bus: e.target.value })}
           />
           <FormRow
             id="memtype"
@@ -150,7 +157,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Memory Type"
             value={gpu.memtype}
             placeholder="GDDR6X"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, memtype: e.target.value })}
           />
           <FormRow
             id="baseclock"
@@ -158,7 +165,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Base Clock (MHz)"
             value={gpu.baseclock}
             placeholder="2235"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, baseclock: e.target.value })}
           />
           <FormRow
             id="boostclock"
@@ -166,7 +173,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Boost Clock (MHz)"
             value={gpu.boostclock}
             placeholder="2520"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, boostclock: e.target.value })}
           />
           <FormRow
             id="memclock"
@@ -174,7 +181,7 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
             label="Memory Clock (MHz)"
             value={gpu.memclock}
             placeholder="21"
-            setGpu={setGpu}
+            onChange={(e) => setGpu({ ...gpu, memclock: e.target.value })}
             step={"0.001"}
           />
           <div className="form-row">
@@ -186,13 +193,4 @@ const AddGpuForm = ({ createGpu, onCancel }) => {
       </form>
     </div>
   );
-};
-
-AddGpuForm.displayName = "AddGpuForm";
-
-AddGpuForm.propTypes = {
-  createGpu: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};
-
-export default AddGpuForm;
+}
