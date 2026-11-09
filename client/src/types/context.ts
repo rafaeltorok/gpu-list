@@ -39,7 +39,7 @@ export type DataActions =
   | { type: "FETCH_FAILURE"; payload: string }
   | { type: "SET_FOUND"; payload: GpuType[] }
   | { type: "ADD_GPU"; payload: GpuType }
-  | { type: "SET_SELECTED_GPU", payload: GpuType | null }
+  | { type: "SET_SELECTED_GPU"; payload: GpuType | null }
   | { type: "SET_PAGINATED_DATA"; payload: GpuType[] };
 
 export type GpuContextType = {
