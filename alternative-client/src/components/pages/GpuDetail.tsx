@@ -145,7 +145,7 @@ export default function GpuDetail({ gpus, onDelete, handleReturn }: GpuDetail) {
           </button>
         </div>
       </div>
-      <button className="back-button" onClick={handleReturnCatalog}>
+      <button className="back-button" onClick={() => handleReturnCatalog()}>
         ⬅ Back to Catalog
       </button>
     </div>
