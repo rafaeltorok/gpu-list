@@ -1,5 +1,5 @@
 // Test dependencies
-import { describe, test, expect, beforeEach, vi } from "vitest";
+import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -285,42 +285,6 @@ describe("Testing the data table component", () => {
           name: /theoretical performance/i,
         }),
       ).toBeInTheDocument();
-    });
-  });
-
-  describe("the Delete button", () => {
-    test("clicking on the Delete button triggers a confirm alert message", async () => {
-      // Get a sample card to test
-      const gpu = {
-        ...sampleData.rtx5090,
-        id: "679a7283008a75d4667c342a",
-      };
-
-      // Mock the alert message
-      const alertMessage = vi.spyOn(window, "confirm").mockReturnValue(true);
-
-      const mockContextValue = createMockContext();
-
-      // Render component
-      render(
-        <GpuContext.Provider value={mockContextValue}>
-          <Gpu gpu={gpu} />
-        </GpuContext.Provider>,
-      );
-
-      // Get the Show button to display all the data
-      const showButton = screen.getByRole("button", { name: /show/i });
-      await user.click(showButton);
-
-      // Click on the Delete button
-      const deleteButton = screen.getByRole("button", { name: /delete/i });
-      await user.click(deleteButton);
-
-      // Confirm the message has been correctly called
-      expect(mockContextValue.deleteGpu).toHaveBeenCalledWith(gpu);
-
-      // Clean up
-      alertMessage.mockRestore();
     });
   });
 

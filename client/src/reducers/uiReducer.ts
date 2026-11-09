@@ -6,6 +6,10 @@ export const initialUiState: UiState = {
   showAll: false,
   showAddForm: false,
   showIndex: false,
+  loadingMessage: false,
+  notificationMessage: false,
+  confirmationMessage: false,
+  dialogMessage: "",
 };
 
 const uiReducer = (state: UiState, action: UiActions): UiState => {
@@ -34,6 +38,26 @@ const uiReducer = (state: UiState, action: UiActions): UiState => {
       return {
         ...state,
         showIndex: !state.showIndex,
+      };
+    case "TOGGLE_LOADING_MESSAGE":
+      return {
+        ...state,
+        loadingMessage: action.payload,
+      };
+    case "TOGGLE_NOTIFICATION_MESSAGE":
+      return {
+        ...state,
+        notificationMessage: action.payload,
+      };
+    case "TOGGLE_CONFIRMATION_MESSAGE":
+      return {
+        ...state,
+        confirmationMessage: action.payload,
+      };
+    case "SET_DIALOG_MESSAGE":
+      return {
+        ...state,
+        dialogMessage: action.payload,
       };
     default:
       return assertNever(action);

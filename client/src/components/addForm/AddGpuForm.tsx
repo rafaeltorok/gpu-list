@@ -48,7 +48,14 @@ export default function AddGpuForm() {
         !Number.isInteger(boost) ||
         Number(gpu.memclock.trim()) < 0.1
       ) {
-        alert("Invalid GPU data");
+        uiDispatch({
+          type: "SET_DIALOG_MESSAGE",
+          payload: "Invalid GPU specs",
+        });
+        uiDispatch({
+          type: "TOGGLE_NOTIFICATION_MESSAGE",
+          payload: true,
+        });
         return;
       }
 

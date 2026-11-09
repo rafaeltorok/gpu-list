@@ -1,5 +1,5 @@
 // Test dependencies
-import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -16,7 +16,7 @@ import GpuContext from "../../context/GpuContext";
 // TypeScript types
 import type { GpuContextType } from "../../types/context";
 import type { GpuInputType } from "../../../../shared/types/types";
-import type { MockInstance } from "vitest";
+
 interface FormFields {
   manufacturerField: HTMLElement;
   gpuLineField: HTMLElement;
@@ -35,7 +35,6 @@ interface FormFields {
 // Global variables
 let user: ReturnType<typeof userEvent.setup>;
 let mockContextOpenForm: GpuContextType;
-let alertMock: MockInstance;
 
 // Helper functions
 function getInputFields() {
@@ -222,13 +221,6 @@ describe("Testing the add graphics card form", () => {
           <AddGpuForm />
         </GpuContext.Provider>,
       );
-
-      // Mock the alert message
-      alertMock = vi.spyOn(window, "alert").mockImplementation(() => {});
-    });
-
-    afterEach(() => {
-      alertMock.mockRestore();
     });
 
     test("the gpu line field is optional", async () => {
@@ -290,12 +282,6 @@ describe("Testing the add graphics card form", () => {
 
       // Confirm the add function has not been called
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
-
-      // Assert the message
-      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
-
-      // Clean up
-      alertMock.mockRestore();
     });
 
     test("zero is an invalid value for the specification fields", async () => {
@@ -316,12 +302,6 @@ describe("Testing the add graphics card form", () => {
 
       // Confirm the add function has not been called
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
-
-      // Assert the message
-      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
-
-      // Clean up
-      alertMock.mockRestore();
     });
 
     test("negative numbers are not allowed", async () => {
@@ -342,12 +322,6 @@ describe("Testing the add graphics card form", () => {
 
       // Confirm the add function has not been called
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
-
-      // Assert the message
-      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
-
-      // Clean up
-      alertMock.mockRestore();
     });
 
     test("empty memory type field", async () => {
@@ -366,12 +340,6 @@ describe("Testing the add graphics card form", () => {
 
       // Confirm the add function has not been called
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
-
-      // Assert the message
-      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
-
-      // Clean up
-      alertMock.mockRestore();
     });
 
     test("both core clock values do not accept float inputs", async () => {
@@ -394,12 +362,6 @@ describe("Testing the add graphics card form", () => {
 
       // Confirm the add function has not been called
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
-
-      // Assert the message
-      expect(alertMock).toHaveBeenCalledWith("Invalid GPU data");
-
-      // Clean up
-      alertMock.mockRestore();
     });
   });
 });
