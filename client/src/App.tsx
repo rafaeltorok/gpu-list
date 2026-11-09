@@ -13,6 +13,9 @@ import PageIndex from "./components/index/PageIndex";
 import ShowAllButton from "./components/ShowAllButton";
 import ListContainer from "./components/list/ListContainer";
 import Limit from "./components/list/Limit";
+import ConfirmMessage from "./components/dialogMessages/ConfirmMessage";
+import NotificationMessage from "./components/dialogMessages/NotificationMessage";
+import LoadingMessage from "./components/dialogMessages/LoadingMessage";
 
 // CSS Styles
 import "./styles/App.css";
@@ -28,6 +31,10 @@ function App() {
   useEffect(() => {
     async function getData(): Promise<void> {
       try {
+        uiDispatch({
+          type: "TOGGLE_LOADING_MESSAGE",
+          payload: true,
+        });
         dataDispatch({ type: "FETCH_START" });
         const data: GpuType[] = await gpuService.getAll();
         dataDispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -37,6 +44,11 @@ function App() {
         } else {
           dataDispatch({ type: "FETCH_FAILURE", payload: String(err) });
         }
+      } finally {
+        uiDispatch({
+          type: "TOGGLE_LOADING_MESSAGE",
+          payload: false,
+        });
       }
     }
     void getData();
@@ -66,17 +78,39 @@ function App() {
     return () => clearTimeout(handler);
   }, [uiState.searchGpu, dataState.gpus]);
 
+  // Add a new card to the database
   async function createGpu(newGpu: GpuInputType): Promise<boolean> {
     try {
       const gpu: GpuType = await gpuService.create(newGpu);
+
+      // Add the card
       dataDispatch({
         type: "ADD_GPU",
         payload: gpu,
       });
-      console.log("GPU Specs Submitted:", gpu);
-      alert(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} was added!`);
+
+      // Set a success notification message
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} was added!`,
+      });
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
     } catch (err: unknown) {
       if (err instanceof Error) console.error("Error adding new GPU:", err);
+
+      // Set an error message
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: `Failed to add a new card: ${String(err)}`,
+      });
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
+
       return false;
     }
 
@@ -84,33 +118,86 @@ function App() {
     return true;
   }
 
-  async function deleteGpu(gpu: GpuType): Promise<void> {
-    const confirmDeletion: boolean = window.confirm(
-      `Remove ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} from the list?`,
-    );
+  // Remove a GPU from the list, after the confirmation message
+  async function deleteGpu(): Promise<void> {
+    try {
+      const gpu = dataState.selectedGpu;
 
-    if (confirmDeletion) {
-      try {
-        await gpuService.remove(gpu.id);
-        dataDispatch({
-          type: "FETCH_SUCCESS",
-          payload: dataState.gpus.filter((g) => g.id !== gpu.id),
-        });
-      } catch (err: unknown) {
-        if (err instanceof Error) console.error("Error deleting GPU:", err);
+      if (!gpu) {
+        throw new Error("No GPU to be removed");
       }
+
+      await gpuService.remove(gpu.id);
+      // Filter out the removed card from the list
+      dataDispatch({
+        type: "FETCH_SUCCESS",
+        payload: dataState.gpus.filter((g) => g.id !== gpu.id),
+      });
+
+      // Set a success notification message
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} was removed`,
+      });
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
+    } catch (err: unknown) {
+      if (err instanceof Error) console.error("Error deleting GPU:", err);
+
+      // Set an error message
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: `Failed to remove the card: ${String(err)}`,
+      });
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
+    } finally {
+      // Reset the current selected GPU
+      dataDispatch({
+        type: "SET_SELECTED_GPU",
+        payload: null,
+      });
     }
   }
 
-  async function editGpu(gpu: GpuType): Promise<boolean> {
+  // "Edit" button from the table, update a GPU specs from the database
+  async function editGpu(newData: GpuType): Promise<boolean> {
     try {
-      await gpuService.update(gpu.id, gpu);
+      if (!newData) {
+        throw new Error("No GPU to be updated");
+      }
+
+      await gpuService.update(newData.id, newData);
+
+      // Update the list with the new card's specs
       const data: GpuType[] = await gpuService.getAll();
       dataDispatch({ type: "FETCH_SUCCESS", payload: data });
+
       return true;
     } catch (err: unknown) {
       if (err instanceof Error) console.error("Error updating data:", err);
+
+      // Set an error message
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: `Failed to update specs: ${String(err)}`,
+      });
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
+
       return false;
+    } finally {
+      // Reset the current selected GPU
+      dataDispatch({
+        type: "SET_SELECTED_GPU",
+        payload: null,
+      });
     }
   }
 
@@ -144,6 +231,10 @@ function App() {
       </nav>
 
       <ListContainer />
+
+      <LoadingMessage />
+      <NotificationMessage />
+      <ConfirmMessage />
     </GpuContext.Provider>
   );
 }

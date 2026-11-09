@@ -1,0 +1,35 @@
+.dialog-container {
+  max-width: 400px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  border: 2px solid gray;
+  border-radius: 1rem;
+  margin-inline: auto;
+  top: 50%;
+  transform: translateY(-75%);
+}
+
+.dialog-container::backdrop {
+  background-color: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(5px);
+}
+
+.dialog-message {
+  font-size: large;
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.dialog-button {
+  width: 100%;
+  padding: 1rem;
+}
+
+.dialog-buttons-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dialog-buttons-wrapper button {
+  width: 50%;
+}

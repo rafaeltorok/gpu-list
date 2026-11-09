@@ -20,29 +20,9 @@ import "../../styles/ManufacturerColors.css";
 
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
-import type { UpdateGpuDataProps } from "../../types/componentProps";
 
 interface GpuProps {
   gpu: GpuType;
-}
-
-// Update the GPU data when clicking on the "Edit" button
-async function updateGpuData({
-  gpu,
-  setEditMode,
-  editGpu,
-}: UpdateGpuDataProps): Promise<void> {
-  const updateSuccess = await editGpu(gpu);
-  if (updateSuccess) {
-    alert(
-      `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs were updated!`,
-    );
-    setEditMode(false);
-  } else {
-    alert(
-      `Failed to update ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs`,
-    );
-  }
 }
 
 // Component
@@ -58,12 +38,46 @@ export default function Gpu({ gpu }: GpuProps) {
   // Access the React context
   const {
     uiState: { showAll },
+    uiDispatch,
+    editGpu,
   } = useGpuContext();
 
   // Sync individual state with global "Show All" toggle
   useEffect(() => {
     setShowBody(showAll);
   }, [showAll]);
+
+  // Update the GPU data when clicking on the "Edit" button
+  async function updateGpuData(): Promise<void> {
+    if (
+      gpuData.manufacturer.trim() === "" ||
+      gpuData.model.trim() === "" ||
+      gpuData.cores < 1 ||
+      gpuData.tmus < 1 ||
+      gpuData.rops < 1 ||
+      gpuData.vram < 0.016 ||
+      gpuData.bus < 1 ||
+      gpuData.memtype.trim() === "" ||
+      gpuData.baseclock < 1 ||
+      gpuData.boostclock < 1 ||
+      gpuData.memclock < 0.01
+    ) {
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: "Failed to update the specs",
+      });
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
+      return;
+    }
+
+    const updateSuccess = await editGpu(gpuData);
+    if (updateSuccess) {
+      setEditMode(false);
+    }
+  }
 
   // Get the classname to customize the table color scheme based on the manufacturer
   const gpuHeaderClass = getManufacturerClass(
@@ -128,7 +142,6 @@ export default function Gpu({ gpu }: GpuProps) {
           {/* Controls section - handles edit mode and removing a card */}
           <TableControls
             gpu={gpu}
-            gpuData={gpuData}
             setGpuData={setGpuData}
             updateGpuData={updateGpuData}
             editMode={editMode}

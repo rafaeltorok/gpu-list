@@ -2,23 +2,20 @@ import useGpuContext from "../../../hooks/useGpuContext";
 
 // TypeScript types
 import type { GpuType } from "../../../../../shared/types/types";
-import type { UpdateGpuDataProps } from "../../../types/componentProps";
 
 interface TableControlsProps {
   gpu: GpuType;
-  gpuData: GpuType;
   setGpuData: (data: GpuType) => void;
   editMode: boolean;
   setEditMode: (mode: boolean) => void;
   overrideMode: boolean;
   setOverrideMode: (mode: boolean) => void;
-  updateGpuData: (props: UpdateGpuDataProps) => Promise<void>;
+  updateGpuData: () => Promise<void>;
 }
 
 // Component
 export default function TableControls({
   gpu,
-  gpuData,
   setGpuData,
   editMode,
   setEditMode,
@@ -26,7 +23,7 @@ export default function TableControls({
   setOverrideMode,
   updateGpuData,
 }: TableControlsProps) {
-  const { deleteGpu, editGpu } = useGpuContext();
+  const { uiDispatch, dataDispatch } = useGpuContext();
 
   return (
     <div id={`${gpu.id}-delete`}>
@@ -64,18 +61,14 @@ export default function TableControls({
             {editMode ? (
               <button
                 aria-label={`Save ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                onClick={() =>
-                  void updateGpuData({ gpu: gpuData, setEditMode, editGpu })
-                }
+                onClick={() => void updateGpuData()}
               >
                 Save
               </button>
             ) : (
               <button
                 aria-label={`Edit ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-                onClick={() => {
-                  void setEditMode(true);
-                }}
+                onClick={() => void setEditMode(true)}
               >
                 Edit
               </button>
@@ -100,7 +93,20 @@ export default function TableControls({
         ) : (
           <button
             aria-label={`Delete ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`}
-            onClick={() => void deleteGpu(gpu)}
+            onClick={() => {
+              dataDispatch({
+                type: "SET_SELECTED_GPU",
+                payload: gpu,
+              });
+              uiDispatch({
+                type: "SET_DIALOG_MESSAGE",
+                payload: `Remove ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} from the list?`,
+              });
+              uiDispatch({
+                type: "TOGGLE_CONFIRMATION_MESSAGE",
+                payload: true,
+              });
+            }}
           >
             Delete
           </button>

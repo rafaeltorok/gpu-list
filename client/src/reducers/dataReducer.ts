@@ -3,6 +3,7 @@ import type { DataState, DataActions } from "../types/context";
 export const initialDataState: DataState = {
   gpus: [],
   gpusFound: [],
+  selectedGpu: null,
   loading: false,
   error: null,
   paginatedData: [],
@@ -37,6 +38,11 @@ const dataReducer = (state: DataState, action: DataActions): DataState => {
       return {
         ...state,
         gpus: [...state.gpus, action.payload],
+      };
+    case "SET_SELECTED_GPU":
+      return {
+        ...state,
+        selectedGpu: action.payload,
       };
     case "SET_PAGINATED_DATA":
       return {
