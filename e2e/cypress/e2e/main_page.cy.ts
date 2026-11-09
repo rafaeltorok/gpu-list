@@ -55,9 +55,19 @@ describe("Testing the GPU list", function () {
       });
     });
 
+    it("the select element works", function () {
+      // Select an option
+      cy.get("#limit-options")
+        .select("3")
+        .should("have.value", "3");
+
+      // Confirm it is the currently selected one
+      cy.get("#limit-options").invoke("val").should("eq", "3");
+    });
+
     it("it correctly paginates the data based on the selected value", function () {
-      // Open the selector
-      cy.get('#limit-options').select("3");
+      // Select an option
+      cy.get("#limit-options").select("3");
 
       // Confirm the correct number of cards are being shown
       cy.get(".gpu-data-table").should("have.length", 3);
