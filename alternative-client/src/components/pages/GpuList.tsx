@@ -4,7 +4,17 @@ import { useEffect } from "react";
 import GpuCard from "../ui/GpuCard";
 import CardsPerPage from "../ui/CardsPerPage";
 
-import PropTypes from "prop-types";
+// TypeScript types
+import type { GpuType } from "../../../../shared/types/types";
+import type { SwipeableHandlers } from "react-swipeable";
+
+interface GpuListProps {
+  gpus: GpuType[];
+  paginatedData: GpuType[];
+  searchTerm: string;
+  scrollToGpu: string | null;
+  swipeHandler: SwipeableHandlers;
+}
 
 export default function GpuList({
   gpus,
@@ -12,12 +22,14 @@ export default function GpuList({
   searchTerm,
   scrollToGpu,
   swipeHandler,
-}) {
+}: GpuListProps) {
   useEffect(() => {
     if (scrollToGpu) {
-      document
-        .getElementById(scrollToGpu)
-        .scrollIntoView({ behavior: "instant" });
+      const documentObject = document.getElementById(scrollToGpu);
+
+      if (documentObject) {
+        documentObject.scrollIntoView({ behavior: "instant" });
+      }
     }
   }, [scrollToGpu]);
 
@@ -55,11 +67,3 @@ export default function GpuList({
     </main>
   );
 }
-
-GpuList.propTypes = {
-  gpus: PropTypes.array.isRequired,
-  paginatedData: PropTypes.array.isRequired,
-  searchTerm: PropTypes.string.isRequired,
-  scrollToGpu: PropTypes.string,
-  swipeHandler: PropTypes.object.isRequired,
-};

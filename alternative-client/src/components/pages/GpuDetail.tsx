@@ -1,58 +1,68 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 
+// Utils
 import getBrand from "../../utils/getBrand";
-import calculatePerformance from "../../utils/calculatePerformance";
+import calculatePerformance from "../../../../shared/utils/calculatePerformance";
 import displayVramAmount from "../../utils/displayVramAmount";
 
+// CSS styles
 import "../../styles/GpuDetail.css";
 
-function GpuDetail({ gpus, onDelete, handleReturn }) {
+// TypeScript types
+import type { GpuType } from "../../../../shared/types/types";
+
+interface GpuDetail {
+  gpus: GpuType[];
+  onDelete: (gpu: GpuType | undefined) => Promise<boolean>;
+  handleReturn: (id: string) => void;
+}
+
+export default function GpuDetail({ gpus, onDelete, handleReturn }: GpuDetail) {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const gpu = gpus.find((gpu) => gpu.id === id);
 
   useEffect(() => {
-    document
-      .querySelector(".gpu-detail-container")
-      .scrollIntoView({ behavior: "smooth" });
-  }, []);
+    const documentObject = document.querySelector(".gpu-detail-container");
 
-  const handleDelete = async () => {
-    const confirm = await onDelete(
-      gpu.id,
-      gpu.manufacturer,
-      gpu.gpuline,
-      gpu.model,
-    );
-    if (confirm) {
-      navigate("/");
+    if (documentObject) {
+      documentObject.scrollIntoView({ behavior: "smooth" });
     }
-  };
-
-  const handleReturnCatalog = () => {
-    navigate("/");
-    handleReturn(gpu.id);
-  };
+  }, []);
 
   if (!gpu) {
     return (
       <div className="gpu-detail-container">
         <h2>GPU Not Found</h2>
-        <button className="back-button" onClick={() => navigate("/")}>
+        <button className="back-button" onClick={() => void navigate("/")}>
           ⬅ Back to Catalog
         </button>
       </div>
     );
   }
 
+  async function handleDelete() {
+    const confirm = await onDelete(gpu);
+
+    if (confirm) {
+      void navigate("/");
+    }
+  }
+
+  const handleReturnCatalog = () => {
+    void navigate("/");
+    handleReturn(gpu.id);
+  };
+
   const gpuPerformance = calculatePerformance(gpu);
+
+  const brand = getBrand(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`);
 
   return (
     <div className="gpu-detail-container">
-      <div className={`gpu-detail-card ${getBrand(gpu)}`}>
+      <div className={`gpu-detail-card ${brand}`}>
         <div className="gpu-detail-header">
           <h1>
             {gpu.manufacturer} {gpu.gpuline} {gpu.model}
@@ -130,22 +140,14 @@ function GpuDetail({ gpus, onDelete, handleReturn }) {
         </div>
 
         <div className="gpu-detail-actions">
-          <button className="delete-button" onClick={handleDelete}>
+          <button className="delete-button" onClick={() => void handleDelete()}>
             Delete GPU
           </button>
         </div>
       </div>
-      <button className="back-button" onClick={handleReturnCatalog}>
+      <button className="back-button" onClick={() => handleReturnCatalog()}>
         ⬅ Back to Catalog
       </button>
     </div>
   );
 }
-
-GpuDetail.propTypes = {
-  gpus: PropTypes.array.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  handleReturn: PropTypes.func.isRequired,
-};
-
-export default GpuDetail;

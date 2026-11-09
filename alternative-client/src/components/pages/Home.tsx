@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router";
-import PropTypes from "prop-types";
 import { useSwipeable } from "react-swipeable";
+
 import useLimit from "../../hooks/useLimit";
 
 // Components
@@ -12,13 +12,25 @@ import PaginationWrapper from "./PaginationWrapper";
 
 import "../../styles/Home.css";
 
+// TypeScript types
+import type { GpuInputType, GpuType } from "../../../../shared/types/types";
+import type { SwipeEventData } from "react-swipeable";
+
+interface HomeProps {
+  gpus: GpuType[];
+  onSearch: (term: string) => void;
+  searchTerm: string;
+  addGpu: (gpu: GpuInputType) => Promise<void>;
+  scrollToGpu: string | null;
+}
+
 export default function Home({
   gpus,
   onSearch,
   searchTerm,
   addGpu,
   scrollToGpu,
-}) {
+}: HomeProps) {
   const [showAddForm, setShowAddForm] = useState(false);
   const { limit } = useLimit();
 
@@ -57,7 +69,7 @@ export default function Home({
 
   // Handles keyboard navigation
   useEffect(() => {
-    function onKeyDown(event) {
+    function onKeyDown(event: KeyboardEvent) {
       // Left arrow key
       if (event.key === "ArrowLeft" && currentPage > 1) {
         setSearchParams({
@@ -81,7 +93,7 @@ export default function Home({
 
   // Handles the Touch screen swipe to change the page
   const swipeHandler = useSwipeable({
-    onSwiped: (eventData) => {
+    onSwiped: (eventData: SwipeEventData) => {
       // Previous page
       if (eventData.dir === "Right" && currentPage > 1) {
         setSearchParams({
@@ -126,7 +138,6 @@ export default function Home({
         paginatedData={paginatedData}
         searchTerm={searchTerm}
         scrollToGpu={scrollToGpu}
-        currentPage={currentPage}
         swipeHandler={swipeHandler}
       />
 
@@ -136,17 +147,13 @@ export default function Home({
 }
 
 // Helper function to handle the data pagination
-function paginateData(dataToPaginate, itemsPerPage, currentPage) {
+function paginateData(
+  dataToPaginate: GpuType[],
+  itemsPerPage: number,
+  currentPage: number,
+) {
   const offset = (currentPage - 1) * itemsPerPage;
   const endIndex = offset + itemsPerPage;
 
   return dataToPaginate.slice(offset, endIndex);
 }
-
-Home.propTypes = {
-  gpus: PropTypes.array.isRequired,
-  onSearch: PropTypes.func.isRequired,
-  searchTerm: PropTypes.string.isRequired,
-  addGpu: PropTypes.func.isRequired,
-  scrollToGpu: PropTypes.string,
-};

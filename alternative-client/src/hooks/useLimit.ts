@@ -4,7 +4,7 @@ export default function useLimit() {
   const [searchParams, setSearchParams] = useSearchParams();
   const limit = Number(searchParams.get("limit")) || 9;
 
-  function setLimit(limit) {
+  function setLimit(limit: string): void {
     setSearchParams({
       page: "1",
       limit: String(limit),
