@@ -14,12 +14,15 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+      
       - name: Install the Main Client dependencies
         working-directory: ./client
         run: npm install
+      
       - name: Install Server dependencies
         working-directory: ./server
         run: npm install
+      
       - name: Run E2E tests in CLI
         working-directory: ./e2e
         run: npm install && npm run e2e
