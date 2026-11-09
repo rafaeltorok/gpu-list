@@ -4,7 +4,7 @@ export default function Limit() {
   const { limit, setLimit } = useLimit();
 
   return (
-    <div className="limit-selector">
+    <div>
       <label htmlFor="limit-options">Cards per page:</label>
       <select
         name="limit-options"

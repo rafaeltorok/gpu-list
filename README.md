@@ -579,6 +579,8 @@ npm run test:run -- ./src/__tests__
 │   │   │   ├── IndexEntry.tsx         # Renders each clickable entry for the page index menu. Handles scrolling to the respective GPU data table and opening it
 │   │   │   └── PageIndex.tsx          # Handles displaying the page index container. Serves as a wrapper for the index entries
 │   │   ├── list
+│   │   │   ├── CardsCounter.tsx       # Displays the amount of cards available or the total search results found
+│   │   │   ├── Limit.tsx              # Render the cards per page selector
 │   │   │   ├── List.tsx               # Display the list of GPU data tables. Handles scrolling back to the index when clicking on the Back to index buttons
 │   │   │   ├── ListContainer.tsx      # Wraps both the List and the Pagination components. Handles paginating the data and dividing it into slices to fill each one of the pages
 │   │   │   └── PaginationWrapper.tsx  # Display the Material UI Pagination component. Handles the button clicks to navigate between pages

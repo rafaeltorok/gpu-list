@@ -13,6 +13,7 @@ import PageIndex from "./components/index/PageIndex";
 import ShowAllButton from "./components/ShowAllButton";
 import ListContainer from "./components/list/ListContainer";
 import Limit from "./components/list/Limit";
+import CardsCounter from "./components/list/CardsCounter";
 import ConfirmMessage from "./components/dialogMessages/ConfirmMessage";
 import NotificationMessage from "./components/dialogMessages/NotificationMessage";
 import LoadingMessage from "./components/dialogMessages/LoadingMessage";
@@ -227,7 +228,12 @@ function App() {
         <SearchBar />
         <PageIndex />
         <ShowAllButton />
-        <Limit />
+
+        <div className="items-section-container">
+          <Limit />
+          <hr />
+          <CardsCounter />
+        </div>
       </nav>
 
       <ListContainer />

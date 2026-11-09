@@ -62,7 +62,6 @@ button:focus {
   border-radius: 1rem;
   box-sizing: border-box; /* Prevents the are to be wider than the others */
   margin: 0 auto;
-  margin-bottom: 2rem;
   border: 0.15rem solid #222222;
 }
 
@@ -104,13 +103,16 @@ footer nav ul {
   justify-content: center;
 }
 
-.limit-selector {
+.items-section-container {
   background-color: rgba(12, 12, 12, 0.75);
-  margin: 0 auto;
-  margin-bottom: 1.5rem;
+  margin: 1rem auto;
   padding: 0.5rem;
   border: 2px solid #222222;
   border-radius: 1rem;
+}
+
+hr {
+  width: 80%;
 }
 
 #limit-options {
