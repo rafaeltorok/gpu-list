@@ -16,6 +16,7 @@ export default function createMockContext() {
     dataState: {
       gpus: [],
       gpusFound: [],
+      selectedGpu: null,
       loading: false,
       error: null,
       paginatedData: [],
@@ -26,6 +27,10 @@ export default function createMockContext() {
       showSearch: false,
       showAddForm: false,
       showIndex: false,
+      loadingMessage: false,
+      notificationMessage: false,
+      confirmationMessage: false,
+      dialogMessage: "",
     },
 
     // Dispatches
