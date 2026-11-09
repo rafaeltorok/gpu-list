@@ -571,6 +571,10 @@ npm run test:run -- ./src/__tests__
 │   │   │       ├── PerformanceSection.tsx  # Render the theoretical performance fields
 │   │   │       ├── SpecsSection.tsx        # Render the specifications fields
 │   │   │       └── TableControls.tsx       # Render the Edit, Override Clocks and Delete buttons
+│   │   ├── dialogMessages
+│   │   │   ├── ConfirmMessage.tsx          # Render the confirmation message when clicking on the "Delete" button
+│   │   │   ├── LoadingMessage.tsx          # Render the initial loading message when first entering the page
+│   │   │   └── NotificationMessage.tsx     # Render both the success and error messages within the UI
 │   │   ├── index
 │   │   │   ├── IndexEntry.tsx         # Renders each clickable entry for the page index menu. Handles scrolling to the respective GPU data table and opening it
 │   │   │   └── PageIndex.tsx          # Handles displaying the page index container. Serves as a wrapper for the index entries
@@ -604,6 +608,7 @@ npm run test:run -- ./src/__tests__
 │   │   ├── App.css
 │   │   ├── Gpu.css
 │   │   ├── ManufacturerColors.css
+│   │   ├── Messages.css
 │   │   ├── PageIndex.css
 │   │   └── SearchBar.css
 │   ├── __tests__                     # Unit tests for the app's util scripts
@@ -614,8 +619,7 @@ npm run test:run -- ./src/__tests__
 │   │   └── data
 │   │       └── fixtures.ts         # Example data to be used for testing purposes
 │   └── types                         # TypeScript types exclusive to the main client frontend
-│       ├── context.ts
-│       └── componentProps.ts
+│       └── context.ts
 ├── Dockerfile.dev                    # Build an image to be used with the Dev Composer script
 ├── eslint.config.js                  # ESLint custom config file
 ├── index.html
