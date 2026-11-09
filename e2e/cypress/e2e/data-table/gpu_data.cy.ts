@@ -167,6 +167,17 @@ describe("the Graphics Card data table", function () {
 
         // Remove the card and confirm it is not present anymore
         cy.get(".gpu-data-table #delete-gpu-button").click();
+
+        // Confirm the removal within the dialog message
+        cy.get('.dialog-buttons-wrapper > :nth-child(1)').click();
+
+        // Assert a proper notification message is displayed
+        cy.get('[open=""] > .dialog-message').contains(
+          `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} was removed`
+        );
+        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+
+        // Assert the card is not present on the list anymore
         cy.get(".gpu-data-table").should("not.exist");
       });
     });
@@ -337,10 +348,9 @@ describe("the Graphics Card data table", function () {
         // Click on the save button
         cy.get(".gpu-data-table button").contains("Save").click();
 
-        // Assert an alert message is displayed
-        cy.on("window:alert", (text) => {
-          expect(text).to.equal(`Failed to update ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} specs`);
-        });
+        // Confirm there is a warning about the invalid data
+        cy.get('[open=""] > .dialog-message').contains(/failed to update the specs/i);
+        cy.get('[open=""] > .dialog-button').click();  // Close the notification
       });
     });
   });
