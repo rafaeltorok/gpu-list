@@ -1,19 +1,15 @@
 import { useState } from "react";
+import useGpuContext from "../../../hooks/useGpuContext";
 import "../../../styles/AddGpuForm.css";
 
 // Components
 import FormRow from "./FormRow";
 
 // TypeScript types
-import type { GpuInputType } from "../../../../../shared/types/types";
 import type { FormEvent } from "react";
 
-interface AddGpuFormProps {
-  createGpu: (gpu: GpuInputType) => Promise<void>;
-  onCancel: () => void;
-}
-
-export default function AddGpuForm({ createGpu, onCancel }: AddGpuFormProps) {
+export default function AddGpuForm() {
+  const { addGpu, uiDispatch } = useGpuContext();
   const [gpu, setGpu] = useState({
     manufacturer: "",
     gpuline: "",
@@ -29,9 +25,11 @@ export default function AddGpuForm({ createGpu, onCancel }: AddGpuFormProps) {
     memclock: "",
   });
 
-  const addGpu = (event: FormEvent<HTMLFormElement>): void => {
+  // Handles submitting the form data
+  function handleCreateGpu(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
+    // Validate the form data
     if (
       gpu.manufacturer.trim() === "" ||
       gpu.model.trim() === "" ||
@@ -45,11 +43,20 @@ export default function AddGpuForm({ createGpu, onCancel }: AddGpuFormProps) {
       Number(gpu.boostclock.trim()) < 1 ||
       Number(gpu.memclock.trim()) < 0.001
     ) {
-      alert("Invalid GPU data");
+      // Display an error message within the UI
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: "Invalid GPU data",
+      });
       return;
     }
 
-    void createGpu({
+    // Call the main App component function responsible for making the API call
+    void addGpu({
       manufacturer: gpu.manufacturer.trim(),
       gpuline: gpu.gpuline.trim(),
       model: gpu.model.trim(),
@@ -64,6 +71,7 @@ export default function AddGpuForm({ createGpu, onCancel }: AddGpuFormProps) {
       memclock: Number(gpu.memclock),
     });
 
+    // Reset the form data on success
     setGpu({
       manufacturer: "",
       gpuline: "",
@@ -78,13 +86,11 @@ export default function AddGpuForm({ createGpu, onCancel }: AddGpuFormProps) {
       boostclock: "",
       memclock: "",
     });
-
-    onCancel();
   };
 
   return (
     <div>
-      <form onSubmit={addGpu} className="add-gpu-form">
+      <form onSubmit={handleCreateGpu} className="add-gpu-form">
         <fieldset className="add-gpu-field">
           <FormRow
             id="manufacturer"

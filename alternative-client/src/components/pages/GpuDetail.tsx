@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import useGpuContext from "../../hooks/useGpuContext";
 
 // Utils
 import getBrand from "../../utils/getBrand";
@@ -12,18 +13,15 @@ import "../../styles/GpuDetail.css";
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
 
-interface GpuDetail {
-  gpus: GpuType[];
-  onDelete: (gpu: GpuType | undefined) => Promise<boolean>;
-  handleReturn: (id: string) => void;
-}
-
-export default function GpuDetail({ gpus, onDelete, handleReturn }: GpuDetail) {
+export default function GpuDetail() {
+  const { dataState, dataDispatch, uiDispatch } = useGpuContext();
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const gpu = gpus.find((gpu) => gpu.id === id);
+  // Find the respective card from the list based on its ID value
+  const gpu = dataState.gpus.find((gpu: GpuType) => gpu.id === id);
 
+  // Scroll to the top of the data table when a user selects a card form the list
   useEffect(() => {
     const documentObject = document.querySelector(".gpu-detail-container");
 
@@ -32,6 +30,7 @@ export default function GpuDetail({ gpus, onDelete, handleReturn }: GpuDetail) {
     }
   }, []);
 
+  // Display a proper message when a card is not found
   if (!gpu) {
     return (
       <div className="gpu-detail-container">
@@ -43,21 +42,10 @@ export default function GpuDetail({ gpus, onDelete, handleReturn }: GpuDetail) {
     );
   }
 
-  async function handleDelete() {
-    const confirm = await onDelete(gpu);
-
-    if (confirm) {
-      void navigate("/");
-    }
-  }
-
-  const handleReturnCatalog = () => {
-    void navigate("/");
-    handleReturn(gpu.id);
-  };
-
+  // Calculate the Theoretical performance for the current card
   const gpuPerformance = calculatePerformance(gpu);
 
+  // Set the table color scheme to the respective manufacturer color
   const brand = getBrand(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`);
 
   return (
@@ -140,12 +128,28 @@ export default function GpuDetail({ gpus, onDelete, handleReturn }: GpuDetail) {
         </div>
 
         <div className="gpu-detail-actions">
-          <button className="delete-button" onClick={() => void handleDelete()}>
+          <button
+            className="delete-button"
+            onClick={() => {
+              dataDispatch({
+                type: "SET_SELECTED_GPU",
+                payload: gpu,
+              });
+              uiDispatch({
+                type: "SET_DIALOG_MESSAGE",
+                payload: `Remove ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} from the list?`
+              });
+              uiDispatch({
+                type: "TOGGLE_CONFIRMATION_MESSAGE",
+                payload: true,
+              });
+            }}
+          >
             Delete GPU
           </button>
         </div>
       </div>
-      <button className="back-button" onClick={() => handleReturnCatalog()}>
+      <button className="back-button" onClick={() => void navigate("/")}>
         ⬅ Back to Catalog
       </button>
     </div>

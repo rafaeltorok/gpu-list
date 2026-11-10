@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import useGpuContext from "../../hooks/useGpuContext";
 
 // Components
 import GpuCard from "../ui/GpuCard";
@@ -9,32 +9,18 @@ import type { GpuType } from "../../../../shared/types/types";
 import type { SwipeableHandlers } from "react-swipeable";
 
 interface GpuListProps {
-  gpus: GpuType[];
   paginatedData: GpuType[];
-  searchTerm: string;
-  scrollToGpu: string | null;
   swipeHandler: SwipeableHandlers;
 }
 
 export default function GpuList({
-  gpus,
   paginatedData,
-  searchTerm,
-  scrollToGpu,
   swipeHandler,
 }: GpuListProps) {
-  useEffect(() => {
-    if (scrollToGpu) {
-      const documentObject = document.getElementById(scrollToGpu);
-
-      if (documentObject) {
-        documentObject.scrollIntoView({ behavior: "instant" });
-      }
-    }
-  }, [scrollToGpu]);
+  const { dataState, uiState } = useGpuContext();
 
   // No GPUs available
-  if (gpus.length === 0 && !searchTerm) {
+  if (dataState.gpus.length === 0 && !uiState.searchTerm) {
     return (
       <main>
         <div className="no-results">
@@ -45,10 +31,10 @@ export default function GpuList({
   }
 
   // No search results
-  if (gpus.length === 0 && searchTerm !== "") {
+  if (dataState.gpusFound.length === 0 && uiState.searchTerm !== "") {
     return (
       <div className="no-results">
-        <p>No GPUs found matching: {searchTerm}</p>
+        <p>No GPUs found matching: {uiState.searchTerm}</p>
       </div>
     );
   }
@@ -59,7 +45,7 @@ export default function GpuList({
 
       <section {...swipeHandler}>
         <div className="gpu-grid">
-          {paginatedData.map((gpu) => (
+          {paginatedData.map((gpu: GpuType) => (
             <GpuCard key={gpu.id} gpu={gpu} />
           ))}
         </div>

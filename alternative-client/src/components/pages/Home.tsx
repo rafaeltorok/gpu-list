@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { useSwipeable } from "react-swipeable";
 
+// Hooks
+import useGpuContext from "../../hooks/useGpuContext";
 import useLimit from "../../hooks/useLimit";
 
 // Components
@@ -13,30 +15,12 @@ import PaginationWrapper from "./PaginationWrapper";
 import "../../styles/Home.css";
 
 // TypeScript types
-import type { GpuInputType, GpuType } from "../../../../shared/types/types";
+import type { GpuType } from "../../../../shared/types/types";
 import type { SwipeEventData } from "react-swipeable";
 
-interface HomeProps {
-  gpus: GpuType[];
-  onSearch: (term: string) => void;
-  searchTerm: string;
-  addGpu: (gpu: GpuInputType) => Promise<void>;
-  scrollToGpu: string | null;
-}
-
-export default function Home({
-  gpus,
-  onSearch,
-  searchTerm,
-  addGpu,
-  scrollToGpu,
-}: HomeProps) {
-  const [showAddForm, setShowAddForm] = useState(false);
+export default function Home() {
+  const { dataState, uiState, uiDispatch } = useGpuContext();
   const { limit } = useLimit();
-
-  const toggleAddForm = () => {
-    setShowAddForm(!showAddForm);
-  };
 
   const itemsPerPage = limit || 9;
 
@@ -44,15 +28,8 @@ export default function Home({
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page"));
 
-  // Filter the list by search term, if available
-  const gpusFound = gpus.filter((g) => {
-    return `${g.manufacturer} ${g.gpuline} ${g.model}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-  });
-
   // Define if the paginated data should be based upon the filtered list or not
-  const dataToPaginate = searchTerm ? gpusFound : gpus;
+  const dataToPaginate = uiState.searchTerm ? dataState.gpusFound : dataState.gpus;
 
   // Paginate the data into slices for each page
   const paginatedData = paginateData(dataToPaginate, itemsPerPage, currentPage);
@@ -118,26 +95,26 @@ export default function Home({
       <div className="home-header">
         <div className="home-actions">
           {/* Search bar and add form controls */}
-          <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
-          <button className="add-gpu-toggle" onClick={toggleAddForm}>
-            {showAddForm ? "Cancel" : "Add GPU"}
+          <SearchBar />
+          <button
+            className="add-gpu-toggle"
+            onClick={() => uiDispatch({ type: "TOGGLE_ADD_FORM" })}
+          >
+            {uiState.showAddForm ? "Cancel" : "Add GPU"}
           </button>
         </div>
       </div>
 
       {/* Add GPU form */}
-      {showAddForm && (
+      {uiState.showAddForm && (
         <div className="add-form-container">
-          <AddGpuForm createGpu={addGpu} onCancel={toggleAddForm} />
+          <AddGpuForm />
         </div>
       )}
 
       {/* Cards list */}
       <GpuList
-        gpus={gpus}
-        paginatedData={paginatedData}
-        searchTerm={searchTerm}
-        scrollToGpu={scrollToGpu}
+      paginatedData={paginatedData}
         swipeHandler={swipeHandler}
       />
 
@@ -151,7 +128,7 @@ function paginateData(
   dataToPaginate: GpuType[],
   itemsPerPage: number,
   currentPage: number,
-) {
+): GpuType[] {
   const offset = (currentPage - 1) * itemsPerPage;
   const endIndex = offset + itemsPerPage;
 
