@@ -32,6 +32,7 @@ export default function App() {
   useEffect(() => {
     async function getData() {
       try {
+        // Setup a loading message when first opening the home page
         uiDispatch({
           type: "SET_DIALOG_MESSAGE",
           payload: "Loading data, please wait...",
@@ -40,6 +41,8 @@ export default function App() {
           type: "TOGGLE_LOADING_MESSAGE",
           payload: true,
         });
+
+        // Fetch the data from the server
         const data: GpuType[] = await gpuService.getAll();
         dataDispatch({
           type: "SET_GPUS",
@@ -47,6 +50,8 @@ export default function App() {
         });
       } catch (err) {
         console.error("Failed to fetch GPU data:", err);
+
+        // Display an error message within the UI
         uiDispatch({
           type: "TOGGLE_NOTIFICATION_MESSAGE",
           payload: true,
