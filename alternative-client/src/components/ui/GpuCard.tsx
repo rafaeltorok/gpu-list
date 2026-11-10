@@ -15,6 +15,7 @@ interface GpuCardProps {
 }
 
 export default function GpuCard({ gpu }: GpuCardProps) {
+  // Match the card color scheme respective to the manufacturer color
   const brand = getBrand(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`);
 
   return (
