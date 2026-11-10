@@ -155,7 +155,9 @@ export default function App() {
         await gpuService.remove(gpu.id);
 
         // Filter the removed card from the list
-        const filteredList = dataState.gpus.filter((g: GpuType) => g.id !== gpu.id)
+        const filteredList = dataState.gpus.filter(
+          (g: GpuType) => g.id !== gpu.id,
+        );
         dataDispatch({
           type: "SET_GPUS",
           payload: filteredList,
@@ -165,7 +167,7 @@ export default function App() {
         void navigate("/");
       } catch (err) {
         console.error("Failed do remove GPU from the list:", err);
-        
+
         // Display an error message within the UI
         uiDispatch({
           type: "TOGGLE_NOTIFICATION_MESSAGE",
@@ -186,29 +188,21 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <GpuContext.Provider value={{
-        addGpu,
-        deleteGpu,
-        dataState,
-        dataDispatch,
-        uiState,
-        uiDispatch,
-      }}>
+      <GpuContext.Provider
+        value={{
+          addGpu,
+          deleteGpu,
+          dataState,
+          dataDispatch,
+          uiState,
+          uiDispatch,
+        }}
+      >
         <Header />
         <main className="main-content">
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Home />
-              }
-            />
-            <Route
-              path="/gpu/:id"
-              element={
-                <GpuDetail />
-              }
-            />
+            <Route path="/" element={<Home />} />
+            <Route path="/gpu/:id" element={<GpuDetail />} />
           </Routes>
         </main>
         <Footer />

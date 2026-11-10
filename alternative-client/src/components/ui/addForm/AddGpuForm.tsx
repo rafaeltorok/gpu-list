@@ -86,7 +86,7 @@ export default function AddGpuForm() {
       boostclock: "",
       memclock: "",
     });
-  };
+  }
 
   return (
     <div>

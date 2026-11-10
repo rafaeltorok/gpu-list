@@ -4,7 +4,10 @@ import useLimit from "../../hooks/useLimit";
 import "../../styles/SearchBar.css";
 
 export default function SearchBar() {
-  const { uiState: { searchTerm }, uiDispatch } = useGpuContext();
+  const {
+    uiState: { searchTerm },
+    uiDispatch,
+  } = useGpuContext();
   const [_searchParams, setSearchParams] = useSearchParams();
   const { limit } = useLimit();
 

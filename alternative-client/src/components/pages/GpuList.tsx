@@ -13,10 +13,7 @@ interface GpuListProps {
   swipeHandler: SwipeableHandlers;
 }
 
-export default function GpuList({
-  paginatedData,
-  swipeHandler,
-}: GpuListProps) {
+export default function GpuList({ paginatedData, swipeHandler }: GpuListProps) {
   const { dataState, uiState } = useGpuContext();
 
   // No GPUs available

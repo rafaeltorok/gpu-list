@@ -137,7 +137,7 @@ export default function GpuDetail() {
               });
               uiDispatch({
                 type: "SET_DIALOG_MESSAGE",
-                payload: `Remove ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} from the list?`
+                payload: `Remove ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} from the list?`,
               });
               uiDispatch({
                 type: "TOGGLE_CONFIRMATION_MESSAGE",

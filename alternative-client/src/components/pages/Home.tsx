@@ -29,7 +29,9 @@ export default function Home() {
   const currentPage = Number(searchParams.get("page"));
 
   // Define if the paginated data should be based upon the filtered list or not
-  const dataToPaginate = uiState.searchTerm ? dataState.gpusFound : dataState.gpus;
+  const dataToPaginate = uiState.searchTerm
+    ? dataState.gpusFound
+    : dataState.gpus;
 
   // Paginate the data into slices for each page
   const paginatedData = paginateData(dataToPaginate, itemsPerPage, currentPage);
@@ -113,10 +115,7 @@ export default function Home() {
       )}
 
       {/* Cards list */}
-      <GpuList
-      paginatedData={paginatedData}
-        swipeHandler={swipeHandler}
-      />
+      <GpuList paginatedData={paginatedData} swipeHandler={swipeHandler} />
 
       <PaginationWrapper totalPages={totalPages} />
     </div>
