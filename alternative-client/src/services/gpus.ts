@@ -14,7 +14,10 @@ async function create(newObject: GpuInputType): Promise<GpuType> {
 }
 
 async function update(updatedObject: GpuType): Promise<GpuType> {
-  const response = await axios.patch<GpuType>(`${baseUrl}/${updatedObject.id}`, updatedObject);
+  const response = await axios.patch<GpuType>(
+    `${baseUrl}/${updatedObject.id}`,
+    updatedObject,
+  );
   return response.data;
 }
 

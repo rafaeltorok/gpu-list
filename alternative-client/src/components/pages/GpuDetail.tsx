@@ -96,7 +96,7 @@ export default function GpuDetail() {
 
   // Set the table color scheme to the respective manufacturer color
   const brand = getBrand(
-    `${editableData.manufacturer} ${editableData.gpuline} ${editableData.model}`
+    `${editableData.manufacturer} ${editableData.gpuline} ${editableData.model}`,
   );
 
   return (
@@ -105,7 +105,8 @@ export default function GpuDetail() {
         {/* Full model title */}
         <div className="gpu-detail-header">
           <h1>
-            {editableData.manufacturer} {editableData.gpuline} {editableData.model}
+            {editableData.manufacturer} {editableData.gpuline}{" "}
+            {editableData.model}
           </h1>
         </div>
 
@@ -124,9 +125,7 @@ export default function GpuDetail() {
             overrideMode={overrideMode}
           />
 
-          <PerformanceSection
-            editableData={editableData}
-          />
+          <PerformanceSection editableData={editableData} />
         </div>
 
         <TableControls

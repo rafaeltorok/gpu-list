@@ -27,10 +27,7 @@ export default function SpecItem({
     <div className="spec-item">
       {editMode || overrideMode ? (
         <>
-          <label
-            htmlFor={id}
-            className="spec-label"
-          >
+          <label htmlFor={id} className="spec-label">
             {label}
           </label>
           <input
@@ -40,9 +37,15 @@ export default function SpecItem({
             value={value || ""}
             onChange={(e) => {
               if (type === "string") {
-                setEditableData({ ...editableData, [id]: e.target.value.trim() });
+                setEditableData({
+                  ...editableData,
+                  [id]: e.target.value.trim(),
+                });
               } else {
-                setEditableData({ ...editableData, [id]: Number(e.target.value.trim()) });
+                setEditableData({
+                  ...editableData,
+                  [id]: Number(e.target.value.trim()),
+                });
               }
             }}
           />

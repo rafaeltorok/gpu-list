@@ -52,17 +52,11 @@ export default function TableControls({
         </div>
       ) : (
         <div className="gpu-detail-actions-three-buttons">
-          <button
-            id="override-button"
-            onClick={() => setOverrideMode(true)}
-          >
+          <button id="override-button" onClick={() => setOverrideMode(true)}>
             Override Clock
           </button>
 
-          <button
-            id="edit-button"
-            onClick={() => setEditMode(true)}
-          >
+          <button id="edit-button" onClick={() => setEditMode(true)}>
             Edit
           </button>
 

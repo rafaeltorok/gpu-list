@@ -3,10 +3,7 @@ interface PerformanceItemProps {
   data: string;
 }
 
-export default function PerformanceItem({
-  label,
-  data,
-}: PerformanceItemProps) {
+export default function PerformanceItem({ label, data }: PerformanceItemProps) {
   return (
     <div className="spec-item">
       <span className="spec-label">{label}</span>

@@ -201,8 +201,8 @@ export default function App() {
       }
 
       // Add the updated card into the list
-      const updatedGpuList = dataState.gpus.map((g: GpuType) => 
-        g.id === updatedObject.id ? updatedObject : g
+      const updatedGpuList = dataState.gpus.map((g: GpuType) =>
+        g.id === updatedObject.id ? updatedObject : g,
       );
 
       dataDispatch({
