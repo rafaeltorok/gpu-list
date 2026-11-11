@@ -1,25 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useGpuContext from "../../hooks/useGpuContext";
 
 // Utils
 import getBrand from "../../utils/getBrand";
-import calculatePerformance from "../../../../shared/utils/calculatePerformance";
-import displayVramAmount from "../../utils/displayVramAmount";
 
 // CSS styles
 import "../../styles/GpuDetail.css";
 
+// Components
+import SpecsSection from "../ui/detailTable/SpecsSection";
+import ClocksSection from "../ui/detailTable/ClocksSection";
+import PerformanceSection from "../ui/detailTable/PerformanceSection";
+
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
+import TableControls from "../ui/detailTable/TableControls";
 
 export default function GpuDetail() {
-  const { dataState, dataDispatch, uiDispatch } = useGpuContext();
+  // React states
+  const [originalData, setOriginalData] = useState<GpuType | undefined>();
+  const [editableData, setEditableData] = useState<GpuType | undefined>();
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [overrideMode, setOverrideMode] = useState<boolean>(false);
+
+  // Hooks
+  const { dataState, uiDispatch, editGpu } = useGpuContext();
   const { id } = useParams();
   const navigate = useNavigate();
 
   // Find the respective card from the list based on its ID value
-  const gpu = dataState.gpus.find((gpu: GpuType) => gpu.id === id);
+  useEffect(() => {
+    setOriginalData(dataState.gpus.find((gpu: GpuType) => gpu.id === id));
+    setEditableData(originalData);
+  }, [dataState.gpus, originalData, id]);
 
   // Scroll to the top of the data table when a user selects a card form the list
   useEffect(() => {
@@ -30,8 +44,8 @@ export default function GpuDetail() {
     }
   }, []);
 
-  // Display a proper message when a card is not found
-  if (!gpu) {
+  // Display a proper message when the card is not found
+  if (!originalData || !editableData) {
     return (
       <div className="gpu-detail-container">
         <h2>GPU Not Found</h2>
@@ -42,113 +56,90 @@ export default function GpuDetail() {
     );
   }
 
-  // Calculate the Theoretical performance for the current card
-  const gpuPerformance = calculatePerformance(gpu);
+  // Handle submitting the updated specs from the edit mode
+  async function handleEdit(): Promise<void> {
+    if (editableData) {
+      // Validate the new data
+      if (
+        editableData.manufacturer.trim() === "" ||
+        editableData.model.trim() === "" ||
+        editableData.cores < 1 ||
+        editableData.tmus < 1 ||
+        editableData.rops < 1 ||
+        editableData.vram < 0.016 ||
+        editableData.bus < 1 ||
+        editableData.memtype === "" ||
+        editableData.baseclock < 1 ||
+        editableData.boostclock < 1 ||
+        editableData.memclock < 0.001
+      ) {
+        // Display an error message within the UI
+        uiDispatch({
+          type: "TOGGLE_NOTIFICATION_MESSAGE",
+          payload: true,
+        });
+        uiDispatch({
+          type: "SET_DIALOG_MESSAGE",
+          payload: "Invalid GPU data",
+        });
+        return;
+      }
+
+      // Send the valid data to be updated
+      const response = await editGpu(editableData);
+
+      if (response) {
+        setEditMode(false);
+      }
+    }
+  }
 
   // Set the table color scheme to the respective manufacturer color
-  const brand = getBrand(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`);
+  const brand = getBrand(
+    `${editableData.manufacturer} ${editableData.gpuline} ${editableData.model}`,
+  );
 
   return (
     <div className="gpu-detail-container">
       <div className={`gpu-detail-card ${brand}`}>
+        {/* Full model title */}
         <div className="gpu-detail-header">
           <h1>
-            {gpu.manufacturer} {gpu.gpuline} {gpu.model}
+            {editableData.manufacturer} {editableData.gpuline}{" "}
+            {editableData.model}
           </h1>
         </div>
 
+        {/* Wrapper for the GPU data section */}
         <div className="gpu-detail-content">
-          <div className="gpu-detail-section">
-            <h2>Specifications</h2>
-            <div className="specs-grid">
-              <div className="spec-item">
-                <span className="spec-label">Cores</span>
-                <span className="spec-value">{gpu.cores}</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">TMUs</span>
-                <span className="spec-value">{gpu.tmus}</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">ROPs</span>
-                <span className="spec-value">{gpu.rops}</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">VRAM</span>
-                <span className="spec-value">
-                  {displayVramAmount(gpu.vram)} {gpu.memtype}
-                </span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">Bus Width</span>
-                <span className="spec-value">{gpu.bus} bit</span>
-              </div>
-            </div>
-          </div>
+          <SpecsSection
+            editableData={editableData}
+            setEditableData={setEditableData}
+            editMode={editMode}
+          />
 
-          <div className="gpu-detail-section">
-            <h2>Clock Speeds</h2>
-            <div className="specs-grid">
-              <div className="spec-item">
-                <span className="spec-label">Base Clock</span>
-                <span className="spec-value">{gpu.baseclock} MHz</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">Boost Clock</span>
-                <span className="spec-value">{gpu.boostclock} MHz</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">Memory Clock</span>
-                <span className="spec-value">{gpu.memclock} Gbps</span>
-              </div>
-            </div>
-          </div>
+          <ClocksSection
+            editableData={editableData}
+            setEditableData={setEditableData}
+            editMode={editMode}
+            overrideMode={overrideMode}
+          />
 
-          <div className="gpu-detail-section">
-            <h2>Performance</h2>
-            <div className="specs-grid">
-              <div className="spec-item">
-                <span className="spec-label">FP32</span>
-                <span className="spec-value">{gpuPerformance[0]}</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">Texture Rate</span>
-                <span className="spec-value">{gpuPerformance[1]}</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">Pixel Rate</span>
-                <span className="spec-value">{gpuPerformance[2]}</span>
-              </div>
-              <div className="spec-item">
-                <span className="spec-label">Bandwidth</span>
-                <span className="spec-value">{gpuPerformance[3]}</span>
-              </div>
-            </div>
-          </div>
+          <PerformanceSection editableData={editableData} />
         </div>
 
-        <div className="gpu-detail-actions">
-          <button
-            className="delete-button"
-            onClick={() => {
-              dataDispatch({
-                type: "SET_SELECTED_GPU",
-                payload: gpu,
-              });
-              uiDispatch({
-                type: "SET_DIALOG_MESSAGE",
-                payload: `Remove ${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} from the list?`,
-              });
-              uiDispatch({
-                type: "TOGGLE_CONFIRMATION_MESSAGE",
-                payload: true,
-              });
-            }}
-          >
-            Delete GPU
-          </button>
-        </div>
+        <TableControls
+          handleEdit={handleEdit}
+          originalData={originalData}
+          setEditableData={setEditableData}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          overrideMode={overrideMode}
+          setOverrideMode={setOverrideMode}
+        />
       </div>
+
+      {/* Return to the home page */}
       <button className="back-button" onClick={() => void navigate("/")}>
         ⬅ Back to Catalog
       </button>
