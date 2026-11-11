@@ -22,6 +22,7 @@ export default function GpuDetail() {
   const [originalData, setOriginalData] = useState<GpuType | undefined>();
   const [editableData, setEditableData] = useState<GpuType | undefined>();
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [overrideMode, setOverrideMode] = useState<boolean>(false);
 
   // Hooks
   const { dataState, uiDispatch, editGpu } = useGpuContext();
@@ -120,6 +121,7 @@ export default function GpuDetail() {
             editableData={editableData}
             setEditableData={setEditableData}
             editMode={editMode}
+            overrideMode={overrideMode}
           />
 
           <PerformanceSection
@@ -133,6 +135,8 @@ export default function GpuDetail() {
           setEditableData={setEditableData}
           editMode={editMode}
           setEditMode={setEditMode}
+          overrideMode={overrideMode}
+          setOverrideMode={setOverrideMode}
         />
       </div>
 

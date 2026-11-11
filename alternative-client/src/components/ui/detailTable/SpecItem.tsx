@@ -9,6 +9,7 @@ interface SpecItemProps {
   displayData: string;
   editableData: GpuType;
   setEditableData: (data: GpuType) => void;
+  overrideMode?: boolean;
 }
 
 export default function SpecItem({
@@ -20,10 +21,11 @@ export default function SpecItem({
   displayData,
   editableData,
   setEditableData,
+  overrideMode,
 }: SpecItemProps) {
   return (
     <div className="spec-item">
-      {editMode ? (
+      {editMode || overrideMode ? (
         <>
           <label
             htmlFor={id}

@@ -9,6 +9,8 @@ interface TableControlsProps {
   setEditableData: (data: GpuType) => void;
   editMode: boolean;
   setEditMode: (mode: boolean) => void;
+  overrideMode: boolean;
+  setOverrideMode: (mode: boolean) => void;
 }
 
 export default function TableControls({
@@ -17,16 +19,21 @@ export default function TableControls({
   setEditableData,
   editMode,
   setEditMode,
+  overrideMode,
+  setOverrideMode,
 }: TableControlsProps) {
   const { dataDispatch, uiDispatch } = useGpuContext();
 
   return (
-    <div className="gpu-detail-actions">
-      {editMode ? (
-        <>
+    <>
+      {editMode || overrideMode ? (
+        <div className="gpu-detail-actions-two-buttons">
           <button
             id="confirm-button"
-            onClick={() => void handleEdit()}
+            onClick={() => {
+              if (overrideMode) setOverrideMode(false);
+              if (editMode) void handleEdit();
+            }}
           >
             Confirm
           </button>
@@ -35,14 +42,23 @@ export default function TableControls({
             id="cancel-button"
             onClick={() => {
               setEditMode(false);
+              setOverrideMode(false);
               setEditableData(originalData);
             }}
           >
-            Cancel
+            {editMode && "Cancel"}
+            {overrideMode && "Reset"}
           </button>
-        </>
+        </div>
       ) : (
-        <>
+        <div className="gpu-detail-actions-three-buttons">
+          <button
+            id="override-button"
+            onClick={() => setOverrideMode(true)}
+          >
+            Override Clock
+          </button>
+
           <button
             id="edit-button"
             onClick={() => setEditMode(true)}
@@ -69,8 +85,8 @@ export default function TableControls({
           >
             Delete
           </button>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }

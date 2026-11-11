@@ -7,12 +7,14 @@ interface ClocksSectionProps {
   editableData: GpuType;
   setEditableData: (data: GpuType) => void;
   editMode: boolean;
+  overrideMode: boolean;
 }
 
 export default function ClocksSection({
   editableData,
   setEditableData,
   editMode,
+  overrideMode,
 }: ClocksSectionProps) {
   return (
     <div className="gpu-detail-section">
@@ -37,6 +39,7 @@ export default function ClocksSection({
           displayData={`${editableData.boostclock} MHz`}
           editableData={editableData}
           setEditableData={setEditableData}
+          overrideMode={overrideMode}
         />
         <SpecItem
           editMode={editMode}
@@ -47,6 +50,7 @@ export default function ClocksSection({
           displayData={`${editableData.memclock} Gbps effective`}
           editableData={editableData}
           setEditableData={setEditableData}
+          overrideMode={overrideMode}
         />
       </div>
     </div>
