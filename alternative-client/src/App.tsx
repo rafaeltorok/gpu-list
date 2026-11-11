@@ -171,7 +171,7 @@ export default function App() {
         // Exit the removed card data page and return to the Home
         void navigate("/");
       } catch (err) {
-        console.error("Failed do remove GPU from the list:", err);
+        console.error("Failed to remove GPU from the list:", err);
 
         // Display an error message within the UI
         uiDispatch({
@@ -180,7 +180,7 @@ export default function App() {
         });
         uiDispatch({
           type: "SET_DIALOG_MESSAGE",
-          payload: `Failed do remove GPU from the list: ${String(err)}`,
+          payload: `Failed to remove GPU from the list: ${String(err)}`,
         });
       } finally {
         dataDispatch({
@@ -191,12 +191,50 @@ export default function App() {
     }
   }
 
+  async function editGpu(newData: GpuType): Promise<boolean> {
+    try {
+      // Make the API call to update the object data
+      const updatedObject = await gpuService.update(newData);
+
+      if (!updatedObject) {
+        throw new Error("operation failed");
+      }
+
+      // Add the updated card into the list
+      const updatedGpuList = dataState.gpus.map((g: GpuType) => 
+        g.id === updatedObject.id ? updatedObject : g
+      );
+
+      dataDispatch({
+        type: "SET_GPUS",
+        payload: updatedGpuList,
+      });
+
+      return true;
+    } catch (err: unknown) {
+      console.error("Failed to update the specs:", err);
+
+      // Display an error message within the UI
+      uiDispatch({
+        type: "TOGGLE_NOTIFICATION_MESSAGE",
+        payload: true,
+      });
+      uiDispatch({
+        type: "SET_DIALOG_MESSAGE",
+        payload: `Failed to update the specs: ${String(err)}`,
+      });
+
+      return false;
+    }
+  }
+
   return (
     <div className="app-container">
       <GpuContext.Provider
         value={{
           addGpu,
           deleteGpu,
+          editGpu,
           dataState,
           dataDispatch,
           uiState,

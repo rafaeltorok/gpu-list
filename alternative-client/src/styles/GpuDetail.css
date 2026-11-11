@@ -95,11 +95,13 @@
 }
 
 .spec-label {
+  width: 50%;
   opacity: 0.7;
   text-align: left;
 }
 
 .spec-value {
+  width: 50%;
   font-weight: bold;
   font-size: 1.1rem;
   text-align: right;
@@ -117,20 +119,50 @@
   color: #0068b5;
 }
 
-.gpu-detail-actions {
-  padding: 1.5rem;
-  display: flex;
-  justify-content: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+.spec-input-field {
+  width: 50%;
+  box-sizing: border-box;
+  font-family: "digital-dreamers";
+  margin: 0 auto;
+  margin-left: 1rem;
+  padding: 0.5rem;
 }
 
-.delete-button {
+.gpu-detail-actions {
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  width: 90%;
+  max-width: 300px;
+  margin-inline: auto;
+}
+
+.gpu-detail-actions button {
+  width: 50%;
+}
+
+#edit-button,
+#confirm-button {
+  background-color: rgba(116, 212, 37, 0.2);
+  color: greenyellow;
+  border-color: greenyellow;
+}
+
+#cancel-button,
+#delete-button {
   background-color: rgba(220, 53, 69, 0.2);
   color: #dc3545;
   border-color: #dc3545;
 }
 
-.delete-button:hover {
+#edit-button:hover,
+#confirm-button:hover {
+  background-color: rgba(116, 212, 37, 0.3);
+}
+
+#cancel-button:hover,
+#delete-button:hover {
   background-color: rgba(220, 53, 69, 0.3);
 }
 

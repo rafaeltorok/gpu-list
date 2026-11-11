@@ -33,7 +33,7 @@ export type DataActions =
 export type GpuContextType = {
   addGpu: (gpu: GpuInputType) => Promise<void>;
   deleteGpu: () => Promise<void>;
-  // editGpu: (newData: GpuType) => Promise<boolean>;
+  editGpu: (newData: GpuType) => Promise<boolean>;
   dataState: DataState;
   dataDispatch: React.Dispatch<DataActions>;
   uiState: UiState;
