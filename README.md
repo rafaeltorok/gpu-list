@@ -318,7 +318,10 @@ Expand the card table → on the table controls section, click on `Override Cloc
 - Displaying a graphics card data → click the `View details` button.
 - Adding a new graphics card → click on the `Add GPU` button, follow the same steps as the Main UI.
 - Using the search button → on the `Search GPUs` bar, type the desired keywords.
-- Removing a graphics card → same steps as the Main UI.
+- Removing a graphics card → click on the desired graphics card → on the bottom of the data table, select the **Delete** button → when prompted, click on **Confirm**
+- Override mode → temporarily modify the boost and memory clock speeds → select a graphics card on the list → on the bottom of the data table, click on **Override Clock** → modify the values with the clock fields and click on **Confirm**
+- Reset override clock speeds → click on **Override Clock** → click on **Reset** → this will return the clock speeds to their default values
+- Updating a graphics card's database data → click on the **Edit** button → modify any fields you want → click on the **Confirm** button
 
 
 ## Performing CRUD operations via Backend
