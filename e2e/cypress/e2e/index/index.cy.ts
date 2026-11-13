@@ -155,6 +155,12 @@ describe("Testing the index", function () {
         // Go to the second page
         cy.get(".MuiPagination-ul > :nth-child(5)").click();
 
+        // Assert the correct page number is present within the URL params
+        cy.location("search").should((search) => {
+          const params = new URLSearchParams(search);
+          expect(params.get("page")).to.equal("2");
+        });
+
         // Select only the second page cards
         const secondPageCards = gpuList.slice(10, 19);
 
@@ -170,7 +176,7 @@ describe("Testing the index", function () {
       });
     });
 
-    it.only("the index should display only the amount of items per page", function () {
+    it("the index should display only the amount of items per page", function () {
       cy.fixture("gpus").then((gpuList) => {
         const itemsPerPage = 3;
 
