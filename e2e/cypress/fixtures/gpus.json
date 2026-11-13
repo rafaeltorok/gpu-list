@@ -124,5 +124,33 @@
     "baseclock": 520,
     "boostclock": 520,
     "memclock": 0.8
+  },
+  {
+    "manufacturer": "AMD",
+    "gpuline": "Radeon",
+    "model": "RX 6700 XT",
+    "cores": 2560,
+    "tmus": 160,
+    "rops": 64,
+    "vram": 12,
+    "bus": 192,
+    "memtype": "GDDR6",
+    "baseclock": 2321,
+    "boostclock": 2581,
+    "memclock": 16    
+  },
+  {
+    "manufacturer": "AMD",
+    "gpuline": "Radeon",
+    "model": "RX 6900 XT",
+    "cores": 5120,
+    "tmus": 320,
+    "rops": 128,
+    "vram": 16,
+    "bus": 256,
+    "memtype": "GDDR6",
+    "baseclock": 1825,
+    "boostclock": 2250,
+    "memclock": 16
   }
 ]
