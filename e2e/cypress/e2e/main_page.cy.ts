@@ -56,11 +56,17 @@ describe("Testing the GPU list", function () {
     });
 
     it("the select element works", function () {
+      const itemsPerPage = "3";
+      
       // Select an option
-      cy.get("#limit-options").select("3").should("have.value", "3");
+      cy.get("#limit-options")
+        .select(itemsPerPage).should("have.value", itemsPerPage);
 
-      // Confirm it is the currently selected one
-      cy.get("#limit-options").invoke("val").should("eq", "3");
+      // Confirm the new limit value has been inserted into the URL params
+      cy.location("search").should((search) => {
+        const params = new URLSearchParams(search);
+        expect(params.get("limit")).to.equal(String(itemsPerPage));
+      });
     });
 
     it("it correctly paginates the data based on the selected value", function () {
