@@ -115,4 +115,98 @@ describe("Testing the index", function () {
       cy.get(".index-list").should("be.visible");
     });
   });
+
+  describe("pagination within the index", function () {
+    beforeEach(function () {
+      cy.fixture("gpus").then((gpuList) => {
+        cy.setupDatabase();
+
+        // Add all available cards on the list to test with multiple manufacturers
+        for (const gpu of gpuList) {
+          cy.createGpu(gpu);
+        }
+
+        // Access the main page
+        cy.visit("/");
+      });
+    });
+
+    it("the index should only display the current page's cards", function () {
+      cy.fixture("gpus").then((gpuList) => {
+        // Open the index
+        cy.get("#page-index-container")
+          .find("button")
+          .contains("Show index")
+          .click();
+
+        // Select only the first page cards
+        const firstPageCards = gpuList.slice(0, 9);
+
+        // Confirm the index contains the correct amount of items per page
+        cy.get(".index-list li").should("have.length", 10);
+
+        // Assert the index is only displaying the current page's cards
+        for (let i = 0; i < firstPageCards.length; i++) {
+          const gpu = firstPageCards[i];
+
+          cy.get(".index-list li").contains(
+            `${gpu.model}`
+          );
+        }
+
+        // Go to the second page
+        cy.get('.MuiPagination-ul > :nth-child(5)').click();
+
+        // Select only the second page cards
+        const secondPageCards = gpuList.slice(10, 19);
+
+        // Confirm the index contains the correct amount of items per page
+        cy.get(".index-list li").should("have.length", secondPageCards.length);
+
+        // Assert the index is only displaying the current page's cards
+        for (let i = 0; i < secondPageCards.length; i++) {
+          const gpu = secondPageCards[i];
+
+          cy.get(".index-list li").contains(
+            `${gpu.model}`
+          );
+        }
+      });
+    });
+
+    it.only("the index should display only the amount of items per page", function () {
+      cy.fixture("gpus").then((gpuList) => {
+        const itemsPerPage = 3;
+
+        // Select an amount of items per page
+        cy.get("#limit-options")
+          .select(String(itemsPerPage))
+          .should("have.value", String(itemsPerPage));
+
+        // Confirm the new limit value has been inserted into the URL params
+        cy.location('search').should((search) => {
+          const params = new URLSearchParams(search);
+          expect(params.get("limit")).to.equal(String(itemsPerPage));
+        });
+
+        // Open the index
+        cy.get("#page-index-container")
+          .find("button")
+          .contains("Show index")
+          .click();
+
+        // Confirm the index contains the correct amount of items per page
+        cy.get(".index-list li").should("have.length", itemsPerPage);
+
+        // Assert the index is only displaying the current page's cards
+        for (let i = 0; i < itemsPerPage; i++) {
+          const gpu = gpuList[i];
+
+          cy.get(".index-list li").contains(
+            `${gpu.model}`
+          );
+        }
+      });
+    });
+  });
 });
