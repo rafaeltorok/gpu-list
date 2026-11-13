@@ -1,3 +1,18 @@
+import { GpuType } from "../../../../shared/types/types";
+
+// Helper function
+// iterates over the list and assert each model is present within
+function checkCardsFromList(gpuList: GpuType[]) {
+  for (let i = 0; i < gpuList.length; i++) {
+    const currentCard = gpuList[i];
+
+    // Assert each card is present within the page
+    cy.get(".gpu-data-table")
+      .eq(i)
+      .should("contain", `${currentCard.model}`);
+  }
+}
+
 // E2E tests
 describe("testing the search bar", function () {
   beforeEach(function () {
@@ -23,185 +38,172 @@ describe("testing the search bar", function () {
   });
 
   it("searching for specific manufacturers only", function () {
-    // Click on the button to open the search bar
-    cy.get("#search-bar-field").find("button").contains("Search").click();
+    cy.fixture("gpus").then((gpuList) => {
+      // Filter the original list by the manufacturer name
+      const nvidiaCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.manufacturer.toLowerCase() === "nvidia"
+      });
+      const amdCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.manufacturer.toLowerCase() === "amd"
+      });
+      const intelCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.manufacturer.toLowerCase() === "intel"
+      });
 
-    // Searches for NVIDIA cards
-    cy.get("#search-bar-input").type("nvidia");
+      // Click on the button to open the search bar
+      cy.get("#search-bar-field").find("button").contains("Search").click();
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 5);
+      // Search for NVIDIA cards
+      cy.get("#search-bar-input").clear().type("nvidia");
 
-    // NOTE: We query each '.gpu-data-table' fresh with cy.get() instead of using a stored $table from .then()
-    // This avoids Cypress errors caused by React re-rendering the DOM and detaching the previous element snapshot.
-    // If we used a $table snapshot and then called .find() on it, Cypress would throw:
-    // "cy.find() failed because the page updated as a result of this command, but the subject is no longer attached to the DOM."
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "NVIDIA GeForce RTX 3060");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "NVIDIA GeForce GTX 970");
-    cy.get(".gpu-data-table")
-      .eq(2)
-      .should("contain", "NVIDIA GeForce GTX 650");
-    cy.get(".gpu-data-table")
-      .eq(3)
-      .should("contain", "NVIDIA RTX PRO 6000 Blackwell");
-    cy.get(".gpu-data-table")
-      .eq(4)
-      .should("contain", "NVIDIA GeForce GT 210");
+      // Confirm the correct number of cards have been found
+      cy.get(".gpu-data-table").should("have.length", nvidiaCards.length);
 
-    // Searches for AMD Radeon cards
-    cy.get("#search-bar-input").clear().type("amd");
+      // Assert each card present is from the current manufacturer
+      checkCardsFromList(nvidiaCards);
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 2);
+      // Search for AMD cards
+      cy.get("#search-bar-input").clear().type("amd");
 
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "AMD Radeon RX 9070 XT");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "AMD Radeon RX 7900 XTX");
+      // Assert each card present is from the current manufacturer
+      checkCardsFromList(amdCards);
 
-    // Searches for Intel Arc cards
-    cy.get("#search-bar-input").clear().type("intel");
+      // Search for Intel cards
+      cy.get("#search-bar-input").clear().type("intel");
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 2);
-
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "Intel Arc B580");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "Intel Arc A770");
+      // Assert each card present is from the current manufacturer
+      checkCardsFromList(intelCards);
+    });
   });
 
   it("filtering the desired graphics card line", function () {
-    // Click on the button to open the search bar
-    cy.get("#search-bar-field").find("button").contains("Search").click();
+    cy.fixture("gpus").then((gpuList) => {
+      // Filter the original list by the line name
+      const geforceCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.gpuline.toLowerCase() === "geforce"
+      });
+      const radeonCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.gpuline.toLowerCase() === "radeon"
+      });
+      const arcCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.gpuline.toLowerCase() === "arc"
+      });
 
-    // Searches for NVIDIA GeForce cards
-    cy.get("#search-bar-input").type("geforce");
+      // Click on the button to open the search bar
+      cy.get("#search-bar-field").find("button").contains("Search").click();
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 4);
+      // Search for GeForce cards
+      cy.get("#search-bar-input").clear().type("geforce");
 
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "NVIDIA GeForce RTX 3060");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "NVIDIA GeForce GTX 970");
-    cy.get(".gpu-data-table")
-      .eq(2)
-      .should("contain", "NVIDIA GeForce GTX 650");
-    cy.get(".gpu-data-table")
-      .eq(3)
-      .should("contain", "NVIDIA GeForce GT 210");
+      // Confirm the correct number of cards have been found
+      cy.get(".gpu-data-table").should("have.length", geforceCards.length);
 
-    // Searches for AMD Radeon cards
-    cy.get("#search-bar-input").clear().type("radeon");
+      // Assert each card present is from the current line
+      checkCardsFromList(geforceCards);
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 2);
+      // Search for Radeon cards
+      cy.get("#search-bar-input").clear().type("radeon");
 
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "AMD Radeon RX 9070 XT");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "AMD Radeon RX 7900 XTX");
+      // Confirm the correct number of cards have been found
+      cy.get(".gpu-data-table").should("have.length", radeonCards.length);
 
-    // Searches for Intel Arc cards
-    cy.get("#search-bar-input").clear().type("arc");
+      // Assert each card present is from the current line
+      checkCardsFromList(radeonCards);
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 2);
+      // Search for Arc cards
+      cy.get("#search-bar-input").clear().type("arc");
 
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "Intel Arc B580");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "Intel Arc A770");
+      // Confirm the correct number of cards have been found
+      cy.get(".gpu-data-table").should("have.length", arcCards.length);
+
+      // Assert each card present is from the current line
+      checkCardsFromList(arcCards);
+    });
   });
 
   it("filtering the cards by the secondary line", function () {
-    // Confirm the correct number of cards have been found
-    cy.get("#search-bar-field").find("button").contains("Search").click();
+    cy.fixture("gpus").then((gpuList) => {
+      // Filter the original list by the secondary line
+      const rtxCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.model.toLowerCase().includes("rtx");
+      });
 
-    // Search for the secondary line
-    cy.get("#search-bar-input").type("rtx");
+      // Open the search bar
+      cy.get("#search-bar-field").find("button").contains("Search").click();
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 2);
+      // Search for the secondary line
+      cy.get("#search-bar-input").clear().type("rtx");
 
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "NVIDIA GeForce RTX 3060");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "NVIDIA RTX PRO 6000 Blackwell");
+      // Confirm the correct number of cards have been found
+      cy.get(".gpu-data-table").should("have.length", rtxCards.length);
+
+      // Assert each card present is from the current line
+      checkCardsFromList(rtxCards);
+    });
   });
 
   it("filtering by specific model variations or names", function () {
-    // Searches by XTX variants only
-    cy.get("#search-bar-field").find("button").contains("Search").click();
+    cy.fixture("gpus").then((gpuList) => {
+      // Search by XTX variants only
+      const xtxCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.model.toLowerCase().includes("xtx");
+      });
 
-    cy.get("#search-bar-input").type("xtx");
+      // Open the search bar
+      cy.get("#search-bar-field").find("button").contains("Search").click();
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 1);
+      // Input the search term
+      cy.get("#search-bar-input").clear().type("xtx");
 
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "AMD Radeon RX 7900 XTX");
+      // Confirm the correct number of cards have been found
+      cy.get(".gpu-data-table").should("have.length", xtxCards.length);
 
-    // Search by cards that contain a model name with '70'
-    cy.get("#search-bar-input").clear().type("70");
+      // Confirm the models are correct
+      checkCardsFromList(xtxCards);
 
-    // Confirm the correct number of cards have been found
-    cy.get(".gpu-data-table").should("have.length", 3);
+      // Search by cards that contain a model name with '70'
+      const cardsWith70 = gpuList.filter((gpu: GpuType) => {
+        return gpu.model.toLowerCase().includes("70");
+      });
 
-    // Confirm the models are correct
-    cy.get(".gpu-data-table")
-      .eq(0)
-      .should("contain", "NVIDIA GeForce GTX 970");
-    cy.get(".gpu-data-table")
-      .eq(1)
-      .should("contain", "AMD Radeon RX 9070 XT");
-    cy.get(".gpu-data-table")
-      .eq(2)
-      .should("contain", "Intel Arc A770");
+      // Input the search term
+      cy.get("#search-bar-input").clear().type("70");
+
+      // Confirm the correct number of cards have been found
+      cy.get(".gpu-data-table").should("have.length", cardsWith70.length);
+
+      // Confirm the models are correct
+      checkCardsFromList(cardsWith70);
+    });
   });
 
   it("the index is also filtered by the search results", function () {
-    // Click on the button to open the search bar
-    cy.get("#search-bar-field").find("button").contains("Search").click();
+    cy.fixture("gpus").then((gpuList) => {
+      // Search by XTX variants only
+      const geforceCards = gpuList.filter((gpu: GpuType) => {
+        return gpu.model.toLowerCase().includes("geforce");
+      });
 
-    // Search by the GPU line
-    cy.get("#search-bar-input").type("GeForce");
+      // Open the search bar
+      cy.get("#search-bar-field").find("button").contains("Search").click();
 
-    // Open the index
-    cy.get("#page-index-container")
-      .find("#show-index-button")
-      .contains("Show index")
-      .click();
+      // Search by the GPU line
+      cy.get("#search-bar-input").clear().type("geforce");
 
-    // Confirm only the filtered cards appear on the index list
-    cy.get(".index-list li").eq(0).contains("NVIDIA GeForce RTX 3060");
-    cy.get(".index-list li").eq(1).contains("NVIDIA GeForce GTX 970");
-    cy.get(".index-list li").eq(2).contains("NVIDIA GeForce GTX 650");
-    cy.get(".index-list li").eq(3).contains("NVIDIA GeForce GT 210");
+      // Open the index
+      cy.get("#page-index-container")
+        .find("#show-index-button")
+        .contains("Show index")
+        .click();
+
+      // Confirm only the filtered cards appear on the index list
+      for (let i = 0; i < geforceCards.length; i++) {
+        const gpu = gpuList[i];
+
+        cy.get(".index-list li").eq(i).contains(
+          `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`
+        );
+      }
+    });
   });
 });
