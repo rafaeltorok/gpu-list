@@ -7,9 +7,7 @@ function checkCardsFromList(gpuList: GpuType[]) {
     const currentCard = gpuList[i];
 
     // Assert each card is present within the page
-    cy.get(".gpu-data-table")
-      .eq(i)
-      .should("contain", `${currentCard.model}`);
+    cy.get(".gpu-data-table").eq(i).should("contain", `${currentCard.model}`);
   }
 }
 
@@ -41,13 +39,13 @@ describe("testing the search bar", function () {
     cy.fixture("gpus").then((gpuList) => {
       // Filter the original list by the manufacturer name
       const nvidiaCards = gpuList.filter((gpu: GpuType) => {
-        return gpu.manufacturer.toLowerCase() === "nvidia"
+        return gpu.manufacturer.toLowerCase() === "nvidia";
       });
       const amdCards = gpuList.filter((gpu: GpuType) => {
-        return gpu.manufacturer.toLowerCase() === "amd"
+        return gpu.manufacturer.toLowerCase() === "amd";
       });
       const intelCards = gpuList.filter((gpu: GpuType) => {
-        return gpu.manufacturer.toLowerCase() === "intel"
+        return gpu.manufacturer.toLowerCase() === "intel";
       });
 
       // Click on the button to open the search bar
@@ -80,13 +78,13 @@ describe("testing the search bar", function () {
     cy.fixture("gpus").then((gpuList) => {
       // Filter the original list by the line name
       const geforceCards = gpuList.filter((gpu: GpuType) => {
-        return gpu.gpuline.toLowerCase() === "geforce"
+        return gpu.gpuline.toLowerCase() === "geforce";
       });
       const radeonCards = gpuList.filter((gpu: GpuType) => {
-        return gpu.gpuline.toLowerCase() === "radeon"
+        return gpu.gpuline.toLowerCase() === "radeon";
       });
       const arcCards = gpuList.filter((gpu: GpuType) => {
-        return gpu.gpuline.toLowerCase() === "arc"
+        return gpu.gpuline.toLowerCase() === "arc";
       });
 
       // Click on the button to open the search bar
@@ -200,9 +198,9 @@ describe("testing the search bar", function () {
       for (let i = 0; i < geforceCards.length; i++) {
         const gpu = gpuList[i];
 
-        cy.get(".index-list li").eq(i).contains(
-          `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`
-        );
+        cy.get(".index-list li")
+          .eq(i)
+          .contains(`${gpu.manufacturer} ${gpu.gpuline} ${gpu.model}`);
       }
     });
   });

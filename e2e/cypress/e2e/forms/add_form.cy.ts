@@ -28,9 +28,9 @@ describe("Testing the add form", function () {
 
         // Confirm the message on the notification dialog is correct
         cy.get('[open=""] > .dialog-message').contains(
-          `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} was added!`
+          `${gpu.manufacturer} ${gpu.gpuline} ${gpu.model} was added!`,
         );
-        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+        cy.get('[open=""] > .dialog-button').click(); // Close the notification
 
         // Confirm each data row is being correctly displayed
         cy.showData(gpu);
@@ -38,8 +38,14 @@ describe("Testing the add form", function () {
           .contains("CORES")
           .siblings()
           .contains(gpu.cores);
-        cy.get(".gpu-data-table").contains("TMUs").siblings().contains(gpu.tmus);
-        cy.get(".gpu-data-table").contains("ROPs").siblings().contains(gpu.rops);
+        cy.get(".gpu-data-table")
+          .contains("TMUs")
+          .siblings()
+          .contains(gpu.tmus);
+        cy.get(".gpu-data-table")
+          .contains("ROPs")
+          .siblings()
+          .contains(gpu.rops);
         cy.get(".gpu-data-table")
           .contains("VRAM")
           .siblings()
@@ -90,9 +96,9 @@ describe("Testing the add form", function () {
 
         // Confirm the message on the notification dialog is correct
         cy.get('[open=""] > .dialog-message').contains(
-          `${gpu.manufacturer} ${gpu.model} was added!`
+          `${gpu.manufacturer} ${gpu.model} was added!`,
         );
-        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+        cy.get('[open=""] > .dialog-button').click(); // Close the notification
 
         // Confirm the new card has been added
         cy.contains(getFullModel(gpu));
@@ -117,7 +123,7 @@ describe("Testing the add form", function () {
 
         // Confirm there is a warning about the invalid data
         cy.get('[open=""] > .dialog-message').contains(/invalid gpu specs/i);
-        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+        cy.get('[open=""] > .dialog-button').click(); // Close the notification
 
         // Assert no new card has been added
         cy.get(".gpu-data-table").should("not.exist");
@@ -143,7 +149,7 @@ describe("Testing the add form", function () {
 
         // Confirm there is a warning about the invalid data
         cy.get('[open=""] > .dialog-message').contains(/invalid gpu specs/i);
-        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+        cy.get('[open=""] > .dialog-button').click(); // Close the notification
 
         // Assert no new card has been added
         cy.get(".gpu-data-table").should("not.exist");
@@ -166,7 +172,7 @@ describe("Testing the add form", function () {
 
         // Confirm there is a warning about the invalid data
         cy.get('[open=""] > .dialog-message').contains(/invalid gpu specs/i);
-        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+        cy.get('[open=""] > .dialog-button').click(); // Close the notification
 
         // Assert no new card has been added
         cy.get(".gpu-data-table").should("not.exist");
@@ -187,7 +193,7 @@ describe("Testing the add form", function () {
 
         // Confirm there is a warning about the invalid data
         cy.get('[open=""] > .dialog-message').contains(/invalid gpu specs/i);
-        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+        cy.get('[open=""] > .dialog-button').click(); // Close the notification
 
         // Confirm the form remains opened
         cy.get(".add-gpu-button").contains("Cancel");
@@ -211,7 +217,7 @@ describe("Testing the add form", function () {
 
         // Confirm there is a warning about the invalid data
         cy.get('[open=""] > .dialog-message').contains(/invalid gpu specs/i);
-        cy.get('[open=""] > .dialog-button').click();  // Close the notification
+        cy.get('[open=""] > .dialog-button').click(); // Close the notification
 
         // Assert no new card has been added
         cy.get(".gpu-data-table").should("not.exist");

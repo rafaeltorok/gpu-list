@@ -25,7 +25,11 @@ declare global {
         data: string | number,
       ): Chainable<void>;
       checkSpecs(gpu: GpuInputType, vramSuffix: string): Chainable<void>;
-      editSpecField(fieldName: string, fullModelName: string, value: string): Chainable<void>;
+      editSpecField(
+        fieldName: string,
+        fullModelName: string,
+        value: string,
+      ): Chainable<void>;
 
       // gpu commands
       createGpu(gpuObject: GpuInputType): Chainable<Cypress.Response<unknown>>;

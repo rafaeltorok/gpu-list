@@ -137,7 +137,7 @@
     "memtype": "GDDR6",
     "baseclock": 2321,
     "boostclock": 2581,
-    "memclock": 16    
+    "memclock": 16
   },
   {
     "manufacturer": "AMD",

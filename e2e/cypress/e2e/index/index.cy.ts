@@ -149,13 +149,11 @@ describe("Testing the index", function () {
         for (let i = 0; i < firstPageCards.length; i++) {
           const gpu = firstPageCards[i];
 
-          cy.get(".index-list li").contains(
-            `${gpu.model}`
-          );
+          cy.get(".index-list li").contains(`${gpu.model}`);
         }
 
         // Go to the second page
-        cy.get('.MuiPagination-ul > :nth-child(5)').click();
+        cy.get(".MuiPagination-ul > :nth-child(5)").click();
 
         // Select only the second page cards
         const secondPageCards = gpuList.slice(10, 19);
@@ -167,9 +165,7 @@ describe("Testing the index", function () {
         for (let i = 0; i < secondPageCards.length; i++) {
           const gpu = secondPageCards[i];
 
-          cy.get(".index-list li").contains(
-            `${gpu.model}`
-          );
+          cy.get(".index-list li").contains(`${gpu.model}`);
         }
       });
     });
@@ -184,7 +180,7 @@ describe("Testing the index", function () {
           .should("have.value", String(itemsPerPage));
 
         // Confirm the new limit value has been inserted into the URL params
-        cy.location('search').should((search) => {
+        cy.location("search").should((search) => {
           const params = new URLSearchParams(search);
           expect(params.get("limit")).to.equal(String(itemsPerPage));
         });
@@ -202,9 +198,7 @@ describe("Testing the index", function () {
         for (let i = 0; i < itemsPerPage; i++) {
           const gpu = gpuList[i];
 
-          cy.get(".index-list li").contains(
-            `${gpu.model}`
-          );
+          cy.get(".index-list li").contains(`${gpu.model}`);
         }
       });
     });

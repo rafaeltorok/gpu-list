@@ -57,9 +57,7 @@ describe("Testing the GPU list", function () {
 
     it("the select element works", function () {
       // Select an option
-      cy.get("#limit-options")
-        .select("3")
-        .should("have.value", "3");
+      cy.get("#limit-options").select("3").should("have.value", "3");
 
       // Confirm it is the currently selected one
       cy.get("#limit-options").invoke("val").should("eq", "3");
