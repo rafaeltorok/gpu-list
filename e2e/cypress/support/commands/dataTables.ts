@@ -19,13 +19,12 @@ Cypress.Commands.add(
   (gpu: GpuInputType, rowName: string, data: string | number) => {
     const fullModelName = getFullModel(gpu);
 
-    cy.contains(".gpu-data-table", fullModelName)
-      .within(() => {
-        // Find the row and confirm the data is correctly being displayed
-        cy.contains(".table-row", rowName).within(() => {
-          cy.get(".table-row-data").contains(String(data));
-        });
+    cy.contains(".gpu-data-table", fullModelName).within(() => {
+      // Find the row and confirm the data is correctly being displayed
+      cy.contains(".table-row", rowName).within(() => {
+        cy.get(".table-row-data").contains(String(data));
       });
+    });
   },
 );
 
@@ -43,13 +42,18 @@ Cypress.Commands.add("checkSpecs", (gpu: GpuInputType, vramSuffix: string) => {
 });
 
 // Edit a spec field from the table in edit mode
-Cypress.Commands.add("editSpecField", (fieldName: string, fullModelName: string, value: string) => {
-  cy.contains(".gpu-data-table", fullModelName)
-    .within(() => {
+Cypress.Commands.add(
+  "editSpecField",
+  (fieldName: string, fullModelName: string, value: string) => {
+    cy.contains(".gpu-data-table", fullModelName).within(() => {
       // Find the row and confirm the data is correctly being displayed
       cy.contains(".table-row", fieldName).within(() => {
         // Select all forces the default 0 value to be replaced
-        cy.get(".table-row-edit-field").get("input[type='number']").clear().type(`{selectall}${value}`);
+        cy.get(".table-row-edit-field")
+          .get("input[type='number']")
+          .clear()
+          .type(`{selectall}${value}`);
       });
     });
-});
+  },
+);

@@ -19,6 +19,7 @@ WORKDIR /usr/src/app/alt-client
 
 COPY ./alternative-client/package.*json .
 COPY ./alternative-client .
+COPY ./shared ../shared
 
 # Install dependencies
 RUN npm ci
