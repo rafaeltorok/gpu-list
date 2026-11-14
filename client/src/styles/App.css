@@ -1,8 +1,11 @@
 #root {
+  max-width: 800px;
   width: 100%;
   text-align: center;
   font-family: "digital-dreamers", "sans-serif";
   box-sizing: border-box;
+  padding-top: 1rem;
+  position: relative;
 }
 
 @font-face {
@@ -15,6 +18,18 @@ nav {
   width: 95%;
   max-width: 500px;
   margin: 0 auto;
+}
+
+.swap-ui-link {
+  color: lightgray;
+  border: 1px solid #303030;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: 0.65rem;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 h1,
