@@ -17,7 +17,6 @@
 }
 
 .home-header {
-  margin-bottom: 1rem;
   padding: 1rem;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 1rem;
@@ -48,18 +47,21 @@
   margin-top: 2rem;
 }
 
-/* Cards per page selector */
-.limit-selector {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Cards per page selector and total cards counter */
+.items-section-container {
   background-color: rgba(12, 12, 12, 0.75);
-  margin: 0 auto;
-  margin-bottom: 1.5rem;
+  margin: 1rem auto;
   padding: 0.5rem;
   border: 2px solid #222222;
   border-radius: 1rem;
-  max-width: 300px;
+  width: 80%;
+  max-width: 375px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+hr {
+  width: 80%;
 }
 
 #limit-options {
