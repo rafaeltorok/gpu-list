@@ -3,6 +3,7 @@ import useGpuContext from "../../hooks/useGpuContext";
 // Components
 import GpuCard from "../ui/GpuCard";
 import CardsPerPage from "../ui/CardsPerPage";
+import CardsCounter from "../ui/CardsCounter";
 
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
@@ -38,7 +39,11 @@ export default function GpuList({ paginatedData, swipeHandler }: GpuListProps) {
 
   return (
     <main>
-      <CardsPerPage />
+      <div className="items-section-container">
+        <CardsPerPage />
+        <hr />
+        <CardsCounter />
+      </div>
 
       <section {...swipeHandler}>
         <div className="gpu-grid">

@@ -36,7 +36,10 @@ function App() {
           type: "TOGGLE_LOADING_MESSAGE",
           payload: true,
         });
-        dataDispatch({ type: "FETCH_START" });
+        uiDispatch({
+          type: "SET_DIALOG_MESSAGE",
+          payload: "Loading data, please wait...",
+        });
         const data: GpuType[] = await gpuService.getAll();
         dataDispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err: unknown) {
@@ -201,8 +204,6 @@ function App() {
       });
     }
   }
-
-  if (dataState.loading) return <h2>Loading GPU data, please wait...</h2>;
 
   if (dataState.error)
     return <h2>Failed to retrieve GPU data: {dataState.error}</h2>;

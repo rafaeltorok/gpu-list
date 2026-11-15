@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 import useGpuContext from "../../hooks/useGpuContext";
 
 // Utils
@@ -12,28 +13,55 @@ import "../../styles/GpuDetail.css";
 import SpecsSection from "../ui/detailTable/SpecsSection";
 import ClocksSection from "../ui/detailTable/ClocksSection";
 import PerformanceSection from "../ui/detailTable/PerformanceSection";
+import TableControls from "../ui/detailTable/TableControls";
 
 // TypeScript types
 import type { GpuType } from "../../../../shared/types/types";
-import TableControls from "../ui/detailTable/TableControls";
+import type { SwipeEventData } from "react-swipeable";
 
 export default function GpuDetail() {
-  // React states
+  // Original card data from the database
   const [originalData, setOriginalData] = useState<GpuType | undefined>();
+
+  // Temporary state-only data to be modified by both the override and edit modes
   const [editableData, setEditableData] = useState<GpuType | undefined>();
+
+  // Activate/deactivates the table modes
   const [editMode, setEditMode] = useState<boolean>(false);
   const [overrideMode, setOverrideMode] = useState<boolean>(false);
 
+  // Defines which are the previous and next cards to navigate between
+  const [previousCard, setPreviousCard] = useState<GpuType | undefined>(undefined);
+  const [nextCard, setNextCard] = useState<GpuType | undefined>(undefined);
+
   // Hooks
-  const { dataState, uiDispatch, editGpu } = useGpuContext();
+  const { dataState, uiState, uiDispatch, editGpu } = useGpuContext();
   const { id } = useParams();
   const navigate = useNavigate();
 
   // Find the respective card from the list based on its ID value
   useEffect(() => {
-    setOriginalData(dataState.gpus.find((gpu: GpuType) => gpu.id === id));
-    setEditableData(originalData);
+    const currentGpu = dataState.gpus.find((gpu: GpuType) => gpu.id === id);
+    setOriginalData(currentGpu);
+    setEditableData(currentGpu);
   }, [dataState.gpus, originalData, id]);
+
+  // Get the previous and next cards to navigate to
+  useEffect(() => {
+    const index = uiState.searchTerm ?
+      dataState.gpusFound.findIndex((g: GpuType) => g.id === id) :
+      dataState.gpus.findIndex((g: GpuType) => g.id === id);
+    if (index >= 0) {
+      // With a search term available, navigate between the search results only
+      if (uiState.searchTerm) {
+        setPreviousCard(dataState.gpusFound[index - 1] || undefined);
+        setNextCard(dataState.gpusFound[index + 1] || undefined);
+      } else {
+        setPreviousCard(dataState.gpus[index - 1] || undefined);
+        setNextCard(dataState.gpus[index + 1] || undefined);
+      }
+    }
+  }, [id, dataState.gpus]);
 
   // Scroll to the top of the data table when a user selects a card form the list
   useEffect(() => {
@@ -44,11 +72,49 @@ export default function GpuDetail() {
     }
   }, []);
 
+  // Handles keyboard navigation
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      // Left arrow key
+      if (event.key === "ArrowLeft" && previousCard) {
+        navigate(`/gpu/${previousCard.id}`);
+      }
+
+      // Right arrow key
+      if (event.key === "ArrowRight" && nextCard) {
+        navigate(`/gpu/${nextCard.id}`);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [previousCard, nextCard]);
+
+  // Handles the Touch screen swipe to change the page
+  const swipeHandler = useSwipeable({
+    onSwiped: (eventData: SwipeEventData) => {
+      // Previous page
+      if (eventData.dir === "Right" && previousCard) {
+        navigate(`/gpu/${previousCard.id}`);
+      }
+
+      // Next page
+      if (eventData.dir === "Left" && nextCard) {
+        navigate(`/gpu/${nextCard.id}`);
+      }
+    },
+    delta: 50, // Define the min amount of pixels before a swipe is registered
+  });
+
   // Display a proper message when the card is not found
   if (!originalData || !editableData) {
     return (
       <div className="gpu-detail-container">
-        <h2>GPU Not Found</h2>
+        <br />
+        <br />
+        <h2>No data available</h2>
+        <br />
+        <br />
         <button className="back-button" onClick={() => void navigate("/")}>
           ⬅ Back to Catalog
         </button>
@@ -100,7 +166,10 @@ export default function GpuDetail() {
   );
 
   return (
-    <div className="gpu-detail-container">
+    <div
+      className="gpu-detail-container"
+      {...swipeHandler}
+    >
       <div className={`gpu-detail-card ${brand}`}>
         {/* Full model title */}
         <div className="gpu-detail-header">
