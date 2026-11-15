@@ -28,13 +28,11 @@ export type DataState = {
   gpus: GpuType[];
   gpusFound: GpuType[];
   selectedGpu: GpuType | null;
-  loading: boolean;
   error: string | null;
   paginatedData: GpuType[];
 };
 
 export type DataActions =
-  | { type: "FETCH_START" }
   | { type: "FETCH_SUCCESS"; payload: GpuType[] }
   | { type: "FETCH_FAILURE"; payload: string }
   | { type: "SET_FOUND"; payload: GpuType[] }

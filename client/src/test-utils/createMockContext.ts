@@ -17,7 +17,6 @@ export default function createMockContext() {
       gpus: [],
       gpusFound: [],
       selectedGpu: null,
-      loading: false,
       error: null,
       paginatedData: [],
     },
