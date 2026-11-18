@@ -102,7 +102,7 @@ export default function Home() {
             className="add-gpu-toggle"
             onClick={() => uiDispatch({ type: "TOGGLE_ADD_FORM" })}
           >
-            {uiState.showAddForm ? "Cancel" : "Add GPU"}
+            {uiState.showAddForm ? "Cancel" : "Add Graphics Card"}
           </button>
         </div>
       </div>
