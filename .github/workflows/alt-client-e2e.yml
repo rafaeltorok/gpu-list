@@ -1,0 +1,31 @@
+name: Alternative Client E2E tests
+
+on:
+  push:
+    branches: [ main, testing ]
+
+jobs:
+  alt-client-e2e:
+    runs-on: ubuntu-latest
+    env:
+      ALT_E2E_MONGODB_URI: ${{ secrets.ALT_E2E_MONGODB_URI }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      
+      - name: Install the Alternative Client dependencies
+        working-directory: ./alternative-client
+        run: npm install
+      
+      - name: Install Server dependencies
+        working-directory: ./server
+        run: npm install
+      
+      - name: Run E2E tests in CLI
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: ./e2e
+          wait-on: "http://localhost:5174/alt"
+          command: npm run e2e:alt
