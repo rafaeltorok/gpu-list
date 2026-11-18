@@ -21,7 +21,7 @@ describe("the Graphics Card data table", function () {
       cy.createGpu(gpu);
 
       // Reload the page to update the list
-      cy.visit("/");
+      cy.visit("/alt");
     });
   });
 
@@ -140,7 +140,7 @@ describe("the Graphics Card data table", function () {
         cy.createGpu(gpu);
 
         // Reload the page to update the list
-        cy.visit("/");
+        cy.visit("/alt");
 
         // Navigate to the details page
         cy.get(".gpu-card-header")
@@ -165,7 +165,7 @@ describe("the Graphics Card data table", function () {
         cy.createGpu(rx7000Series);
 
         // Reload the page to update the list
-        cy.visit("/");
+        cy.visit("/alt");
 
         // Get the performance data for both
         const performanceRx9000 = calculatePerformance(rx9000Series);
@@ -215,7 +215,7 @@ describe("the Graphics Card data table", function () {
         cy.createGpu(gpuInMb);
 
         // Reload the page to update the list
-        cy.visit("/");
+        cy.visit("/alt");
 
         // Navigate to the details page
         cy.get(".gpu-card-header")

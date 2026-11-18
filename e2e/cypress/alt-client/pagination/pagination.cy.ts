@@ -9,7 +9,7 @@ describe("testing the pages navigation", function () {
       }
 
       // Access the main page
-      cy.visit("/");
+      cy.visit("/alt");
     });
   });
 
