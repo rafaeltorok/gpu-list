@@ -467,10 +467,23 @@ Install the necessary dependencies for Cypress
   npm run e2e:main
   ```
 
-- UI mode (Using a browser window)
+- UI mode (Opens on a browser)
   ```bash
   npm run e2e:main:ui
   ```
+
+#### Alternative client E2E test suites
+
+- CLI mode
+  ```bash
+  npm run e2e:alt
+  ```
+
+- UI mode (Opens on a browser)
+  ```bash
+  npm run e2e:alt:ui
+  ```
+
   
 ### Testing via Docker
 
@@ -483,8 +496,6 @@ Cleanup
 ```bash
 docker compose -f ./docker-compose.test.yml down -v
 ```
-
-**Note**: ⚠️ E2E tests were designed for the **Main UI** only.
 
 
 ## Integration tests (Backend server)
