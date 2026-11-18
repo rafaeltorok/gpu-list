@@ -7,7 +7,7 @@
     "main-client": "cd ../client && npm run dev -- --port 5173",
     "alt-client": "cd ../alternative-client && npm run dev -- --port 5174",
     "dev:test-env": "concurrently 'npm run server' 'npm run main-client' 'npm run alt-client'",
-    "e2e:main": "start-server-and-test dev:test-env http://localhost:5173 'cypress --spec cypress/main-client/**/*.cy.ts run --browser chrome'",
+    "e2e:main": "start-server-and-test dev:test-env http://localhost:5173 'cypress run --spec cypress/main-client/**/*.cy.ts run --browser chrome'",
     "e2e:main:chromium": "start-server-and-test dev:test-env http://localhost:5173 'cypress run --spec cypress/main-client/**/*.cy.ts --browser chromium'",
     "e2e:main:ui": "start-server-and-test dev:test-env http://localhost:5173 'cypress open --config specPattern=\"cypress/main-client/**/*.cy.ts\"'",
     "e2e:alt": "start-server-and-test dev:test-env http://localhost:5174/alt \"CYPRESS_FRONTEND=http://localhost:5174/alt cypress run --spec 'cypress/alt-client/**/*.cy.ts' --browser chrome\"",
