@@ -8,7 +8,7 @@ jobs:
   main-client-e2e:
     runs-on: ubuntu-latest
     env:
-      E2E_MONGODB_URI: ${{ secrets.E2E_MONGODB_URI }}
+      MAIN_E2E_MONGODB_URI: ${{ secrets.MAIN_E2E_MONGODB_URI }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -25,4 +25,4 @@ jobs:
       
       - name: Run E2E tests in CLI
         working-directory: ./e2e
-        run: npm install && npm run e2e
+        run: npm install && npm run e2e:main

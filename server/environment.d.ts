@@ -5,7 +5,7 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: "development" | "production" | "test" | "e2e";
+      NODE_ENV: "development" | "production" | "test" | "main-e2e" | "alt-e2e";
       PORT?: string;
       MONGODB_URI?: string;
     }

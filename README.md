@@ -207,11 +207,12 @@ $ cd ./server && npm install && npm run start
 
 ## Environment variables
 
-- The `.env` file should have the following **three** fields (examples)
+- The `.env` file should have all of the following fields (examples)
   ```conf
   MONGODB_URI=mongodb+srv://myDatabaseUser:myPassword@cluster0.example.mongodb.net/?retryWrites=true&w=majority
   TEST_MONGODB_URI=mongodb+srv://myTestDatabaseUser:myPassword@cluster0.example.mongodb.net/test?retryWrites=true&w=majority
-  E2E_MONGODB_URI=mongodb+srv://myTestDatabaseUser:myPassword@cluster0.example.mongodb.net/e2e?retryWrites=true&w=majority
+  MAIN_E2E_MONGODB_URI=mongodb+srv://myTestDatabaseUser:myPassword@cluster0.example.mongodb.net/main-e2e?retryWrites=true&w=majority
+  ALT_E2E_MONGODB_URI=mongodb+srv://myTestDatabaseUser:myPassword@cluster0.example.mongodb.net/alt-e2e?retryWrites=true&w=majority
   PORT=3001
   ```
 
@@ -219,10 +220,11 @@ $ cd ./server && npm install && npm run start
 
 - The frontend uses a **dev proxy** on `vite.config.ts` currently configured to fetch data from port **3001** on the backend server.
 
-- The backend server will always use the main database as default. For the test one, you must pass the correct flag when starting the server: 
+- The backend server will always use the main database as default. For the test ones, you must pass the correct flag when starting the server: 
   
   - `NODE_ENV=test` : For the server integration tests
-  - `NODE_ENV=e2e` : For the main client E2E tests
+  - `NODE_ENV=main-e2e` : For the main client E2E tests
+  - `NODE_ENV=alt-e2e` : For the alt client E2E tests
   - or add one of these variables to the `.env` file.
 
 - The E2E tests database env, must follow the same pattern as the other test one, passing the flag
@@ -451,23 +453,37 @@ docker compose -f ./docker-compose.dev.yml up --build
 
 ### Manual testing
 
-The npm script will automatically start both client and server, using the packages [start-server-and-test⇗](https://github.com/bahmutov/start-server-and-test) and [concurrently⇗](https://www.npmjs.com/package/concurrently).
+The npm script will automatically start both the main client, alternative client and server, using the packages [start-server-and-test⇗](https://github.com/bahmutov/start-server-and-test) and [concurrently⇗](https://www.npmjs.com/package/concurrently).
 
 Install the necessary dependencies for Cypress
   ```bash
   cd ./e2e && npm install
   ```
 
-Run Cypress
-  - CLI mode
-    ```bash
-    npm run e2e
-    ```
+#### Main client E2E test suites
+  
+- CLI mode
+  ```bash
+  npm run e2e:main
+  ```
 
-  - UI mode (Using a browser window)
-    ```bash
-    npm run e2e:ui
-    ```
+- UI mode (Opens on a browser)
+  ```bash
+  npm run e2e:main:ui
+  ```
+
+#### Alternative client E2E test suites
+
+- CLI mode
+  ```bash
+  npm run e2e:alt
+  ```
+
+- UI mode (Opens on a browser)
+  ```bash
+  npm run e2e:alt:ui
+  ```
+
   
 ### Testing via Docker
 
@@ -480,8 +496,6 @@ Cleanup
 ```bash
 docker compose -f ./docker-compose.test.yml down -v
 ```
-
-**Note**: ⚠️ E2E tests were designed for the **Main UI** only.
 
 
 ## Integration tests (Backend server)

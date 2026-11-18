@@ -1,5 +1,28 @@
 services:
-  server:
+  test-mongodb:
+    image: mongo
+    container_name: gpulist-test-mongodb
+    networks:
+      - test-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=gpulist
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=test_gpus
+    volumes:
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  test-server:
+    depends_on:
+      test-mongodb:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
       interval: 30s
@@ -10,22 +33,23 @@ services:
       context: ./
       dockerfile: ./server/Dockerfile
     image: gpulist-server
-    container_name: gpulist-server
+    container_name: gpulist-test-server
     networks:
       - test-network
-    env_file:
-      - ./server/.env
     environment:
-      NODE_ENV: e2e
+      # authSource=admin tells the MongoDB driver to authenticate against the admin database where
+      # root credentials are created, preventing a "not authorized to execute command" error
+      - MAIN_E2E_MONGODB_URI=mongodb://gpulist:password@test-mongodb:27017/test_gpus?authSource=admin
+      - NODE_ENV=main-e2e
 
-  nginx:
+  test-nginx:
     depends_on:
-      server:
+      test-server:
         condition: service_healthy
     build:
-      dockerfile: ./nginx/Dockerfile
+      dockerfile: ./nginx/Dockerfile.test
     image: gpulist-nginx
-    container_name: gpulist-nginx
+    container_name: gpulist-test-nginx
     networks:
       - test-network
     healthcheck:
@@ -35,15 +59,15 @@ services:
       retries: 3
       start_period: 30s
 
-  e2e:
+  test-e2e:
     depends_on:
-      nginx:
+      test-nginx:
         condition: service_healthy
     build: 
       context: ./
       dockerfile: ./e2e/Dockerfile
     image: gpulist-e2e
-    container_name: gpulist-e2e
+    container_name: gpulist-test-e2e
     working_dir: /e2e
     networks:
       - test-network
