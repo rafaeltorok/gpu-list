@@ -24,8 +24,5 @@ jobs:
         run: npm install
       
       - name: Run E2E tests in CLI
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: ./e2e
-          wait-on: "http://localhost:5174/alt"
-          command: npm run e2e:alt
+        working-directory: ./e2e
+        run: npm install && npm run e2e:alt
