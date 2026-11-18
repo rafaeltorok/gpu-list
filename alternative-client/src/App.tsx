@@ -85,10 +85,9 @@ export default function App() {
   }, [uiState.searchTerm, dataState.gpus]);
 
   // Handles the add form data
-  async function addGpu(gpuObject: GpuInputType): Promise<void> {
+  async function addGpu(gpuObject: GpuInputType): Promise<boolean> {
     if (
       gpuObject.manufacturer === "" ||
-      gpuObject.gpuline === "" ||
       gpuObject.model === "" ||
       gpuObject.cores < 1 ||
       gpuObject.tmus < 1 ||
@@ -109,7 +108,7 @@ export default function App() {
         type: "TOGGLE_NOTIFICATION_MESSAGE",
         payload: true,
       });
-      return;
+      return false;
     }
 
     try {
@@ -135,6 +134,8 @@ export default function App() {
       uiDispatch({
         type: "TOGGLE_ADD_FORM",
       });
+
+      return true;
     } catch (err) {
       console.error("Failed to add new Graphics Card:", err);
 
@@ -147,6 +148,8 @@ export default function App() {
         type: "SET_DIALOG_MESSAGE",
         payload: `"Failed to add new Graphics Card: ${String(err)}`,
       });
+
+      return false;
     }
   }
 

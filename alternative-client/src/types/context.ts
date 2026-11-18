@@ -31,7 +31,7 @@ export type DataActions =
   | { type: "SET_SELECTED_GPU"; payload: GpuType | null };
 
 export type GpuContextType = {
-  addGpu: (gpu: GpuInputType) => Promise<void>;
+  addGpu: (gpu: GpuInputType) => Promise<boolean>;
   deleteGpu: () => Promise<void>;
   editGpu: (newData: GpuType) => Promise<boolean>;
   dataState: DataState;
