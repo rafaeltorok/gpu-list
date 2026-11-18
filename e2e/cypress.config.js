@@ -11,5 +11,9 @@ module.exports = defineConfig({
     env: {
       BACKEND: process.env.CYPRESS_BACKEND || "http://localhost:3001",
     },
+    specPattern: [
+      "cypress/main-client/**/*.cy.ts",
+      "cypress/alt-client/**/*.cy.ts",
+    ],
   },
 });
