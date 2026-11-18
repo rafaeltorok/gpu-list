@@ -3,7 +3,7 @@ describe("Testing the add form", function () {
     cy.setupDatabase();
 
     // Access the main page
-    cy.visit("/");
+    cy.visit("/alt");
   });
 
   describe("valid data", function () {
