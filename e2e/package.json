@@ -13,7 +13,7 @@
 
     "server-alt": "cd ../server && npm run dev:alt-e2e",
     "alt-client": "cd ../alternative-client && npm run dev",
-    "dev:alt-test-env": "concurrently 'npm run server-main' 'npm run alt-client'",
+    "dev:alt-test-env": "concurrently 'npm run server-alt' 'npm run alt-client'",
 
     "e2e:alt": "start-server-and-test dev:alt-test-env http://localhost:5173 \"cypress run --spec 'cypress/alt-client/**/*.cy.ts' --browser chrome\"",
     "e2e:alt:chromium": "start-server-and-test dev:alt-test-env http://localhost:5173 \"cypress run --spec 'cypress/alt-client/**/*.cy.ts' --browser chromium\"",
