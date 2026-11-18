@@ -3,7 +3,7 @@ describe("Testing the alternative client", function () {
     cy.setupDatabase();
 
     // Access the main page
-    cy.visit("/");
+    cy.visit("/alt");
   });
 
   describe("basic page access", function () {
@@ -23,7 +23,7 @@ describe("Testing the alternative client", function () {
         }
 
         // Access the main page
-        cy.visit("/");
+        cy.visit("/alt");
       });
     });
 
@@ -61,7 +61,7 @@ describe("Testing the alternative client", function () {
       cy.addSampleData();
 
       // Reload the page
-      cy.visit("/");
+      cy.visit("/alt");
 
       // Assert the cards available counter is correct
       cy.get("main").contains(/cards available: 3/i);
@@ -80,7 +80,7 @@ describe("Testing the alternative client", function () {
       cy.addSampleData();
 
       // Reload the page
-      cy.visit("/");
+      cy.visit("/alt");
 
       // Search for a particular card
       cy.get("input").type("rtx 3060");

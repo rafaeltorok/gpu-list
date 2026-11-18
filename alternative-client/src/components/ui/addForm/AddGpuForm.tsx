@@ -26,7 +26,7 @@ export default function AddGpuForm() {
   });
 
   // Handles submitting the form data
-  function handleCreateGpu(event: FormEvent<HTMLFormElement>): void {
+  async function handleCreateGpu(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
 
     // Validate the form data
@@ -56,7 +56,7 @@ export default function AddGpuForm() {
     }
 
     // Call the main App component function responsible for making the API call
-    void addGpu({
+    const isSuccess = await addGpu({
       manufacturer: gpu.manufacturer.trim(),
       gpuline: gpu.gpuline.trim(),
       model: gpu.model.trim(),
@@ -72,25 +72,27 @@ export default function AddGpuForm() {
     });
 
     // Reset the form data on success
-    setGpu({
-      manufacturer: "",
-      gpuline: "",
-      model: "",
-      cores: "",
-      tmus: "",
-      rops: "",
-      vram: "",
-      bus: "",
-      memtype: "",
-      baseclock: "",
-      boostclock: "",
-      memclock: "",
-    });
+    if (isSuccess) {
+      setGpu({
+        manufacturer: "",
+        gpuline: "",
+        model: "",
+        cores: "",
+        tmus: "",
+        rops: "",
+        vram: "",
+        bus: "",
+        memtype: "",
+        baseclock: "",
+        boostclock: "",
+        memclock: "",
+      });
+    }
   }
 
   return (
     <div>
-      <form onSubmit={handleCreateGpu} className="add-gpu-form">
+      <form onSubmit={(e) => void handleCreateGpu(e)} className="add-gpu-form">
         <fieldset className="add-gpu-field">
           <FormRow
             id="manufacturer"
