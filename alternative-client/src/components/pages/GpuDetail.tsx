@@ -61,7 +61,7 @@ export default function GpuDetail() {
         setNextCard(dataState.gpus[index + 1] || undefined);
       }
     }
-  }, [id, dataState.gpus]);
+  }, [id, dataState.gpus, uiState.searchTerm,dataState.gpusFound]);
 
   // Scroll to the top of the data table when a user selects a card form the list
   useEffect(() => {
@@ -77,30 +77,30 @@ export default function GpuDetail() {
     function onKeyDown(event: KeyboardEvent) {
       // Left arrow key
       if (event.key === "ArrowLeft" && previousCard) {
-        navigate(`/gpu/${previousCard.id}`);
+        void navigate(`/gpu/${previousCard.id}`);
       }
 
       // Right arrow key
       if (event.key === "ArrowRight" && nextCard) {
-        navigate(`/gpu/${nextCard.id}`);
+        void navigate(`/gpu/${nextCard.id}`);
       }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [previousCard, nextCard]);
+  }, [previousCard, nextCard, navigate]);
 
   // Handles the Touch screen swipe to change the page
   const swipeHandler = useSwipeable({
     onSwiped: (eventData: SwipeEventData) => {
       // Previous page
       if (eventData.dir === "Right" && previousCard) {
-        navigate(`/gpu/${previousCard.id}`);
+        void navigate(`/gpu/${previousCard.id}`);
       }
 
       // Next page
       if (eventData.dir === "Left" && nextCard) {
-        navigate(`/gpu/${nextCard.id}`);
+        void navigate(`/gpu/${nextCard.id}`);
       }
     },
     delta: 50, // Define the min amount of pixels before a swipe is registered
