@@ -71,6 +71,7 @@ services:
     working_dir: /e2e
     networks:
       - test-network
+    command: npm run e2e:all
 
 networks:
   test-network:

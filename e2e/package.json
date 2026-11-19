@@ -17,7 +17,9 @@
 
     "e2e:alt": "start-server-and-test dev:alt-test-env http://localhost:5173 \"cypress run --spec 'cypress/alt-client/**/*.cy.ts' --browser chrome\"",
     "e2e:alt:chromium": "start-server-and-test dev:alt-test-env http://localhost:5173 \"cypress run --spec 'cypress/alt-client/**/*.cy.ts' --browser chromium\"",
-    "e2e:alt:ui": "start-server-and-test dev:alt-test-env http://localhost:5173 \"cypress open --config specPattern='cypress/alt-client/**/*.cy.ts'\""
+    "e2e:alt:ui": "start-server-and-test dev:alt-test-env http://localhost:5173 \"cypress open --config specPattern='cypress/alt-client/**/*.cy.ts'\"",
+
+    "e2e:all": "cypress run --spec 'cypress/**/*.cy.ts'"
   },
   "keywords": [],
   "author": "",
