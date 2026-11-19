@@ -490,6 +490,8 @@ Install the necessary dependencies for Cypress
   
 ### Testing via Docker
 
+**Note**: The test compose orchestration was designed to run all E2E test suites sequentially, for both clients.
+
 Run the tests
 ```bash
 docker compose -f docker-compose.test.yml up --build --abort-on-container-exit

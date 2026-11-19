@@ -10,5 +10,3 @@ RUN npm ci
 
 ENV CYPRESS_FRONTEND=http://test-nginx:80
 ENV CYPRESS_BACKEND=http://test-nginx:80
-
-CMD ["npm", "run", "e2e:main"]
