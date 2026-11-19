@@ -35,6 +35,9 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
   - [Component tests (Main client)](#component-tests-main-client)
   - [Unit tests (Frontend / Main client)](#unit-tests-frontend--main-client)
   - [Project overview (folder structure)](#project-overview-folder-structure)
+    - [Frontend (Main client)](#frontend-main-client)
+    - [Frontend (Alternative client)](#frontend-alternative-client)
+    - [Backend server](#backend-server)
   - [Troubleshooting](#troubleshooting)
   - [Author](#author)
 
@@ -120,8 +123,8 @@ You can temporarily override both the Boost and Memory clock speeds to test the 
 Desktop view
 
 <div style="display: flex; gap: 1rem;">
-  <img src="./img/gpulist_main-ui_desktop.png" alt="GPU List app main UI on desktops" height="350"/>
-  <img src="./img/gpulist_main-ui_card-view_desktop.png" alt="GPU List app main UI data table on desktops" height="350"/>
+  <img src="./img/gpulist_main-ui_desktop.png" alt="GPU List app main UI on desktops" height="400"/>
+  <img src="./img/gpulist_main-ui_card-view_desktop.png" alt="GPU List app main UI data table on desktops" height="400"/>
 </div>
 
 <br>
@@ -129,8 +132,8 @@ Desktop view
 Mobile view
 
 <div style="display: flex; gap: 1rem;">
-  <img src="./img/gpulist_main-ui_mobile.png" alt="GPU List app main UI on mobile devices" height="400"/>
-  <img src="./img/gpulist_main-ui_card-view_mobile.png" alt="GPU List app main UI data table on mobile devices" height="400"/>
+  <img src="./img/gpulist_main-ui_mobile.png" alt="GPU List app main UI on mobile devices" height="500"/>
+  <img src="./img/gpulist_main-ui_card-view_mobile.png" alt="GPU List app main UI data table on mobile devices" height="500"/>
 </div>
 
 <br>
@@ -140,8 +143,8 @@ Mobile view
 Desktop view
 
 <div style="display: flex; gap: 1rem;">
-  <img src="./img/gpulist_alt-ui_desktop.png" alt="GPU List app alternative UI on desktops" width="350"/>
-  <img src="./img/gpulist_alt-ui_card-view_desktop.png" alt="GPU List app alternative UI card info on desktops" width="350"/>
+  <img src="./img/gpulist_alt-ui_desktop.png" alt="GPU List app alternative UI on desktops" width="400"/>
+  <img src="./img/gpulist_alt-ui_card-view_desktop.png" alt="GPU List app alternative UI card info on desktops" width="400"/>
 </div>
 
 <br>
@@ -149,8 +152,8 @@ Desktop view
 Mobile view
 
 <div style="display: flex; gap: 1rem;">
-  <img src="./img/gpulist_alt-ui_mobile.png" alt="GPU List app alternative UI on mobile devices" height="400"/>
-  <img src="./img/gpulist_alt-ui_card-view_mobile.png" alt="GPU List app alternative UI card info on mobile devices" height="400"/>
+  <img src="./img/gpulist_alt-ui_mobile.png" alt="GPU List app alternative UI on mobile devices" height="500"/>
+  <img src="./img/gpulist_alt-ui_card-view_mobile.png" alt="GPU List app alternative UI card info on mobile devices" height="500"/>
 </div>
 
 <br>
@@ -651,6 +654,94 @@ npm run test:run -- ./src/__tests__
 ├── vite.config.ts
 └── vitest.config.ts                  # Config file for the component tests
 ```
+
+
+### Frontend (Alternative client)
+
+```bash
+/alternative-client/
+├── src
+│   ├── App.tsx                             # Handles the logic for creating the React Context for GPUs. Also responsible for the functions to create, edit or remove a graphics card.
+│   ├── assets                              # Icons
+│   │   ├── apple-touch-icon.png
+│   │   ├── background_alt.jpg
+│   │   ├── background.jpg
+│   │   ├── backup_favicon.ico
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-192x192.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon-512x512.png
+│   │   ├── favicon.ico
+│   │   └── favicon.png
+│   ├── components                          # Presentational and state-driven UI components
+│   │   ├── layout
+│   │   │   ├── Footer.tsx                  # Render the footer note on the bottom of the page
+│   │   │   └── Header.tsx                  # Render the main page title
+│   │   ├── pages
+│   │   │   ├── GpuDetail.tsx               # The graphics card details page, when the user selects a GPU on the main list
+│   │   │   ├── GpuList.tsx                 # Render the list of available cards on the main page, alongside the cards counter and the items per page components
+│   │   │   ├── Home.tsx                    # Acts as a wrapper for the add form, search bar, list and pagination components
+│   │   │   └── PaginationWrapper.tsx       # Wraps the pagination controls within the bottom of the page
+│   │   └── ui
+│   │       ├── addForm
+│   │       │   ├── AddGpuForm.tsx          # Handles the logic for the frontend validation, submissions state and form handling
+│   │       │   └── FormRow.tsx             # Helper component to render a single row on the add form
+│   │       ├── CardsCounter.tsx            # Renders either the total available cards in the database, or the amount of search results found
+│   │       ├── CardsPerPage.tsx            # Renders the HMTL selector element that controls the amount of cards to be displayed within each page of the list
+│   │       ├── detailTable
+│   │       │   ├── ClocksSection.tsx       # Wraps the clocks section inside of the GPU details page
+│   │       │   ├── PerformanceItem.tsx     # Renders a single performance row, including the row label and the value itself
+│   │       │   ├── PerformanceSection.tsx  # Wraps the theoretical performance section inside of the GPU details page
+│   │       │   ├── SpecItem.tsx            # Renders a single specification row, including the row label and the value itself. During the Override or Edit modes, it renders an input field instead of the spec value
+│   │       │   ├── SpecsSection.tsx        # Wraps the specifications section inside of the GPU details page
+│   │       │   └── TableControls.tsx       # Renders the controls for the different table models, including the Override Clock, Edit and Delete buttons
+│   │       ├── dialogMessages              # Handles the HTML dialog elements to be displayed to the user within the UI
+│   │       │   ├── ConfirmMessage.tsx      # Renders the confirmation message after clicking on the Delete button, asking the user for confirmation before removing a card from the list
+│   │       │   ├── LoadingMessage.tsx      # Renders the initial loading message while the API is retrieving the database data to be displayed within the list
+│   │       │   └── NotificationMessage.tsx  # Renders success and/or error messages during the add form validation, after adding a new graphics card or when trying to input invalid data during the edit mode
+│   │       ├── GpuCard.tsx                 # Renders each one of the clickable card entries within the main page list
+│   │       └── SearchBar.tsx               # Renders the search bar input field in the top page controls
+│   ├── context                             # React context API folder
+│   │   └── GpuContext.ts                   # Defines the shared React context for both the UI and GPU-related states
+│   ├── hooks
+│   │   ├── useGpuContext.ts                # Allows components to access the GPU context
+│   │   └── useLimit.ts                     # Sets the limit param on the URL - used by the CardsPerPage component to define the amount of items to be displayed on each page of the list
+│   ├── main.tsx                            # Entry point for the React app
+│   ├── reducers                            # State transition logic for the React Context
+│   │   ├── dataReducer.ts                  # Related to the data handling on the app
+│   │   └── uiReducer.ts                    # Related to the UI elements, such as displaying buttons and/or forms
+│   ├── services                            # API communication layer
+│   │   └── gpus.ts                         # Handles GPU-related API requests with Axios
+│   ├── styles                              # Custom CSS styles for the React components
+│   │   ├── AddGpuForm.css
+│   │   ├── App.css
+│   │   ├── fonts
+│   │   │   └── DigitalDreamers-jy99.ttf
+│   │   ├── Footer.css
+│   │   ├── GpuCard.css
+│   │   ├── GpuDetail.css
+│   │   ├── Header.css
+│   │   ├── Home.css
+│   │   ├── index.css                       # Custom CSS rules for the root and body elements
+│   │   ├── Messages.css
+│   │   └── SearchBar.css
+│   ├── types                               # TypeScript types exclusive to the alternative client frontend
+│   │   └── context.ts                      # Handles all of the types used by the GpuContext script
+│   └── utils
+│       ├── displayVramAmount.ts            # Formats the VRAM amount output in either MB or GB
+│       └── getBrand.ts                     # Get the manufacturer class name to properly style the UI elements according to their respective manufacturer colors schemes
+├── Dockerfile.dev                    # Build an image to be used with the Dev Composer script
+├── eslint.config.js                  # Custom ESLint config
+├── index.html
+├── manifest.json
+├── package.json
+├── package-lock.json
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
 
 ### Backend server
 
