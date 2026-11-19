@@ -38,3 +38,20 @@ jobs:
       
       - name: Run ESLint
         run: npm run lint
+        
+  alt-client-linting:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./alternative-client
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run ESLint
+        run: npm run lint
