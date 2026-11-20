@@ -288,6 +288,28 @@ describe("Testing the add graphics card form", () => {
       // Confirm the add function has not been called
       expect(mockContextOpenForm.addGpu).not.toHaveBeenCalled();
     });
+  });
+
+  describe("invalid form data", () => {
+    beforeEach(() => {
+      const mockContextValue = createMockContext();
+
+      // Expand the add form
+      mockContextOpenForm = {
+        ...mockContextValue,
+        uiState: {
+          ...mockContextValue.uiState,
+          showAddForm: true,
+        },
+      };
+
+      // Render the form component
+      render(
+        <GpuContext.Provider value={mockContextOpenForm}>
+          <AddGpuForm />
+        </GpuContext.Provider>,
+      );
+    });
 
     test("zero is an invalid value for the specification fields", async () => {
       const gpuData = {
@@ -347,8 +369,32 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.addGpu).not.toHaveBeenCalled();
     });
 
-    test("both core clock values should accept float inputs", async () => {
-      // Insert non-integer clock values on the original data
+    test("specification input fields should not accept float inputs", async () => {
+      // Use non-integer clock values
+      const gpuData = {
+        ...sampleData.rtx5090,
+        cores: 1.1,
+        tmus: 1.1,
+        rops: 1.1,
+        bus: 1.1,
+      };
+
+      // Get the input fields and fill them
+      const formFields = getInputFields();
+      await fillInputFields(formFields, gpuData);
+
+      // Select the Submit button
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Submit the form
+      await user.click(submitButton);
+
+      // Confirm the add function has not been called
+      expect(mockContextOpenForm.addGpu).not.toHaveBeenCalled();
+    });
+
+    test("both core clock values should not accept float inputs", async () => {
+      // Use non-integer clock values, such as values in GHz
       const gpuData = {
         ...sampleData.rtx5090,
         baseclock: 2.2,
@@ -365,8 +411,8 @@ describe("Testing the add graphics card form", () => {
       // Submit the form
       await user.click(submitButton);
 
-      // Confirm the add function has been called
-      expect(mockContextOpenForm.addGpu).toHaveBeenCalledTimes(1);
+      // Confirm the add function has not been called
+      expect(mockContextOpenForm.addGpu).not.toHaveBeenCalled();
     });
   });
 });
