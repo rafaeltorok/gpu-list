@@ -9,6 +9,7 @@ type formRowProps = {
   placeholder: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  step?: string;
 };
 
 // Component
@@ -19,6 +20,7 @@ export default function FormRow({
   placeholder,
   value,
   onChange,
+  step,
 }: formRowProps) {
   return (
     <div className="form-row">
@@ -30,6 +32,7 @@ export default function FormRow({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        step={step || "1"}
       />
     </div>
   );
