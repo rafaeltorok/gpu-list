@@ -132,12 +132,18 @@ export default function GpuDetail() {
         editableData.cores < 1 ||
         editableData.tmus < 1 ||
         editableData.rops < 1 ||
-        editableData.vram < 0.016 ||
+        editableData.vram < 0.001 ||
         editableData.bus < 1 ||
         editableData.memtype === "" ||
         editableData.baseclock < 1 ||
         editableData.boostclock < 1 ||
-        editableData.memclock < 0.001
+        editableData.memclock < 0.01 ||
+        !Number.isInteger(editableData.cores) ||
+        !Number.isInteger(editableData.tmus) ||
+        !Number.isInteger(editableData.rops) ||
+        !Number.isInteger(editableData.bus) ||
+        !Number.isInteger(editableData.baseclock) ||
+        !Number.isInteger(editableData.boostclock)
       ) {
         // Display an error message within the UI
         uiDispatch({
