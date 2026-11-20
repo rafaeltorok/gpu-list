@@ -38,6 +38,7 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
     - [Frontend (Main client)](#frontend-main-client)
     - [Frontend (Alternative client)](#frontend-alternative-client)
     - [Backend server](#backend-server)
+  - [Running workflows locally with the Act tool](#running-workflows-locally-with-the-act-tool)
   - [Troubleshooting](#troubleshooting)
   - [Author](#author)
 
@@ -68,7 +69,7 @@ Built with:
 - Frontend: React + Axios
 - The entire project was written with TypeScript
 
-#### App available on Render: https://gpulist.onrender.com and https://gpulist.onrender.com/alt
+App available on Render: https://gpulist.onrender.com and https://gpulist.onrender.com/alt
 
 #### Container image available on the Docker Hub
 
@@ -586,6 +587,49 @@ The same npm commands from the integration tests can be used for these (Example)
 ```bash
 npm run test:run -- ./src/__tests__
 ```
+
+
+## Running workflows locally with the Act tool
+
+To test the workflows available from this repo locally, you can use the [act](https://github.com/nektos/act)↗ CLI tool.
+
+### ESLint
+
+```bash
+act push -W ./.github/workflows/eslint.yml
+```
+
+### Server integration tests
+
+```bash
+act push -W ./.github/workflows/server-integration-tests.yml -s TEST_MONGODB_URI="your_mongodb_test_database_uri"
+```
+
+### Component and unit tests
+
+- Main client
+  ```bash
+  act push -W ./.github/workflows/main-client-tests.yml
+  ```
+
+- Alternative client
+  ```bash
+  act push -W ./.github/workflows/alt-client-tests.yml
+  ```
+
+### E2E tests
+
+**Note**: act's default runner image lacks `xvfb` needed for headless Cypress runs. Use `-P` to map `ubuntu-latest` to an image like `cypress/browsers:latest` that includes `xvfb` and browser dependencies.
+
+- Main client
+  ```bash
+  act push -P ubuntu-latest=cypress/browsers:latest -W ./.github/workflows/main-client-e2e.yml -s MAIN_E2E_MONGODB_URI="your_e2e_test_database_uri" --pull=false
+  ```
+
+- Alternative client
+  ```bash
+  act push -P ubuntu-latest=cypress/browsers:latest -W ./.github/workflows/alt-client-e2e.yml -s ALT_E2E_MONGODB_URI="your_e2e_test_database_uri" --pull=false
+  ```
 
 
 ## Project overview (folder structure)

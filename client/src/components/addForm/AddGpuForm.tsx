@@ -32,21 +32,34 @@ export default function AddGpuForm() {
     event.preventDefault();
 
     try {
+      const cores = Number(gpu.cores.trim());
+      const tmus = Number(gpu.tmus.trim());
+      const rops = Number(gpu.rops.trim());
+      const vram = Number(gpu.vram.trim());
+      const bus = Number(gpu.bus.trim());
       const base = Number(gpu.baseclock.trim());
       const boost = Number(gpu.boostclock.trim());
+      const memClock = Number(gpu.memclock.trim());
 
+      // Validate each field before the API request
       if (
         gpu.manufacturer.trim() === "" ||
         gpu.model.trim() === "" ||
-        Number(gpu.cores.trim()) < 1 ||
-        Number(gpu.tmus.trim()) < 1 ||
-        Number(gpu.rops.trim()) < 1 ||
-        Number(gpu.vram.trim()) < 0.016 ||
-        Number(gpu.bus.trim()) < 1 ||
         gpu.memtype.trim() === "" ||
+        !Number.isInteger(cores) ||
+        !Number.isInteger(tmus) ||
+        !Number.isInteger(rops) ||
+        !Number.isInteger(bus) ||
         !Number.isInteger(base) ||
         !Number.isInteger(boost) ||
-        Number(gpu.memclock.trim()) < 0.1
+        cores < 1 ||
+        tmus < 1 ||
+        rops < 1 ||
+        vram < 0.001 ||
+        bus < 1 ||
+        base < 1 ||
+        boost < 1 ||
+        memClock < 0.01
       ) {
         uiDispatch({
           type: "SET_DIALOG_MESSAGE",
@@ -59,21 +72,23 @@ export default function AddGpuForm() {
         return;
       }
 
+      // Call the createGpu function to send the API request with the form data
       const response: boolean = await createGpu({
         manufacturer: gpu.manufacturer.trim(),
         gpuline: gpu.gpuline.trim(),
         model: gpu.model.trim(),
-        cores: Number(gpu.cores.trim()),
-        tmus: Number(gpu.tmus.trim()),
-        rops: Number(gpu.rops.trim()),
-        vram: Number(gpu.vram.trim()),
-        bus: Number(gpu.bus.trim()),
+        cores: cores,
+        tmus: tmus,
+        rops: rops,
+        vram: vram,
+        bus: bus,
         memtype: gpu.memtype.trim(),
-        baseclock: Number(gpu.baseclock.trim()),
-        boostclock: Number(gpu.boostclock.trim()),
-        memclock: Number(gpu.memclock.trim()),
+        baseclock: base,
+        boostclock: boost,
+        memclock: memClock,
       });
 
+      // Clear the form data after a successful response
       if (response) {
         setGpu({
           manufacturer: "",
@@ -178,6 +193,7 @@ export default function AddGpuForm() {
               placeholder="24"
               value={gpu.vram}
               onChange={(e) => setGpu({ ...gpu, vram: e.target.value })}
+              step="0.001"
             />
             <FormRow
               id="bus"
@@ -218,6 +234,7 @@ export default function AddGpuForm() {
               placeholder="21"
               value={gpu.memclock}
               onChange={(e) => setGpu({ ...gpu, memclock: e.target.value })}
+              step="0.01"
             />
             <div className="form-row">
               <button className="add-gpu-submit-button" type="submit">

@@ -49,22 +49,29 @@ export default function Gpu({ gpu }: GpuProps) {
 
   // Update the GPU data when clicking on the "Edit" button
   async function updateGpuData(): Promise<void> {
+    // Validate each field before the API request
     if (
       gpuData.manufacturer.trim() === "" ||
       gpuData.model.trim() === "" ||
       gpuData.cores < 1 ||
       gpuData.tmus < 1 ||
       gpuData.rops < 1 ||
-      gpuData.vram < 0.016 ||
+      gpuData.vram < 0.001 ||
       gpuData.bus < 1 ||
       gpuData.memtype.trim() === "" ||
       gpuData.baseclock < 1 ||
       gpuData.boostclock < 1 ||
-      gpuData.memclock < 0.01
+      gpuData.memclock < 0.01 ||
+      !Number.isInteger(gpuData.cores) ||
+      !Number.isInteger(gpuData.tmus) ||
+      !Number.isInteger(gpuData.rops) ||
+      !Number.isInteger(gpuData.bus) ||
+      !Number.isInteger(gpuData.baseclock) ||
+      !Number.isInteger(gpuData.boostclock)
     ) {
       uiDispatch({
         type: "SET_DIALOG_MESSAGE",
-        payload: "Failed to update the specs",
+        payload: "Invalid specs",
       });
       uiDispatch({
         type: "TOGGLE_NOTIFICATION_MESSAGE",

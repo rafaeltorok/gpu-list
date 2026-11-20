@@ -29,19 +29,34 @@ export default function AddGpuForm() {
   async function handleCreateGpu(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
 
-    // Validate the form data
+    const cores = Number(gpu.cores.trim());
+    const tmus = Number(gpu.tmus.trim());
+    const rops = Number(gpu.rops.trim());
+    const vram = Number(gpu.vram.trim());
+    const bus = Number(gpu.bus.trim());
+    const base = Number(gpu.baseclock.trim());
+    const boost = Number(gpu.boostclock.trim());
+    const memClock = Number(gpu.memclock.trim());
+
+    // Validate each field before the API request
     if (
       gpu.manufacturer.trim() === "" ||
       gpu.model.trim() === "" ||
-      Number(gpu.cores.trim()) < 1 ||
-      Number(gpu.tmus.trim()) < 1 ||
-      Number(gpu.rops.trim()) < 1 ||
-      Number(gpu.vram.trim()) < 0.016 ||
-      Number(gpu.bus.trim()) < 1 ||
       gpu.memtype.trim() === "" ||
-      Number(gpu.baseclock.trim()) < 1 ||
-      Number(gpu.boostclock.trim()) < 1 ||
-      Number(gpu.memclock.trim()) < 0.001
+      !Number.isInteger(cores) ||
+      !Number.isInteger(tmus) ||
+      !Number.isInteger(rops) ||
+      !Number.isInteger(bus) ||
+      !Number.isInteger(base) ||
+      !Number.isInteger(boost) ||
+      cores < 1 ||
+      tmus < 1 ||
+      rops < 1 ||
+      vram < 0.001 ||
+      bus < 1 ||
+      base < 1 ||
+      boost < 1 ||
+      memClock < 0.01
     ) {
       // Display an error message within the UI
       uiDispatch({
@@ -149,7 +164,7 @@ export default function AddGpuForm() {
             value={gpu.vram}
             placeholder="24"
             onChange={(e) => setGpu({ ...gpu, vram: e.target.value })}
-            step={"0.01"}
+            step={"0.001"}
           />
           <FormRow
             id="bus"
@@ -190,7 +205,7 @@ export default function AddGpuForm() {
             value={gpu.memclock}
             placeholder="21"
             onChange={(e) => setGpu({ ...gpu, memclock: e.target.value })}
-            step={"0.001"}
+            step={"0.01"}
           />
           <div className="form-row">
             <button id="add-gpu-submit-button" type="submit">

@@ -358,7 +358,7 @@ describe("the Graphics Card data table", function () {
 
         // Confirm there is a warning about the invalid data
         cy.get('[open=""] > .dialog-message').contains(
-          /failed to update the specs/i,
+          /invalid specs/i,
         );
         cy.get('[open=""] > .dialog-button').click(); // Close the notification
       });

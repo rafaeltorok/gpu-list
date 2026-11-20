@@ -1,4 +1,3 @@
-// Test dependencies
 import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -6,12 +5,12 @@ import userEvent from "@testing-library/user-event";
 // Component
 import AddGpuForm from "../addForm/AddGpuForm";
 
-// Utils
+// Mock context
 import createMockContext from "../../test-utils/createMockContext";
+import GpuContext from "../../context/GpuContext";
 
 // Data
 import sampleData from "../../test-utils/data/fixtures";
-import GpuContext from "../../context/GpuContext";
 
 // TypeScript types
 import type { GpuContextType } from "../../types/context";
@@ -61,6 +60,7 @@ function getInputFields() {
   };
 }
 
+// Receives all of the form input fields and fill them with the prop object data
 async function fillInputFields(formFields: FormFields, gpuData: GpuInputType) {
   // Type on each one of the fields
   if (gpuData.manufacturer)
@@ -120,7 +120,7 @@ describe("Testing the add graphics card form", () => {
     });
   });
 
-  describe("the web form UI works", () => {
+  describe("the web form functionality", () => {
     beforeEach(() => {
       const mockContextValue = createMockContext();
 
@@ -145,8 +145,8 @@ describe("Testing the add graphics card form", () => {
       // Get sample data to be used as input
       const gpuData = sampleData.rtx5090;
 
+      // Get the input fields and fill them
       const formFields = getInputFields();
-
       await fillInputFields(formFields, gpuData);
 
       // Assert the correct input is present on each respective field
@@ -168,8 +168,8 @@ describe("Testing the add graphics card form", () => {
       // Add the sample data
       const gpuData = sampleData.rtx5090;
 
+      // Get the input fields and fill them
       const formFields = getInputFields();
-
       await fillInputFields(formFields, gpuData);
 
       // Assert the correct input is present on each respective field
@@ -283,6 +283,28 @@ describe("Testing the add graphics card form", () => {
       // Confirm the add function has not been called
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
     });
+  });
+
+  describe("invalid form data", () => {
+    beforeEach(() => {
+      const mockContextValue = createMockContext();
+
+      // Expand the add form
+      mockContextOpenForm = {
+        ...mockContextValue,
+        uiState: {
+          ...mockContextValue.uiState,
+          showAddForm: true,
+        },
+      };
+
+      // Render the form component
+      render(
+        <GpuContext.Provider value={mockContextOpenForm}>
+          <AddGpuForm />
+        </GpuContext.Provider>,
+      );
+    });
 
     test("zero is an invalid value for the specification fields", async () => {
       const gpuData = {
@@ -290,8 +312,8 @@ describe("Testing the add graphics card form", () => {
         cores: 0,
       };
 
+      // Get the input fields and fill them
       const formFields = getInputFields();
-
       await fillInputFields(formFields, gpuData);
 
       // Select the Submit button
@@ -310,8 +332,8 @@ describe("Testing the add graphics card form", () => {
         cores: -1,
       };
 
+      // Get the input fields and fill them
       const formFields = getInputFields();
-
       await fillInputFields(formFields, gpuData);
 
       // Select the Submit button
@@ -342,16 +364,40 @@ describe("Testing the add graphics card form", () => {
       expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
     });
 
-    test("both core clock values do not accept float inputs", async () => {
-      // Use non-integer clock values, as in GHz
+    test("specification input fields should not accept float inputs", async () => {
+      // Use non-integer clock values
+      const gpuData = {
+        ...sampleData.rtx5090,
+        cores: 1.1,
+        tmus: 1.1,
+        rops: 1.1,
+        bus: 1.1,
+      };
+
+      // Get the input fields and fill them
+      const formFields = getInputFields();
+      await fillInputFields(formFields, gpuData);
+
+      // Select the Submit button
+      const submitButton = screen.getByRole("button", { name: /submit/i });
+
+      // Submit the form
+      await user.click(submitButton);
+
+      // Confirm the add function has not been called
+      expect(mockContextOpenForm.createGpu).not.toHaveBeenCalled();
+    });
+
+    test("both core clock values should not accept float inputs", async () => {
+      // Use non-integer clock values, such as values in GHz
       const gpuData = {
         ...sampleData.rtx5090,
         baseclock: 2.2,
         boostclock: 2.7,
       };
 
+      // Get the input fields and fill them
       const formFields = getInputFields();
-
       await fillInputFields(formFields, gpuData);
 
       // Select the Submit button

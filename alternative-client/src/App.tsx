@@ -86,31 +86,6 @@ export default function App() {
 
   // Handles the add form data
   async function addGpu(gpuObject: GpuInputType): Promise<boolean> {
-    if (
-      gpuObject.manufacturer === "" ||
-      gpuObject.model === "" ||
-      gpuObject.cores < 1 ||
-      gpuObject.tmus < 1 ||
-      gpuObject.rops < 1 ||
-      gpuObject.vram < 0.016 ||
-      gpuObject.bus < 1 ||
-      gpuObject.memtype === "" ||
-      gpuObject.baseclock < 1 ||
-      gpuObject.boostclock < 1 ||
-      gpuObject.memclock < 1
-    ) {
-      // Display an error message within the UI
-      uiDispatch({
-        type: "SET_DIALOG_MESSAGE",
-        payload: "Invalid GPU data",
-      });
-      uiDispatch({
-        type: "TOGGLE_NOTIFICATION_MESSAGE",
-        payload: true,
-      });
-      return false;
-    }
-
     try {
       // Make the API call to add the new graphics card
       const returnedObject = await gpuService.create(gpuObject);

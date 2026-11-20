@@ -65,7 +65,7 @@ const gpuSchema = new Schema<GpuType>({
   vram: {
     type: Number,
     required: [true, "VRAM amount is required"],
-    min: [0.016, "VRAM must be at least 1"],
+    min: [0.001, "VRAM must be at least 1MB"],
   },
   bus: {
     type: Number,
@@ -94,7 +94,7 @@ const gpuSchema = new Schema<GpuType>({
   memclock: {
     type: Number,
     required: [true, "Memory clock is required"],
-    min: [0.01, "Memory clock must be at least 1"],
+    min: [0.01, "Memory clock must be at least 10 Mbps effective"],
   },
 });
 
