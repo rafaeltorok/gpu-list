@@ -32,7 +32,7 @@ Full-stack React + Express + MongoDB application for managing GPU specifications
     - [Manual testing](#manual-testing)
     - [Testing via Docker](#testing-via-docker)
   - [Integration tests (Backend server)](#integration-tests-backend-server)
-  - [Component tests (Main client)](#component-tests-main-client)
+  - [Component tests](#component-tests)
   - [Unit tests (Frontend / Main client)](#unit-tests-frontend--main-client)
   - [Project overview (folder structure)](#project-overview-folder-structure)
     - [Frontend (Main client)](#frontend-main-client)
@@ -516,13 +516,42 @@ npm run test
 ```
 
 
-## Component tests (Main client)
+## Component tests
 
 **All frontend related tests have been implemented with Vitest alongside the React Testing Library.**
+
+### Main client
 
 Install dependencies
 ```bash
 cd ./client && npm install
+```
+
+Run all tests in watch mode
+```bash
+npm run test -- ./src/components/__tests__
+```
+
+Single run without watch mode
+```bash
+npm run test:run -- ./src/components/__tests__
+```
+
+Vitest UI mode
+```bash
+npm run test:ui -- ./src/components/__tests__
+```
+
+Get the current test coverage
+```bash
+npm run coverage
+```
+
+### Alternative client
+
+Install dependencies
+```bash
+cd ./alternative-client && npm install
 ```
 
 Run all tests in watch mode
