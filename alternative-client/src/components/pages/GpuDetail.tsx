@@ -31,7 +31,9 @@ export default function GpuDetail() {
   const [overrideMode, setOverrideMode] = useState<boolean>(false);
 
   // Defines which are the previous and next cards to navigate between
-  const [previousCard, setPreviousCard] = useState<GpuType | undefined>(undefined);
+  const [previousCard, setPreviousCard] = useState<GpuType | undefined>(
+    undefined,
+  );
   const [nextCard, setNextCard] = useState<GpuType | undefined>(undefined);
 
   // Hooks
@@ -48,9 +50,9 @@ export default function GpuDetail() {
 
   // Get the previous and next cards to navigate to
   useEffect(() => {
-    const index = uiState.searchTerm ?
-      dataState.gpusFound.findIndex((g: GpuType) => g.id === id) :
-      dataState.gpus.findIndex((g: GpuType) => g.id === id);
+    const index = uiState.searchTerm
+      ? dataState.gpusFound.findIndex((g: GpuType) => g.id === id)
+      : dataState.gpus.findIndex((g: GpuType) => g.id === id);
     if (index >= 0) {
       // With a search term available, navigate between the search results only
       if (uiState.searchTerm) {
@@ -61,7 +63,7 @@ export default function GpuDetail() {
         setNextCard(dataState.gpus[index + 1] || undefined);
       }
     }
-  }, [id, dataState.gpus, uiState.searchTerm,dataState.gpusFound]);
+  }, [id, dataState.gpus, uiState.searchTerm, dataState.gpusFound]);
 
   // Scroll to the top of the data table when a user selects a card form the list
   useEffect(() => {
@@ -172,10 +174,7 @@ export default function GpuDetail() {
   );
 
   return (
-    <div
-      className="gpu-detail-container"
-      {...swipeHandler}
-    >
+    <div className="gpu-detail-container" {...swipeHandler}>
       <div className={`gpu-detail-card ${brand}`}>
         {/* Full model title */}
         <div className="gpu-detail-header">

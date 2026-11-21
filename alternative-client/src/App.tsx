@@ -219,8 +219,10 @@ export default function App() {
           uiDispatch,
         }}
       >
-        <a href="/" className="swap-ui-link">Main UI</a>
-        
+        <a href="/" className="swap-ui-link">
+          Main UI
+        </a>
+
         <Header />
         <main className="main-content">
           <Routes>

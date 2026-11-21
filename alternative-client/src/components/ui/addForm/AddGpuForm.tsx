@@ -26,7 +26,9 @@ export default function AddGpuForm() {
   });
 
   // Handles submitting the form data
-  async function handleCreateGpu(event: FormEvent<HTMLFormElement>): Promise<void> {
+  async function handleCreateGpu(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
 
     const cores = Number(gpu.cores.trim());

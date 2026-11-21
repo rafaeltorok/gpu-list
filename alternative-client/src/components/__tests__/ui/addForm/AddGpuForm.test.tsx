@@ -107,21 +107,47 @@ describe("Testing the add graphics card form", () => {
       );
 
       // Confirm each field is present within the add form
-      expect(screen.getByLabelText(/manufacturer/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/line/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/model/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/cores/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/tmus/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/rops/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/vram/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/bus width/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/memory type/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/base clock/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/boost clock/i, { selector: "input" })).toBeInTheDocument();
-      expect(screen.getByLabelText(/memory clock/i, { selector: "input" })).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/manufacturer/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/line/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/model/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/cores/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/tmus/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/rops/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/vram/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/bus width/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/memory type/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/base clock/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/boost clock/i, { selector: "input" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByLabelText(/memory clock/i, { selector: "input" }),
+      ).toBeInTheDocument();
 
       // Confirm the Submit button is present
-      expect(screen.queryByRole("button", { name: /submit/i })).toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: /submit/i }),
+      ).toBeInTheDocument();
     });
   });
 
