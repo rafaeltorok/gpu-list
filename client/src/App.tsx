@@ -220,7 +220,9 @@ function App() {
         uiDispatch,
       }}
     >
-      <a href="/alt/" className="swap-ui-link">Alternative UI</a>
+      <a href="/alt/" className="swap-ui-link">
+        Alternative UI
+      </a>
 
       <header>
         <h1 id="main-page-title">GPU List</h1>
