@@ -195,15 +195,15 @@
 }
 
 #override-button:hover {
-  background-color: rgba(8, 90, 153, 0.2);
+  background-color: rgba(66, 172, 253, 0.2);
 }
 
 #edit-button:hover,
 #confirm-button:hover {
-  background-color: rgba(116, 212, 37, 0.3);
+  background-color: rgba(133, 240, 46, 0.3);
 }
 
 #cancel-button:hover,
 #delete-button:hover {
-  background-color: rgba(220, 53, 69, 0.3);
+  background-color: rgba(255, 111, 125, 0.3);
 }
