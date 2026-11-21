@@ -709,8 +709,6 @@ act push -W ./.github/workflows/server-integration-tests.yml -s TEST_MONGODB_URI
 │   │   ├── PageIndex.css
 │   │   └── SearchBar.css
 │   ├── __tests__                     # Unit tests for the app's util scripts
-│   │   └── utils
-│   │       └── calculatePerformance.test.ts
 │   ├── test-utils                    # Shared utilities and fixtures for component testing
 │   │   ├── createMockContext.ts
 │   │   └── data
@@ -775,7 +773,8 @@ act push -W ./.github/workflows/server-integration-tests.yml -s TEST_MONGODB_URI
 │   │       │   ├── LoadingMessage.tsx      # Renders the initial loading message while the API is retrieving the database data to be displayed within the list
 │   │       │   └── NotificationMessage.tsx  # Renders success and/or error messages during the add form validation, after adding a new graphics card or when trying to input invalid data during the edit mode
 │   │       ├── GpuCard.tsx                 # Renders each one of the clickable card entries within the main page list
-│   │       └── SearchBar.tsx               # Renders the search bar input field in the top page controls
+│   │       ├── SearchBar.tsx               # Renders the search bar input field in the top page controls
+│   │       └── __tests__                 # Component integration tests
 │   ├── context                             # React context API folder
 │   │   └── GpuContext.ts                   # Defines the shared React context for both the UI and GPU-related states
 │   ├── hooks
@@ -800,6 +799,10 @@ act push -W ./.github/workflows/server-integration-tests.yml -s TEST_MONGODB_URI
 │   │   ├── index.css                       # Custom CSS rules for the root and body elements
 │   │   ├── Messages.css
 │   │   └── SearchBar.css
+|   ├── test-utils                          # Shared utilities and fixtures for component testing
+│   │   ├── createMockContext.ts
+│   │   └── data
+│   │       └── fixtures.ts                 # Example data to be used for testing purposes
 │   ├── types                               # TypeScript types exclusive to the alternative client frontend
 │   │   └── context.ts                      # Handles all of the types used by the GpuContext script
 │   └── utils
