@@ -799,6 +799,7 @@ act push -W ./.github/workflows/server-integration-tests.yml -s TEST_MONGODB_URI
 │   │   ├── index.css                       # Custom CSS rules for the root and body elements
 │   │   ├── Messages.css
 │   │   └── SearchBar.css
+│   ├── __tests__                           # Unit tests for the app's util scripts
 |   ├── test-utils                          # Shared utilities and fixtures for component testing
 │   │   ├── createMockContext.ts
 │   │   └── data
