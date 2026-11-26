@@ -1,4 +1,4 @@
-import { describe, test, expect, vi } from "vitest";
+import { describe, test, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 // Component
@@ -6,45 +6,13 @@ import CardsCounter from "../../ui/CardsCounter";
 
 // Mocked context
 import GpuContext from "../../../context/GpuContext";
+import createMockContext from "../../../test-utils/createMockContext";
 
 // Data
 import sampleData from "../../../test-utils/data/fixturesWithIds";
 
 // TypeScript types
-import type { GpuContextType } from "../../../types/context";
 import type { GpuType } from "../../../../../shared/types/types";
-
-// Helper functions
-export default function createMockContext(gpus: GpuType[], gpusFound: GpuType[], searchTerm: string) {
-  // Mock the React Context
-  const mockContextValue: GpuContextType = {
-    // Functions: vi.fn() track calls and return promises
-    addGpu: vi.fn().mockResolvedValue(true),
-    deleteGpu: vi.fn().mockResolvedValue(undefined),
-    editGpu: vi.fn().mockResolvedValue(undefined),
-
-    // States
-    dataState: {
-      gpus: gpus,
-      gpusFound: gpusFound,
-      selectedGpu: null,
-    },
-    uiState: {
-      searchTerm: searchTerm,
-      showAddForm: false,
-      loadingMessage: false,
-      notificationMessage: false,
-      confirmationMessage: false,
-      dialogMessage: "",
-    },
-
-    // Dispatches
-    dataDispatch: vi.fn(),
-    uiDispatch: vi.fn(),
-  };
-
-  return mockContextValue;
-}
 
 // Tests
 describe("Testing the cards counter for the GPU list", () => {

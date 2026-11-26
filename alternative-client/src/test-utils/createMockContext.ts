@@ -3,8 +3,9 @@ import { vi } from "vitest";
 
 // TypeScript types
 import type { GpuContextType } from "../types/context";
+import type { GpuType } from "../../../shared/types/types";
 
-export default function createMockContext() {
+export default function createMockContext(gpus?: GpuType[], gpusFound?: GpuType[], searchTerm?: string) {
   // Mock the React Context
   const mockContextValue: GpuContextType = {
     // Functions: vi.fn() track calls and return promises
@@ -14,12 +15,12 @@ export default function createMockContext() {
 
     // States
     dataState: {
-      gpus: [],
-      gpusFound: [],
+      gpus: gpus || [],
+      gpusFound: gpusFound || [],
       selectedGpu: null,
     },
     uiState: {
-      searchTerm: "",
+      searchTerm: searchTerm || "",
       showAddForm: false,
       loadingMessage: false,
       notificationMessage: false,
